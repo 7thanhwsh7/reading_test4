@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G.EDU – IELTS Academic Reading Test 4</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1a1a2e;
+  --navy-mid: #16213e;
+  --navy-light: #0f3460;
+  --gold: #c9a84c;
+  --gold-light: #e2c97e;
+  --gold-dim: rgba(201,168,76,0.15);
+  --cream: #f8f5ef;
+  --cream-dark: #ede8df;
+  --white: #ffffff;
+  --green: #2d9e6b;
+  --red: #d94f4f;
+  --orange: #e07b39;
+  --gray: #8a8a9a;
+  --text: #1a1a2e;
+  --text-light: #5a5a7a;
+  --border: rgba(201,168,76,0.2);
+  --shadow: 0 4px 24px rgba(26,26,46,0.1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Be Vietnam Pro',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;}
+input,textarea,select{-webkit-user-select:text;user-select:text;cursor:text;pointer-events:all;}
+.passage-text,.questions-col{-webkit-user-select:text;user-select:text;}
+body.allow-select{-webkit-user-select:text;user-select:text;}
+
+/* ===== LOGIN ===== */
+#login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:linear-gradient(145deg,#f8f5ef 0%,#ede8df 100%)}
+.login-card{background:var(--white);border-radius:20px;padding:48px 40px;width:100%;max-width:460px;box-shadow:0 8px 48px rgba(26,26,46,0.12);border:1px solid var(--border)}
+.login-logo{text-align:center;margin-bottom:8px;font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--gold);letter-spacing:1px}
+.login-subtitle{text-align:center;font-size:0.78rem;color:var(--navy);font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
+.login-subtitle span{color:var(--green);font-weight:700}
+.login-warning{background:#fff4f4;border:1.5px solid #f0a0a0;border-radius:10px;padding:14px 16px;margin-bottom:28px;font-size:0.83rem;line-height:1.6;color:#c0392b}
+.login-warning b{display:block;margin-bottom:4px;font-size:0.85rem}
+.login-label{display:block;font-size:0.78rem;font-weight:600;color:var(--navy);margin-bottom:6px;letter-spacing:0.5px;text-transform:uppercase}
+.login-input{width:100%;padding:13px 16px;border:1.5px solid var(--cream-dark);border-radius:10px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.95rem;color:var(--navy);background:var(--cream);transition:all .2s;outline:none;margin-bottom:20px}
+.login-input:focus{border-color:var(--gold);background:var(--white);box-shadow:0 0 0 3px var(--gold-dim)}
+.login-btn{width:100%;padding:15px;background:var(--gold);border:none;border-radius:12px;font-family:'Be Vietnam Pro',sans-serif;font-size:1rem;font-weight:700;color:var(--navy);cursor:pointer;transition:all .2s;letter-spacing:0.5px;opacity:0.5;pointer-events:none}
+.login-btn.active{opacity:1;pointer-events:all}
+.login-btn.active:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,168,76,0.4)}
+
+/* ===== MAIN TEST ===== */
+#test-screen{display:none;flex-direction:column;height:100vh;overflow:hidden}
+.test-header{background:var(--navy);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:100;border-bottom:2px solid var(--gold)}
+.header-logo{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.6rem;letter-spacing:1px}
+.header-center{display:flex;align-items:center;gap:16px}
+.header-info{text-align:right;font-size:0.78rem;color:rgba(255,255,255,0.7);line-height:1.5}
+.header-info strong{color:var(--white);font-size:0.85rem;display:block}
+.timer-box{background:var(--gold);color:var(--navy);font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:700;padding:7px 16px;border-radius:8px;letter-spacing:2px;min-width:90px;text-align:center}
+.timer-box.warning{background:#e74c3c;color:#fff;animation:blink .7s infinite}
+.timer-box.done{background:#2d9e6b;color:#fff}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.6}}
+
+/* tabs */
+.passage-tabs{background:var(--navy-mid);display:flex;align-items:center;padding:0 24px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}
+.ptab{padding:10px 20px;color:rgba(255,255,255,0.5);font-size:0.82rem;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;letter-spacing:0.5px}
+.ptab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.ptab:hover:not(.active){color:rgba(255,255,255,0.8)}
+
+/* main body */
+.test-body{display:flex;flex:1;overflow:hidden}
+.passage-col{flex:1;overflow-y:auto;padding:28px 32px;background:var(--cream);border-right:1px solid var(--cream-dark)}
+.questions-col{overflow-y:auto;padding:24px 20px;background:var(--white);flex-shrink:1;min-height:0;}
+
+/* passage */
+.passage-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--navy);margin-bottom:4px}
+.passage-subtitle{font-size:0.82rem;color:var(--text-light);font-style:italic;margin-bottom:20px}
+.passage-text{font-size:0.93rem;line-height:1.9;color:var(--text)}
+.passage-text p{margin-bottom:16px}
+.passage-text .para-label{font-weight:700;color:var(--navy);margin-right:6px}
+
+/* questions */
+.q-section-title{font-size:0.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.q-instruction{font-size:0.82rem;color:var(--text-light);margin-bottom:16px;line-height:1.6;background:var(--cream);padding:10px 14px;border-radius:8px;border-left:3px solid var(--gold)}
+.q-instruction strong{color:var(--navy)}
+.q-block{margin-bottom:24px}
+.q-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:12px;padding:10px 12px;border-radius:10px;border:1.5px solid transparent;background:var(--cream);transition:all .2s;position:relative}
+.q-row:hover{border-color:var(--border)}
+.q-row.answered{border-color:rgba(45,158,107,0.2)}
+.q-row.flagged{background:#fff8ec;border-color:rgba(224,123,57,0.3)}
+.q-row.answered.flagged{background:#fff8f0;border-color:rgba(224,123,57,0.4)}
+.q-num{font-family:'DM Mono',monospace;font-size:0.78rem;font-weight:500;color:var(--gray);min-width:22px;padding-top:2px}
+.q-content{flex:1}
+.q-text{font-size:0.85rem;color:var(--text);margin-bottom:8px;line-height:1.5}
+.q-input{width:100%;padding:8px 12px;border:1.5px solid var(--cream-dark);border-radius:8px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.88rem;color:var(--navy);background:var(--white);outline:none;transition:all .2s}
+.q-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
+.q-input:disabled{background:var(--cream);color:var(--text-light);cursor:not-allowed}
+.q-options{display:flex;flex-direction:column;gap:6px}
+.q-option{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;transition:background .15s;font-size:0.85rem}
+.q-option:hover{background:var(--cream-dark)}
+.q-option input[type=radio]{accent-color:var(--gold);width:14px;height:14px;cursor:pointer}
+.q-option input[type=radio]:disabled{cursor:not-allowed}
+.q-option label{cursor:pointer;line-height:1.4}
+.q-option.selected-opt{background:var(--gold-dim);border-radius:7px}
+
+/* TFN, YNNG */
+.tfn-group{display:flex;gap:6px;flex-wrap:wrap}
+.tfn-btn{padding:5px 12px;border:1.5px solid var(--cream-dark);border-radius:20px;font-size:0.78rem;font-weight:600;cursor:pointer;background:var(--white);color:var(--text-light);transition:all .2s;letter-spacing:0.3px}
+.tfn-btn:hover{border-color:var(--gold);color:var(--navy)}
+.tfn-btn.sel-TRUE,.tfn-btn.sel-YES,.tfn-btn.sel-FALSE,.tfn-btn.sel-NO,.tfn-btn.sel-NOT_GIVEN{background:var(--navy);border-color:var(--navy);color:var(--white)}
+.tfn-btn:disabled{cursor:not-allowed;opacity:0.7}
+
+/* flag btn */
+.flag-btn{background:none;border:none;cursor:pointer;font-size:0.9rem;padding:2px 4px;border-radius:4px;opacity:0.5;transition:all .15s;flex-shrink:0}
+.flag-btn:hover{opacity:1;transform:scale(1.2)}
+.flag-btn.flagged{opacity:1;filter:drop-shadow(0 0 3px orange)}
+
+/* answer badge (review) */
+.answer-badge{display:none;margin-top:6px;padding:4px 10px;border-radius:6px;font-size:0.78rem;font-weight:600;font-family:'DM Mono',monospace}
+.answer-badge.correct{display:inline-block;background:#e8f5ee;color:var(--green);border:1px solid rgba(45,158,107,0.3)}
+.answer-badge.wrong{display:inline-block;background:#fdf0f0;color:var(--red);border:1px solid rgba(217,79,79,0.3)}
+.answer-badge.blank{display:inline-block;background:#f5f5f5;color:var(--gray);border:1px solid var(--cream-dark)}
+
+/* sidebar */
+.sidebar{width:52px;background:var(--navy);display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:4px;overflow-y:auto;flex-shrink:0}
+.sidebar-q{width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);font-family:'DM Mono',monospace;font-size:0.68rem;font-weight:500;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;position:relative;border:none}
+.sidebar-q:hover{background:rgba(201,168,76,0.2);color:var(--gold)}
+.sidebar-q.ans{background:rgba(201,168,76,0.25);color:var(--gold)}
+.sidebar-q.flag{background:rgba(224,123,57,0.3);color:var(--orange)}
+.sidebar-q.ans.flag{background:rgba(201,168,76,0.25);color:var(--gold)}
+.sidebar-q.ans.flag::after{content:'';position:absolute;top:3px;right:3px;width:5px;height:5px;background:var(--orange);border-radius:50%}
+.sidebar-sep{width:28px;height:1px;background:rgba(255,255,255,0.1);margin:4px 0}
+.flag-panel-btn{width:32px;height:32px;border-radius:6px;background:rgba(224,123,57,0.2);border:none;color:var(--orange);font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:4px}
+.flag-panel-btn:hover{background:rgba(224,123,57,0.4)}
+
+/* submit btn */
+.submit-wrap{padding:16px 20px;border-top:1px solid var(--cream-dark);background:var(--white);flex-shrink:0}
+.submit-btn{width:100%;padding:13px;background:var(--navy);color:var(--white);border:none;border-radius:10px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.92rem;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:0.3px}
+.submit-btn:hover{background:var(--navy-light);transform:translateY(-1px)}
+.submit-btn.submitted{background:var(--green);cursor:default;transform:none}
+
+/* progress */
+.progress-wrap{padding:10px 20px 4px;background:var(--white)}
+.progress-bar{height:4px;background:var(--cream-dark);border-radius:4px;overflow:hidden;margin-bottom:6px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:4px;transition:width .3s}
+.progress-text{font-size:0.72rem;color:var(--text-light);text-align:center}
+
+/* modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--white);border-radius:20px;padding:36px 32px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2);text-align:center}
+.modal-icon{font-size:2.4rem;margin-bottom:16px}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--navy);margin-bottom:10px}
+.modal-text{font-size:0.88rem;color:var(--text-light);line-height:1.7;margin-bottom:24px}
+.modal-text strong{color:var(--navy)}
+.modal-btns{display:flex;gap:12px;justify-content:center}
+.modal-btn{padding:11px 28px;border-radius:10px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all .2s;border:none}
+.modal-btn.primary{background:var(--navy);color:var(--white)}
+.modal-btn.primary:hover{background:var(--navy-light)}
+.modal-btn.secondary{background:var(--cream);color:var(--text);border:1px solid var(--cream-dark)}
+.modal-btn.secondary:hover{background:var(--cream-dark)}
+.modal-btn.danger{background:var(--red);color:var(--white)}
+.modal-btn.danger:hover{background:#c0392b}
+
+/* result screen */
+#result-screen{display:none;min-height:100vh;background:linear-gradient(145deg,#f8f5ef,#ede8df);align-items:center;justify-content:center;padding:20px;flex-direction:column}
+.result-card{background:var(--white);border-radius:24px;padding:48px 40px;max-width:520px;width:100%;text-align:center;box-shadow:0 8px 48px rgba(26,26,46,0.12);border:1px solid var(--border)}
+.result-logo{font-family:'Playfair Display',serif;color:var(--gold);font-size:2rem;margin-bottom:8px}
+.result-congrats{font-size:0.82rem;color:var(--text-light);margin-bottom:28px;line-height:1.6}
+.result-congrats strong{font-size:1.1rem;color:var(--navy);display:block;margin-bottom:4px;font-family:'Playfair Display',serif}
+.result-scores{display:flex;gap:20px;justify-content:center;margin-bottom:32px}
+.score-box{background:var(--cream);border-radius:16px;padding:24px 32px;flex:1;border:1px solid var(--border)}
+.score-label{font-size:0.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-light);margin-bottom:8px}
+.score-value{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--navy);line-height:1}
+.score-sub{font-size:0.78rem;color:var(--text-light);margin-top:4px}
+.review-btn{padding:13px 32px;background:var(--navy);color:var(--white);border:none;border-radius:12px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:0.3px}
+.review-btn:hover{background:var(--navy-light);transform:translateY(-1px)}
+
+/* review banner */
+.review-banner{display:none;background:linear-gradient(90deg,var(--navy),var(--navy-light));color:var(--white);padding:10px 24px;font-size:0.82rem;font-weight:600;text-align:center;letter-spacing:0.5px;flex-shrink:0}
+.review-banner span{color:var(--gold)}
+.back-result-btn{background:none;border:1px solid rgba(255,255,255,0.3);color:var(--white);padding:5px 14px;border-radius:6px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.78rem;cursor:pointer;transition:all .2s;margin-left:12px}
+.back-result-btn:hover{background:rgba(255,255,255,0.1)}
+
+/* flag panel overlay */
+#flag-panel{display:none;position:fixed;right:72px;top:100px;width:260px;background:var(--white);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,0.15);border:1px solid var(--border);z-index:200;padding:16px}
+#flag-panel.show{display:block}
+.flag-panel-title{font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.flag-panel-close{background:none;border:none;cursor:pointer;font-size:1rem;color:var(--gray)}
+.flag-item{padding:6px 8px;border-radius:6px;font-size:0.82rem;cursor:pointer;color:var(--text);display:flex;align-items:center;gap:8px;transition:background .15s}
+.flag-item:hover{background:var(--cream)}
+.flag-item-q{font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--orange);font-weight:600;min-width:28px}
+.flag-none{font-size:0.82rem;color:var(--text-light);text-align:center;padding:12px}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--cream-dark);border-radius:4px}
+.passage-col::-webkit-scrollbar-thumb,.questions-col::-webkit-scrollbar-thumb{background:var(--cream-dark)}
+
+/* Utility */
+.hidden{display:none!important}
+
+/* ===== HIGHLIGHT SYSTEM ===== */
+#hl-toolbar{
+  position:fixed;z-index:9999;display:none;
+  background:var(--navy);border-radius:10px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.25);
+  padding:6px 8px;gap:5px;align-items:center;
+  border:1px solid rgba(255,255,255,0.1);
+  animation:hl-pop .15s cubic-bezier(.34,1.56,.64,1);
+}
+#hl-toolbar.show{display:flex;}
+@keyframes hl-pop{from{opacity:0;transform:scale(0.85) translateY(4px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.hl-btn{
+  width:24px;height:24px;border-radius:50%;border:2.5px solid transparent;
+  cursor:pointer;transition:all .15s;position:relative;flex-shrink:0;
+}
+.hl-btn:hover{transform:scale(1.2);border-color:rgba(255,255,255,0.6);}
+.hl-btn[data-color="yellow"]{background:#ffe066;}
+.hl-btn[data-color="blue"]{background:#74b9ff;}
+.hl-btn[data-color="green"]{background:#55efc4;}
+.hl-btn[data-color="pink"]{background:#fd79a8;}
+.hl-label{font-size:0.7rem;color:rgba(255,255,255,0.5);padding:0 4px 0 2px;white-space:nowrap;font-family:'Be Vietnam Pro',sans-serif;}
+.hl-sep{width:1px;height:18px;background:rgba(255,255,255,0.15);margin:0 2px;}
+.hl-erase-btn{
+  background:none;border:none;color:rgba(255,255,255,0.5);
+  cursor:pointer;font-size:0.75rem;padding:2px 6px;border-radius:5px;
+  font-family:'Be Vietnam Pro',sans-serif;transition:all .15s;white-space:nowrap;
+}
+.hl-erase-btn:hover{background:rgba(255,255,255,0.1);color:#fff;}
+
+/* highlight spans */
+.hl-span{cursor:pointer;border-radius:2px;transition:filter .15s;}
+.hl-span:hover{filter:brightness(0.88);}
+.hl-span[data-hl-color="yellow"]{background:#ffe066;color:#1a1a2e;}
+.hl-span[data-hl-color="blue"]{background:#74b9ff;color:#1a1a2e;}
+.hl-span[data-hl-color="green"]{background:#55efc4;color:#1a1a2e;}
+.hl-span[data-hl-color="pink"]{background:#fd79a8;color:#1a1a2e;}
+
+/* toolbar arrow */
+#hl-toolbar::after{
+  content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);
+  width:10px;height:10px;background:var(--navy);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">G.EDU</div>
+    <div class="login-subtitle">IELTS Academic Reading – <span>Reading Test 4</span></div>
+    <div class="login-warning">
+      <b>⚠ Lưu ý quan trọng:</b>
+      Khi đồng hồ còn 30 giây, hãy bấm nút <strong>Nộp bài</strong> để đảm bảo kết quả làm bài được lưu thành công về hệ thống.
+    </div>
+    <label class="login-label">Họ và tên đầy đủ</label>
+    <input class="login-input" id="inp-name" type="text" placeholder="Họ và tên học sinh" autocomplete="off">
+    <label class="login-label">Mã lớp (Class ID)</label>
+    <input class="login-input" id="inp-class" type="text" placeholder="Lớp học" autocomplete="off">
+    <button class="login-btn" id="start-btn" onclick="startTest()">🚀 Bắt đầu làm bài</button>
+  </div>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen">
+  <div class="test-header">
+    <div class="header-logo">G.EDU</div>
+    <div class="header-center">
+      <div class="timer-box" id="timer-box">60:00</div>
+    </div>
+    <div class="header-info">
+      <strong id="hdr-name">—</strong>
+      <span id="hdr-class">—</span>
+    </div>
+  </div>
+  <div class="review-banner" id="review-banner">
+    <span>📋 Chế độ xem lại — không thể chỉnh sửa</span>
+    <button class="back-result-btn" onclick="goToResult()">← Về kết quả</button>
+  </div>
+  <div class="passage-tabs">
+    <div class="ptab active" id="tab-p1" onclick="switchPassage(1)">Passage 1</div>
+    <div class="ptab" id="tab-p2" onclick="switchPassage(2)">Passage 2</div>
+    <div class="ptab" id="tab-p3" onclick="switchPassage(3)">Passage 3</div>
+  </div>
+  <div class="test-body">
+    <!-- Passage column -->
+    <div class="passage-col" id="passage-col">
+      <!-- rendered by JS -->
+    </div>
+    <!-- Questions column -->
+    <div style="display:flex;flex-direction:column;width:420px;flex-shrink:0;background:var(--white);overflow:hidden;min-height:0;">
+      <div class="progress-wrap">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+        <div class="progress-text" id="progress-text">0 / 40 câu đã trả lời</div>
+      </div>
+      <div class="questions-col" id="questions-col" style="flex:1;min-height:0;overflow-y:auto;">
+        <!-- rendered by JS -->
+      </div>
+      <div class="submit-wrap" id="submit-wrap">
+        <button class="submit-btn" id="submit-btn" onclick="showSubmitModal()">📤 Nộp bài</button>
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="flag-panel-btn" onclick="toggleFlagPanel()" title="Câu đã đánh dấu">🚩</div>
+      <div class="sidebar-sep"></div>
+      <!-- rendered by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result-screen">
+  <div class="result-card">
+    <div class="result-logo">G.EDU</div>
+    <div class="result-congrats">
+      <strong id="res-name">—</strong>
+      đã hoàn thành bài thi IELTS Academic Reading Test 4
+    </div>
+    <div class="result-scores">
+      <div class="score-box">
+        <div class="score-label">Số câu đúng</div>
+        <div class="score-value"><span id="res-correct">0</span><span style="font-size:1.4rem;color:var(--text-light)">/40</span></div>
+        <div class="score-sub">câu trả lời đúng</div>
+      </div>
+      <div class="score-box">
+        <div class="score-label">Band Score</div>
+        <div class="score-value" id="res-band">0.0</div>
+        <div class="score-sub">IELTS Academic</div>
+      </div>
+    </div>
+    <button class="review-btn" onclick="enterReviewMode()">👁 Xem lại bài làm</button>
+  </div>
+</div>
+
+<!-- Flag Panel -->
+<div id="flag-panel">
+  <div class="flag-panel-title">
+    🚩 Câu đã đánh dấu
+    <button class="flag-panel-close" onclick="toggleFlagPanel()">✕</button>
+  </div>
+  <div id="flag-list"></div>
+</div>
+
+<!-- Submit Modal -->
+<div class="modal-overlay" id="modal-submit">
+  <div class="modal-box">
+    <div class="modal-icon">📤</div>
+    <div class="modal-title">Xác nhận nộp bài</div>
+    <div class="modal-text">
+      Bạn đã trả lời <strong id="modal-answered">0</strong>/40 câu.<br>
+      Sau khi nộp, bạn <strong>không thể chỉnh sửa</strong> câu trả lời.
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn secondary" onclick="closeModal('modal-submit')">Quay lại</button>
+      <button class="modal-btn danger" onclick="submitTest()">✓ Nộp bài</button>
+    </div>
+  </div>
+</div>
+
+<!-- Auto submit modal -->
+<div class="modal-overlay" id="modal-timeout">
+  <div class="modal-box">
+    <div class="modal-icon">⏰</div>
+    <div class="modal-title">Hết giờ!</div>
+    <div class="modal-text">Thời gian làm bài đã kết thúc. Hệ thống đã tự động lưu bài làm của bạn.</div>
+    <div class="modal-btns">
+      <button class="modal-btn primary" onclick="closeModal('modal-timeout');showResult()">Xem kết quả</button>
+    </div>
+  </div>
+</div>
+
+<!-- Highlight Toolbar -->
+<div id="hl-toolbar">
+  <span class="hl-label">✏️</span>
+  <button class="hl-btn" data-color="yellow" title="Vàng" onclick="applyHighlight('yellow')"></button>
+  <button class="hl-btn" data-color="blue" title="Xanh dương" onclick="applyHighlight('blue')"></button>
+  <button class="hl-btn" data-color="green" title="Xanh lá" onclick="applyHighlight('green')"></button>
+  <button class="hl-btn" data-color="pink" title="Hồng" onclick="applyHighlight('pink')"></button>
+  <div class="hl-sep"></div>
+  <button class="hl-erase-btn" onclick="hideHlToolbar()">✕</button>
+</div>
+
+<script>
+
+// ===== ANSWER KEY (obfuscated) =====
+const _k = (()=>{
+  const raw = [
+    'FALSE','NG','NG','TRUE','NG','FALSE',
+    'waterproof cloth','waste strips','rigid','stabilise','steam engines','pneumatic tyre','mass production',
+    'VII','V','I','VI','III',
+    'C','E','B','B','D',
+    'sunset','dreams','thieves',
+    'IV','VIII','VI','VII','V','IX','II',
+    'C','B','D',
+    'barchans','shape','tone','minerals'
+  ];
+  return raw;
+})();
+
+// Band score table (Academic Reading)
+function getBand(correct){
+  if(correct>=39)return'9.0';if(correct>=37)return'8.5';if(correct>=35)return'8.0';
+  if(correct>=33)return'7.5';if(correct>=30)return'7.0';if(correct>=27)return'6.5';
+  if(correct>=23)return'6.0';if(correct>=19)return'5.5';if(correct>=15)return'5.0';
+  if(correct>=13)return'4.5';if(correct>=10)return'4.0';if(correct>=8)return'3.5';
+  if(correct>=6)return'3.0';if(correct>=4)return'2.5';return'2.0';
+}
+
+// State
+let studentName='',studentClass='',answers=new Array(40).fill(''),flags=new Array(40).fill(false);
+let timerInterval=null,timeLeft=60*60,submitted=false,reviewMode=false,sheetSent=false;
+const SCRIPT_URL='https://script.google.com/macros/s/AKfycbze-ULqfpnB5IcJxAvg2m7IfSqkoUY4JmoHnjvpuGvxodzmLbhHHlcqxfcnha2aahY/exec';
+const LS_KEY='gedu_rt3_state';
+
+// ===== LOGIN =====
+document.getElementById('inp-name').addEventListener('input',checkLogin);
+document.getElementById('inp-class').addEventListener('input',checkLogin);
+function checkLogin(){
+  const n=document.getElementById('inp-name').value.trim();
+  const c=document.getElementById('inp-class').value.trim();
+  const btn=document.getElementById('start-btn');
+  btn.classList.toggle('active',n.length>0&&c.length>0);
+}
+function startTest(){
+  studentName=document.getElementById('inp-name').value.trim();
+  studentClass=document.getElementById('inp-class').value.trim();
+  if(!studentName||!studentClass)return;
+  // Restore from localStorage
+  const saved=localStorage.getItem(LS_KEY);
+  if(saved){try{const s=JSON.parse(saved);if(s.name===studentName&&s.cls===studentClass){answers=s.answers||answers;flags=s.flags||flags;timeLeft=s.timeLeft||timeLeft;submitted=s.submitted||false;}}catch(e){}}
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('test-screen').style.display='flex';
+  document.getElementById('hdr-name').textContent=studentName;
+  document.getElementById('hdr-class').textContent='Lớp: '+studentClass;
+  buildSidebar();
+  switchPassage(1);
+  if(!submitted)startTimer();
+  else{showSubmittedState();}
+  updateProgress();
+  document.body.classList.add('allow-select');
+}
+
+// ===== TIMER =====
+function startTimer(){
+  updateTimerDisplay();
+  timerInterval=setInterval(()=>{
+    timeLeft--;
+    if(timeLeft<=0){timeLeft=0;updateTimerDisplay();clearInterval(timerInterval);autoSubmit();return;}
+    updateTimerDisplay();
+    saveLocal();
+  },1000);
+}
+function updateTimerDisplay(){
+  const m=Math.floor(timeLeft/60),s=timeLeft%60;
+  const el=document.getElementById('timer-box');
+  el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  el.classList.toggle('warning',timeLeft<=30&&timeLeft>0);
+  el.classList.toggle('done',submitted);
+  if(submitted){el.textContent='✓ Đã nộp';el.classList.remove('warning');}
+}
+function autoSubmit(){
+  if(submitted)return;
+  doSubmit();
+  document.getElementById('modal-timeout').classList.add('show');
+}
+
+// ===== PASSAGES =====
+const PASSAGES=[
+  {
+    title:'Rubber',
+    subtitle:'T and W Musgrove discuss the origins and early uses of rubber',
+    text:`<p>The plants that produce rubber are spread right across the globe, and grow in many different habitats. One might think it likely, therefore, that humankind has known about rubber for thousands of years. Yet, unlike other crops of economic importance, rubber led a relatively anonymous life until the last 150 years or so. The Indians of South America appear to be the first people to have understood the properties of rubber, and the Aztecs of what is now Mexico were the first to be recorded using the substance; a wall painting dating back to the sixth century depicts a scene of a tributary offering of crude rubber. With the arrival of Columbus in the Americas and the resulting Spanish influx, further evidence starts to appear concerning the Native American use of rubber. Antonio de Herrera y Tordesillas describes a ritual game played with a rubber ball at the court of the Aztec Emperor Montezuma II, and the Mayan and Toltec people are known to have taken part in similar activities. Rubber was also used to make raincoats, shoes, jars, torches and musical instruments, all of which must have been made from the indigenous Castilla elastica, as the Para plant now favoured for rubber cultivation does not grow in the Mexican region.</p>
+<p>The first description of latex (liquid rubber) extraction is made by Juan de Torquemada, who noted that if a receptacle was not at hand the Native Americans would place the latex on their bodies to allow it to solidify. However, no real interest in rubber was shown by any European until Charles de la Condamine, a French mathematician, published an account of his journey to South America in 1735. The journey was undertaken on behalf of the Paris Academy of Sciences to measure an arc of the meridian line on the equator, but the journey home was to turn out to be more significant than the true purpose of the trip. Condamine explored Brazil and Peru and discovered how the local people used one single piece of coagulated latex to make boots. The boots were impervious to water and, when smoked, looked like real leather. In 1747 the first description of the rubber tree and latex tapping was made by a military engineer and amateur botanist, François Fresneau, who was posted to French Guiana. The publications of Condamine and Fresneau created considerable excitement among French scientists, and an attempt was made to discover a solvent that could turn the crude rubber into a substance for commercial exploitation.</p>
+<p>In 1818 a British medical student named James Syme first used rubber to make waterproof cloth. Another early use of the substance was as an eraser of pencil marks, hence the name 'rubber'. This was complemented by balloons, rubber bands, braces, boots for the army and other ideas that met with varying degrees of success. In 1820 Thomas Hancock, an English manufacturer of rubber goods such as driving belts, industrial rollers and rubber hoses, invented a machine he called the 'pickle', which chewed up waste strips for re-use. It was discovered that the masticated rubber was more malleable, while maintaining much of its elasticity. In Scotland at the same time Charles Mackintosh had discovered a way of using rubber as waterproofing material, by a process he patented in 1823. Hancock and Mackintosh joined forces in 1834, and three years later Hancock invented a machine for spreading rubber onto material.</p>
+<p>Despite their beneficial qualities, such as waterproofing, rubber goods were still not particularly popular as they had some major flaws, including the fact that they dissolved malodorously. They also became pliant when warm and rigid when cold. Then in 1839 the American Charles Goodyear discovered that it was possible to stabilise rubber by mixing it with sulphur while exposing it to heat - a process he called vulcanisation - and the full versatility of this extraordinary substance became apparent.</p>
+<p>Rubber goods could now be manufactured which had all the beneficial qualities of the material, such as durability, elasticity and variability, but which were not sticky, soluble or governed by the vagaries of the weather. The economic potential of rubber was now clearly evident. It played an important role in the Industrial Revolution, being employed in the steam engines found in factories, mills, mines and railways. It made a triumphant entrance as a new and innovative material at the Great Exhibition of 1851, where shoes, airbeds, furniture and clothing made out of newly improved rubber were proudly displayed.</p>
+<p>One of the most important rubber inventions was made in 1888, when an Irishman called John Boyd Dunlop produced the first pneumatic tyre. Solid rubber tyres had been used for the previous 18 years, but Dunlop's new design, which he updated in 1890, immediately became popular. In 1895 Dunlop's tyres were first used in motor cars, and with the mass production of cars just over the horizon the rubber industry had never looked healthier. The import levels of rubber over the nineteenth century bear witness to its irrepressible rise. In 1830 Britain had imported just 211 kg of crude rubber. This had risen to 10,000kg in 1857, and by 1874 levels were just under six times as much again.</p>`
+  },
+  {
+    title:'The Myth of the Eight-hour Sleep',
+    subtitle:'',
+    text:`<p><strong>(14) ……</strong><br>We often worry about lying awake in the middle of the night – but it could be good for you Indications from both science and history suggest that the eight-hour sleep may not be a natural or inborn pattern for humans. In the early 1990s, psychiatrist Thomas Wehr conducted research which implies just that Wehr kept a group of people in a darkened room or 14 hours a day for a month. It took some time for their sleep to regulate, but by the fourth week the subjects had settled into a very distinct sleeping pattern. Firstly, they slept four hours, then woke for one or two hours before falling into a second four-hour sleep. Though sleep scientists were impressed by the implications of the study, the idea that we must sleep for eight consecutive hours persists amongst the general public.</p>
+<p><strong>(15) ……</strong><br>In 2001, historian Roger Ekirch of Virginia Tech University in the US published a paper drawn from 16 years of research, revealing historical evidence that humans used to sleep in two distinct periods of time each night. Ekirch's research found more than 500 references to a segmented sleeping pattern – in diaries, court recorders, medical books and literature, from the ancient Greeks to tribes in Nigeria. Much like Wehr's findings, these references describe a first sleep which began not long following sunset. Then there was a waking period of one or two hours and after that a second sleep. During the waking period, people could be quite active. They sometimes got up and moved around the house, although most people stayed in bed, and perhaps read or wrote if they had enough money for candles. In many historic accounts, Ekirch found that people used the time that they were awake between periods of sleep to think about and attempt to analyse their dreams. In his book, Evening's Empire, historian Craig Koslofsky suggested an explanation for this divided sleep pattern in Europe. 'Associations with night before the 17th century were not good,' he writes. He goes on to explain that the streets of cities and towns at night were often populated by thieves or worse. The streets at night consequently scared many people. Even the wealthy, who could afford to light their way, had better things to spend their money on. There was no prestige or social value with going out or staying up late at night.</p>
+<p><strong>(16) ……</strong><br>Ekirch found that references to the first and second sleep started to disappear during the late 17th century. The pattern began to alter first among the urban upper classes changing amongst the rest of Western society. By the 1920s, the idea of a first and second sleep had receded entirely from our social consciousness. Ekirch attributes the initial shift to improvements in street and home lighting. As the night became a time for all kinds of activity, the length of time people used for rest declined.</p>
+<p>In 1667, Paris became the first city in the world to light its streets, using wax candles in glass lamps. It was followed by another French city, Lille, in the same year and by Amsterdam in Holland two years later, where a much more efficient oil-powered lamp was developed. London didn't light its streets until 1584, but by the end of the 17th century, more than 50 of Europe's major towns and cities were lit at night. Coffee houses emerged as a fashionable phenomenon and many were open virtually around the clock. Going out at night became commonplace, and spending hours lying in bad was considered a waste of time. 'People were becoming increasingly time-conscious and sensitive to efficiency, certainly before the 19th century,' says Ekirch. 'But the Industrial Revolution intensified that attitude considerably.' Strong evidence of this shifting attitude is contained in a medical journal from 1829 which urged parents to force their children out of the pattern of first and second sleep.</p>
+<p><strong>(17) ……</strong><br>Today, most people seem to have adapted quite well to the eight-hour sleep, but Ekirch believes many sleeping problems may have roots in the human body's natural preference for divided sleep, as well as in difficulties caused by extended exposure to artificial light in the modern world. This could be the cause of a condition called sleep maintenance insomnia, where people wake during the night and have trouble getting back to sleep. The condition first appears in literature at the end of the 19th century, at the same time as accounts of interrupted sleep disappear.</p>
+<p><strong>(18) ……</strong><br>Sleep psychologist, Gregg Jacobs, says that the idea that we must sleep for an extended period of time could be changing. If it makes people who wake up in the night anxious, as this anxiety can itself discourage sleep and is likely to affect waking life too. Jacobs suggests that the waking period between sleeping, when people simply rested and relaxed, could have played an important part in the human capacity to regulate stress naturally. Russell Foster, a professor of circadian (body clock) neuroscience at Oxford University in the UK, shares this point of view. 'Over 30% of the medical problems that doctors are faced with stem directly or indirectly from sleep. But sleep has been ignored in medical training, and there are very few countries where sleep is studied,' Foster says. He feels this needs to change.</p>`
+  },
+  {
+    title:'Living Dunes',
+    subtitle:'Things don\'t come much stranger than heaps of sand that can move and sing of their own accord. Sally Palmer investigates',
+    text:`<p><strong>(27) ……</strong><br>Armies of giant sand dunes are advancing across the world's deserts, engulfing anything that crosses their path. They are tens of metres tall and hundreds of metres long. Fortunately, they aren't going very fast. Even the smallest, speediest dunes only travel about 100 metres over the course of a year, while the bigger ones, which weigh something in the order of 10,000 tonnes, barely move one metre in that time. However, their insidious creep can have serious consequences if there is an oil installation or a railway line in their path.</p>
+<p><strong>(28) ……</strong><br>About 47% of the world's land mass, including Antarctica, most of Australia and large areas of Africa, is classified as arid or semi-arid desert. Only around 20% of that is sand-covered, however, and over half of that is classified as linear' sand dunes. These form in a long curving wave, as a result of wind blowing strongly from several quarters, flipping them from side to side. Although linear dunes are static, sand blowing off them can cause problems for desert villages, burying crops and buildings.</p>
+<p><strong>(29) ……</strong><br>Moving dunes make up just a small percentage of the rest, but they are of the most interest to scientists. They are known as 'barchans': heavy, crescent-shaped sand piles with a ridged crest and two elongated arms, one curving away to either side. 'Barchan dunes only tend to form where you have one-directional winds on the edge of sandy deserts near coastal areas,' says Giles Wiggs, a geomorphologist at Oxford University, who has been studying the formation and movement of sand dunes for more than a decade.</p>
+<p><strong>(30) ……</strong><br>But even with strong winds, how can entire barchans move while retaining their form? That question was first answered in the mid-20th century by British explorer Ralph Alger Bagnold, and his answer hinges on the fact that dunes aren't solid, but granular. Bagnold figured out how barchan dunes are able to move grain by grain. Imagine a single grain of sand being blown up the back of a dune by the wind and deposited on the top. More grains follow the same pattern, until the accumulated weight of piled-up sand finally pushes the top down the dune face. The grain tumbles, then stops on the face until subsequent mini-avalanches bury it. Eventually, it reappears at the back of the dune, ready to repeat the process. As this happens to every grain of sand in the dune, the whole thing creeps in the direction of the prevailing wind.</p>
+<p><strong>(31) ……</strong><br>The relationship between the wind and barchan dunes is complex. As a dune grows, it modifies the speed and course of the wind, which in turn alters how that dune and its neighbours evolve. 'Interestingly, the dune can regulate its own shape, and maintain it as it moves,' says Dr Stéphane Douady, a physicist at Ecole Normale Supérieure (ENS) in France. 'Even when two dunes collide, they quickly take on their distinctive shapes again. It's like a living organism.'</p>
+<p><strong>(32) ……</strong><br>Douady and his colleagues have also been studying an even odder phenomenon than moving dunes: some barchans actually sing. Local legends attributed the sounds to dangerous spirits which were trying to trap unwary travellers. Douady is more pragmatic. 'It's a strong booming noise with a low frequency,' he explains, making a noise like a foghorn to demonstrate. 'It can last for a long time - up to several minutes. It's a very loud sound and you don't understand where it's coming from when you first hear it.' There are about 50 dunes distributed across 35 deserts round the world that are known to sing. Douady says the sound is caused by the way sand avalanches down the faces of particular dunes. Rather than tumbling randomly, the sand grains flow in synchrony and set each other vibrating like the membrane on a gigantic loudspeaker. The synchronisation causes the air to move in and out between the grains, creating a powerful sound wave.</p>
+<p><strong>(33) ……</strong><br>What really surprised the scientists, however, was that they were able to take samples of the singing sand back to France and replicate the sound at ENS, proving that it's the sand, not the dune shape, that causes the sound. Their studies show the grains are a uniform shape, well-rounded from years of striking each other, and that the variations in size affect the tone. Crucially, the grains are coated with a special veneer, which Douady calls 'desert glaze', made from a precise combination of minerals from surrounding rocks including iron, aluminium, manganese, silicon and calcium. The team found that after a month or so, the veneer wore off and the grains lost their 'voice'. 'We managed to reproduce the desert glaze and then the grains started to sing again,' says Douady. 'We tried putting the coating onto different grains, but they weren't round enough and it didn't work. But some American colleagues made some artificial grains and managed to make them sing, after covering them in desert glaze.' Douady has now made recordings of dunesong from all over the world which are to be made into a CD.</p>`
+  }
+];
+
+// ===== QUESTION DEFINITIONS =====
+const QUESTIONS=[
+  // Q1-6: T/F/NG
+  {id:0,type:'tfn',text:'Rubber plants grow only in certain regions of the world.',p:1},
+  {id:1,type:'tfn',text:'Rubber was extracted in Mexico as early as the sixth century.',p:1},
+  {id:2,type:'tfn',text:'Rubber from the Castilla elastica plant is of poorer quality than that from the Para plant.',p:1},
+  {id:3,type:'tfn',text:'A French mathematician inspired real interest in rubber amongst Europeans.',p:1},
+  {id:4,type:'tfn',text:'The process of vulcanisation was discovered by accident.',p:1},
+  {id:5,type:'tfn',text:'Imports of crude rubber into Britain fell during the nineteenth century.',p:1},
+  // Q7-13: Fill in
+  {id:6,type:'fill',text:'In 1818, (7) _________________ was produced using rubber.',p:1},
+  {id:7,type:'fill',text:'In 1820 a machine was invented for recycling (8) _________________ of rubber.',p:1},
+  {id:8,type:'fill',text:'Rubber products could turn either soft or (9) _________________ depending on temperature.',p:1},
+  {id:9,type:'fill',text:'In 1839 a new process to (10) _________________ rubber was discovered.',p:1},
+  {id:10,type:'fill',text:'Rubber was used in the creation of the (11) _________________ industry during the Industrial Revolution.',p:1},
+  {id:11,type:'fill',text:'Then in 1888 the (12) _________________ was developed.',p:1},
+  {id:12,type:'fill',text:'A few years later the (13) _________________ of the motor car began.',p:1},
+  // Q14-18: Heading match
+  {id:13,type:'heading',text:'Section (14)',p:2,options:['i','ii','iii','iv','v','vi','vii']},
+  {id:14,type:'heading',text:'Section (15)',p:2,options:['i','ii','iii','iv','v','vi','vii']},
+  {id:15,type:'heading',text:'Section (16)',p:2,options:['i','ii','iii','iv','v','vi','vii']},
+  {id:16,type:'heading',text:'Section (17)',p:2,options:['i','ii','iii','iv','v','vi','vii']},
+  {id:17,type:'heading',text:'Section (18)',p:2,options:['i','ii','iii','iv','v','vi','vii']},
+  // Q19-23: Matching academics
+  {id:18,type:'academic',text:'In certain historical periods, the threat of criminal danger led to segmented sleep.',p:2,options:['A','B','C','D','E']},
+  {id:19,type:'academic',text:'Physicians should learn more about treating people with sleeping difficulties.',p:2,options:['A','B','C','D','E']},
+  {id:20,type:'academic',text:'Historically, when people experienced interrupted sleep, they used the waking period at night for different activities.',p:2,options:['A','B','C','D','E']},
+  {id:21,type:'academic',text:'Technological changes in Europe made people more likely to sleep throughout the night.',p:2,options:['A','B','C','D','E']},
+  {id:22,type:'academic',text:'The belief that humans should have a long continuous sleep can be psychologically harmful.',p:2,options:['A','B','C','D','E']},
+  // Q24-26: Fill
+  {id:23,type:'fill',text:'People habitually went to bed early, soon after (24) _________.',p:2},
+  {id:24,type:'fill',text:'People used the time awake between sleeps to think about (25) _________.',p:2},
+  {id:25,type:'fill',text:'In 16th-century Europe, people feared (26) _________ on large unit city.',p:2},
+  // Q27-32: Paragraph headings P3
+  {id:26,type:'para-head',text:'Paragraph (27)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
+  {id:27,type:'para-head',text:'Paragraph (28)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
+  {id:28,type:'para-head',text:'Paragraph (29)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
+  {id:29,type:'para-head',text:'Paragraph (30)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
+  {id:30,type:'para-head',text:'Paragraph (31)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
+  {id:31,type:'para-head',text:'Paragraph (32)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
+  {id:32,type:'para-head',text:'Paragraph (33)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
+  // Q34-36: MCQ
+  {id:33,type:'mcq',text:'What are we told about linear dunes?',p:3,options:['A. They are formed by strong winds blowing from one direction.','B. They can move up to 100 metres in a twelve-month period.','C. They develop in a recognisable shape.','D. They make up about 20% of the world\'s deserts.']},
+  {id:34,type:'mcq',text:'Bagnold discovered that movement in barchans was caused by',p:3,options:['A. the long straight shape of the dunes.','B. the particular composition of the dunes.','C. the exceptionally heavy nature of the sand grains.','D. the unusual strength of the wind in certain seasons.']},
+  {id:35,type:'mcq',text:'Why does Dr Douady compare a barchan dune to a living organism?',p:3,options:['A. It starts small and then increases in size.','B. It has an effect on its immediate surroundings.','C. Its relations with desert organisms are quite developed.','D. Its outline stays the same even after a period of movement.']},
+  // Q37-40: Fill
+  {id:36,type:'fill',text:'Singing dunes, which belong to the type known as (37) _________________, produce a very loud sound.',p:3},
+  {id:37,type:'fill',text:'Researchers have worked out that individual grains have a similar (38) _________________.',p:3},
+  {id:38,type:'fill',text:'The differences in dimensions alter the (39) _________________ of the song.',p:3},
+  {id:39,type:'fill',text:'Each grain is covered with a mixture of different (40) _________________.',p:3}
+];
+
+const HEADINGS_P2=['i – Historical reasons why interrupted sleep became uncommon','ii – Brain structure involved in sleep patterns','iii – Potential health issues related to sleep','iv – Famous cases in literature of sleep','v – An analysis of old documents to discover deep patterns','vi – Biological and environmental factors preventing people from falling asleep again','vii – Scientific evidence that divided sleep is a natural phenomenon'];
+const HEADINGS_P3=['i – Moving rapidly across the desert','ii – Recreating the process in a laboratory','iii – Strange music created by human movement','iv – A potential threat to industry and communications','v – Dunes coming together and re-forming','vi – Needing a specific combination of conditions','vii – A continuous cycle','viii – The commonest type of dune','ix – Old superstitions demystified'];
+const ACADEMICS=['A. Thomas Wehr','B. Roger Ekirch','C. Craig Koslofsky','D. Gregg Jacobs','E. Russell Foster'];
+
+let currentPassage=1;
+
+function switchPassage(p){
+  currentPassage=p;
+  [1,2,3].forEach(n=>{
+    document.getElementById('tab-p'+n).classList.toggle('active',n===p);
+  });
+  renderPassage(p);
+  renderQuestions(p);
+}
+
+function renderPassage(p){
+  const col=document.getElementById('passage-col');
+  const d=PASSAGES[p-1];
+  col.innerHTML=`<div class="passage-title">${d.title}</div>${d.subtitle?`<div class="passage-subtitle">${d.subtitle}</div>`:''}<div class="passage-text">${d.text}</div>`;
+  col.scrollTop=0;
+}
+
+function renderQuestions(p){
+  const col=document.getElementById('questions-col');
+  col.innerHTML='';
+  const qs=QUESTIONS.filter(q=>q.p===p);
+
+  // Group by type-block for cleaner rendering
+  let html='';
+
+  if(p===1){
+    // TFN block
+    html+=`<div class="q-block"><div class="q-section-title">Questions 1–6</div>
+    <div class="q-instruction">Choose <strong>TRUE</strong> if the statement agrees with the text, <strong>FALSE</strong> if it contradicts, or <strong>NOT GIVEN</strong> if there is no information.</div>`;
+    QUESTIONS.filter(q=>q.p===1&&q.type==='tfn').forEach(q=>html+=buildTFN(q));
+    html+=`</div>`;
+    // Fill block
+    html+=`<div class="q-block"><div class="q-section-title">Questions 7–13 — Summary Completion</div>
+    <div class="q-instruction">Complete the summary below. Write <strong>NO MORE THAN THREE WORDS</strong> from the passage for each answer.</div>`;
+    QUESTIONS.filter(q=>q.p===1&&q.type==='fill').forEach(q=>html+=buildFill(q));
+    html+=`</div>`;
+  } else if(p===2){
+    html+=`<div class="q-block"><div class="q-section-title">Questions 14–18 — Matching Headings</div>
+    <div class="q-instruction">Reading Passage 2 has five sections. Choose the correct heading for each section from the list. Choose the correct number, <strong>i–vii</strong>.</div>`;
+    QUESTIONS.filter(q=>q.p===2&&q.type==='heading').forEach(q=>html+=buildSelect(q,HEADINGS_P2));
+    html+=`</div>`;
+    html+=`<div class="q-block"><div class="q-section-title">Questions 19–23 — Matching Academics</div>
+    <div class="q-instruction">Match each statement with the correct researcher, <strong>A–E</strong>. You may use any letter more than once.</div>
+    <div style="font-size:0.78rem;color:var(--text-light);margin-bottom:12px;line-height:1.8;">${ACADEMICS.map(a=>`<span style="margin-right:12px">${a}</span>`).join('')}</div>`;
+    QUESTIONS.filter(q=>q.p===2&&q.type==='academic').forEach(q=>html+=buildSelect(q,q.options));
+    html+=`</div>`;
+    html+=`<div class="q-block"><div class="q-section-title">Questions 24–26 — Summary Completion</div>
+    <div class="q-instruction">Write <strong>ONE WORD ONLY</strong> from the passage for each answer.</div>`;
+    QUESTIONS.filter(q=>q.p===2&&q.type==='fill').forEach(q=>html+=buildFill(q));
+    html+=`</div>`;
+  } else if(p===3){
+    html+=`<div class="q-block"><div class="q-section-title">Questions 27–33 — Matching Headings</div>
+    <div class="q-instruction">Reading Passage 3 has seven paragraphs. Choose the correct heading for each paragraph from the list. Choose the correct number, <strong>i–ix</strong>.</div>`;
+    QUESTIONS.filter(q=>q.p===3&&q.type==='para-head').forEach(q=>html+=buildSelect(q,HEADINGS_P3));
+    html+=`</div>`;
+    html+=`<div class="q-block"><div class="q-section-title">Questions 34–36 — Multiple Choice</div>
+    <div class="q-instruction">Choose the correct answer, <strong>A, B, C or D</strong>.</div>`;
+    QUESTIONS.filter(q=>q.p===3&&q.type==='mcq').forEach(q=>html+=buildMCQ(q));
+    html+=`</div>`;
+    html+=`<div class="q-block"><div class="q-section-title">Questions 37–40 — Summary Completion</div>
+    <div class="q-instruction">Write <strong>NO MORE THAN TWO WORDS</strong> from the passage for each answer.</div>`;
+    QUESTIONS.filter(q=>q.p===3&&q.type==='fill').forEach(q=>html+=buildFill(q));
+    html+=`</div>`;
+  }
+
+  col.innerHTML=html;
+  // Bind events
+  bindQuestionEvents();
+  applyAnswers();
+  if(reviewMode)applyReviewBadges();
+  col.scrollTop=0;
+}
+
+function buildTFN(q){
+  const qn=q.id+1;
+  return `<div class="q-row${answers[q.id]?' answered':''}${flags[q.id]?' flagged':''}" id="qrow-${q.id}">
+    <span class="q-num">${qn}</span>
+    <div class="q-content">
+      <div class="q-text">${q.text}</div>
+      <div class="tfn-group" id="tfn-${q.id}">
+        <button class="tfn-btn${answers[q.id]==='TRUE'?' sel-TRUE':''}" data-q="${q.id}" data-v="TRUE" ${submitted&&!reviewMode?'disabled':''}>TRUE</button>
+        <button class="tfn-btn${answers[q.id]==='FALSE'?' sel-FALSE':''}" data-q="${q.id}" data-v="FALSE" ${submitted&&!reviewMode?'disabled':''}>FALSE</button>
+        <button class="tfn-btn${answers[q.id]==='NOT_GIVEN'?' sel-NOT_GIVEN':''}" data-q="${q.id}" data-v="NOT_GIVEN" ${submitted&&!reviewMode?'disabled':''}>NOT GIVEN</button>
+      </div>
+      <div class="answer-badge" id="badge-${q.id}"></div>
+    </div>
+    <button class="flag-btn${flags[q.id]?' flagged':''}" data-q="${q.id}" onclick="toggleFlag(${q.id})" title="Đánh dấu">🚩</button>
+  </div>`;
+}
+
+function buildFill(q){
+  const qn=q.id+1;
+  return `<div class="q-row${answers[q.id]?' answered':''}${flags[q.id]?' flagged':''}" id="qrow-${q.id}">
+    <span class="q-num">${qn}</span>
+    <div class="q-content">
+      <div class="q-text">${q.text}</div>
+      <input class="q-input" type="text" id="qi-${q.id}" placeholder="Nhập đáp án..." autocomplete="off" data-q="${q.id}" value="${answers[q.id]||''}" ${submitted?'disabled':''}>
+      <div class="answer-badge" id="badge-${q.id}"></div>
+    </div>
+    <button class="flag-btn${flags[q.id]?' flagged':''}" data-q="${q.id}" onclick="toggleFlag(${q.id})" title="Đánh dấu">🚩</button>
+  </div>`;
+}
+
+function buildSelect(q,opts){
+  const qn=q.id+1;
+  const optsHtml=opts.map(o=>{
+    const val=o.split(' ')[0].replace(/[.–]/g,'');
+    return `<option value="${val}" ${answers[q.id]===val?'selected':''}>${o}</option>`;
+  }).join('');
+  return `<div class="q-row${answers[q.id]?' answered':''}${flags[q.id]?' flagged':''}" id="qrow-${q.id}">
+    <span class="q-num">${qn}</span>
+    <div class="q-content">
+      <div class="q-text">${q.text}</div>
+      <select class="q-input" id="qi-${q.id}" data-q="${q.id}" ${submitted?'disabled':''}>
+        <option value="">-- Chọn --</option>${optsHtml}
+      </select>
+      <div class="answer-badge" id="badge-${q.id}"></div>
+    </div>
+    <button class="flag-btn${flags[q.id]?' flagged':''}" data-q="${q.id}" onclick="toggleFlag(${q.id})" title="Đánh dấu">🚩</button>
+  </div>`;
+}
+
+function buildMCQ(q){
+  const qn=q.id+1;
+  const optsHtml=q.options.map((o,i)=>{
+    const val=o.charAt(0);
+    return `<div class="q-option${answers[q.id]===val?' selected-opt':''}">
+      <input type="radio" name="mcq-${q.id}" id="mcq-${q.id}-${i}" value="${val}" ${answers[q.id]===val?'checked':''} ${submitted?'disabled':''}>
+      <label for="mcq-${q.id}-${i}">${o}</label>
+    </div>`;
+  }).join('');
+  return `<div class="q-row${answers[q.id]?' answered':''}${flags[q.id]?' flagged':''}" id="qrow-${q.id}">
+    <span class="q-num">${qn}</span>
+    <div class="q-content">
+      <div class="q-text">${q.text}</div>
+      <div class="q-options" id="qi-${q.id}">${optsHtml}</div>
+      <div class="answer-badge" id="badge-${q.id}"></div>
+    </div>
+    <button class="flag-btn${flags[q.id]?' flagged':''}" data-q="${q.id}" onclick="toggleFlag(${q.id})" title="Đánh dấu">🚩</button>
+  </div>`;
+}
+
+function bindQuestionEvents(){
+  // TFN buttons
+  document.querySelectorAll('.tfn-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      if(submitted)return;
+      const qi=parseInt(btn.dataset.q),v=btn.dataset.v;
+      answers[qi]=v;
+      // re-render just the tfn group
+      const grp=document.getElementById('tfn-'+qi);
+      grp.querySelectorAll('.tfn-btn').forEach(b=>{
+        b.className='tfn-btn'+(b.dataset.v===v?' sel-'+v:'');
+      });
+      updateRow(qi);
+    });
+  });
+  // Fill inputs
+  document.querySelectorAll('input.q-input[data-q]').forEach(inp=>{
+    inp.addEventListener('input',()=>{
+      const qi=parseInt(inp.dataset.q);
+      answers[qi]=inp.value.trim();
+      updateRow(qi);
+    });
+  });
+  // Select
+  document.querySelectorAll('select.q-input[data-q]').forEach(sel=>{
+    sel.addEventListener('change',()=>{
+      const qi=parseInt(sel.dataset.q);
+      answers[qi]=sel.value;
+      updateRow(qi);
+    });
+  });
+  // MCQ radio
+  document.querySelectorAll('input[type=radio]').forEach(r=>{
+    r.addEventListener('change',()=>{
+      if(submitted)return;
+      const qi=parseInt(r.name.replace('mcq-',''));
+      answers[qi]=r.value;
+      updateRow(qi);
+      // update selected-opt styling
+      const container=document.getElementById('qi-'+qi);
+      container.querySelectorAll('.q-option').forEach(opt=>{
+        const radio=opt.querySelector('input[type=radio]');
+        opt.classList.toggle('selected-opt',radio.checked);
+      });
+    });
+  });
+}
+
+function applyAnswers(){
+  // already baked into HTML from buildXXX functions
+}
+
+function updateRow(qi){
+  const row=document.getElementById('qrow-'+qi);
+  if(!row)return;
+  row.classList.toggle('answered',!!answers[qi]);
+  row.classList.toggle('flagged',flags[qi]);
+  updateSidebarQ(qi);
+  updateProgress();
+  saveLocal();
+}
+
+function toggleFlag(qi){
+  if(reviewMode)return;
+  flags[qi]=!flags[qi];
+  const row=document.getElementById('qrow-'+qi);
+  if(row){
+    row.classList.toggle('flagged',flags[qi]);
+    const fb=row.querySelector('.flag-btn');
+    if(fb)fb.classList.toggle('flagged',flags[qi]);
+  }
+  updateSidebarQ(qi);
+  saveLocal();
+}
+
+// ===== SIDEBAR =====
+function buildSidebar(){
+  const sb=document.getElementById('sidebar');
+  const header=sb.querySelector('.flag-panel-btn');
+  // Keep flag btn, remove rest
+  while(sb.children.length>2)sb.removeChild(sb.lastChild);
+  
+  const groups=[[0,12],[13,25],[26,39]];
+  groups.forEach((g,gi)=>{
+    if(gi>0){const sep=document.createElement('div');sep.className='sidebar-sep';sb.appendChild(sep);}
+    for(let i=g[0];i<=g[1];i++){
+      const btn=document.createElement('button');
+      btn.className='sidebar-q';
+      btn.id='sq-'+i;
+      btn.textContent=i+1;
+      btn.title='Câu '+(i+1);
+      btn.onclick=()=>jumpToQ(i);
+      updateSidebarQEl(btn,i);
+      sb.appendChild(btn);
+    }
+  });
+}
+
+function updateSidebarQ(qi){
+  const btn=document.getElementById('sq-'+qi);
+  if(btn)updateSidebarQEl(btn,qi);
+}
+function updateSidebarQEl(btn,qi){
+  btn.className='sidebar-q';
+  if(answers[qi])btn.classList.add('ans');
+  if(flags[qi])btn.classList.add('flag');
+}
+
+function jumpToQ(qi){
+  const q=QUESTIONS[qi];
+  if(q.p!==currentPassage)switchPassage(q.p);
+  setTimeout(()=>{
+    const row=document.getElementById('qrow-'+qi);
+    if(row)row.scrollIntoView({behavior:'smooth',block:'center'});
+  },50);
+}
+
+// ===== PROGRESS =====
+function updateProgress(){
+  const total=answers.filter(a=>a&&a.trim()).length;
+  document.getElementById('progress-fill').style.width=(total/40*100)+'%';
+  document.getElementById('progress-text').textContent=`${total} / 40 câu đã trả lời`;
+  // also update all sidebar
+  for(let i=0;i<40;i++)updateSidebarQ(i);
+}
+
+// ===== FLAG PANEL =====
+function toggleFlagPanel(){
+  const panel=document.getElementById('flag-panel');
+  panel.classList.toggle('show');
+  if(panel.classList.contains('show'))renderFlagPanel();
+}
+function renderFlagPanel(){
+  const list=document.getElementById('flag-list');
+  const flagged=flags.map((f,i)=>f?i:-1).filter(i=>i>=0);
+  if(!flagged.length){list.innerHTML='<div class="flag-none">Chưa đánh dấu câu nào</div>';return;}
+  list.innerHTML=flagged.map(qi=>`<div class="flag-item" onclick="jumpToQ(${qi});toggleFlagPanel()">
+    <span class="flag-item-q">Q${qi+1}</span>
+    <span>${QUESTIONS[qi].text.substring(0,60)}…</span>
+  </div>`).join('');
+}
+
+// ===== SUBMIT =====
+function showSubmitModal(){
+  if(submitted)return;
+  const total=answers.filter(a=>a&&a.trim()).length;
+  document.getElementById('modal-answered').textContent=total;
+  document.getElementById('modal-submit').classList.add('show');
+}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+
+function submitTest(){
+  closeModal('modal-submit');
+  doSubmit();
+  showResult();
+}
+
+function doSubmit(){
+  if(submitted)return;
+  submitted=true;
+  clearInterval(timerInterval);
+  // Score
+  const correct=calcScore();
+  const band=getBand(correct);
+  // Send to sheet
+  sendToSheet(correct,band);
+  saveLocal();
+  showSubmittedState();
+}
+
+function showSubmittedState(){
+  const btn=document.getElementById('submit-btn');
+  btn.textContent='✓ Đã nộp bài';
+  btn.classList.add('submitted');
+  const timerEl=document.getElementById('timer-box');
+  timerEl.textContent='✓ Đã nộp';
+  timerEl.classList.remove('warning');
+  timerEl.classList.add('done');
+  // disable all inputs
+  document.querySelectorAll('.q-input,.tfn-btn,input[type=radio]').forEach(el=>el.disabled=true);
+}
+
+function calcScore(){
+  let c=0;
+  _k.forEach((key,i)=>{
+    const ans=(answers[i]||'').trim().toLowerCase();
+    if(!ans)return;
+    const keys=key.split('/').map(k=>k.trim().toLowerCase());
+    if(keys.includes(ans))c++;
+  });
+  return c;
+}
+
+function sendToSheet(correct,band){
+  if(sheetSent)return;
+  sheetSent=true;
+
+  // Pack answers as JSON object {"1":"answer","2":"answer",...}
+  const answersObj={};
+  answers.forEach((a,i)=>answersObj[String(i+1)]=a||'');
+  const answersStr=JSON.stringify(answersObj);
+
+  const payload={
+    timestamp:new Date().toISOString(),
+    test_name:'reading_test4',
+    name:studentName,
+    class:studentClass,
+    totalScore:correct,
+    bandScore:band,
+    answers:answersStr
+  };
+  // Also send individual q1..q40
+  answers.forEach((a,i)=>payload['q'+(i+1)]=a||'');
+
+  // Try fetch POST first (Apps Script must have doPost)
+  fetch(SCRIPT_URL,{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).catch(()=>{});
+
+  // Also fire GET as fallback (works if doGet handles it)
+  const params=new URLSearchParams({
+    timestamp:payload.timestamp,
+    test_name:payload.test_name,
+    name:payload.name,
+    class:payload.class,
+    totalScore:correct,
+    bandScore:band,
+    answers:answersStr
+  });
+  answers.forEach((a,i)=>params.append('q'+(i+1),a||''));
+  new Image().src=SCRIPT_URL+'?'+params.toString();
+}
+
+function showResult(){
+  document.getElementById('test-screen').style.display='none';
+  const rs=document.getElementById('result-screen');
+  rs.style.display='flex';
+  const correct=calcScore();
+  const band=getBand(correct);
+  document.getElementById('res-name').textContent=studentName;
+  document.getElementById('res-correct').textContent=correct;
+  document.getElementById('res-band').textContent=band;
+}
+
+function goToResult(){
+  reviewMode=false;
+  document.getElementById('test-screen').style.display='none';
+  showResult();
+}
+
+// ===== REVIEW MODE =====
+function enterReviewMode(){
+  reviewMode=true;
+  document.getElementById('result-screen').style.display='none';
+  const ts=document.getElementById('test-screen');
+  ts.style.display='flex';
+  document.getElementById('review-banner').style.display='block';
+  document.getElementById('submit-wrap').style.display='none';
+  switchPassage(1);
+}
+
+function applyReviewBadges(){
+  QUESTIONS.filter(q=>q.p===currentPassage).forEach(q=>{
+    const badge=document.getElementById('badge-'+q.id);
+    if(!badge)return;
+    const ans=(answers[q.id]||'').trim();
+    if(!ans){badge.className='answer-badge blank';badge.textContent='— Bỏ trống';return;}
+    const keys=_k[q.id].split('/').map(k=>k.trim().toLowerCase());
+    const isCorrect=keys.includes(ans.toLowerCase());
+    badge.className='answer-badge '+(isCorrect?'correct':'wrong');
+    badge.textContent=(isCorrect?'✓ ':'✗ ')+ans;
+  });
+}
+
+// ===== LOCAL STORAGE =====
+function saveLocal(){
+  try{
+    localStorage.setItem(LS_KEY,JSON.stringify({name:studentName,cls:studentClass,answers,flags,timeLeft,submitted}));
+  }catch(e){}
+}
+
+// ===== DISABLE RIGHT CLICK (exclude form elements) =====
+document.addEventListener('contextmenu',e=>{
+  const tag=e.target.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+  e.preventDefault();
+});
+
+// Login input enter key
+document.getElementById('inp-class').addEventListener('keydown',e=>{if(e.key==='Enter')startTest();});
+
+// ===== HIGHLIGHT SYSTEM =====
+const HL_LS_KEY='gedu_rt3_highlights';
+// highlights: [{id, passageIdx, color, text, startOffset, ...}] — stored as serialized ranges
+// We use a simpler approach: store by unique span IDs with their innerHTML context
+let hlData={};  // {spanId: color}
+let _hlSelection=null; // saved Selection range
+let _hlToolbarVisible=false;
+
+function saveHighlights(){
+  try{
+    // Collect all .hl-span in DOM
+    const result={};
+    document.querySelectorAll('.hl-span').forEach(s=>{
+      result[s.dataset.hlId]={color:s.dataset.hlColor,passage:s.dataset.hlPassage};
+    });
+    localStorage.setItem(HL_LS_KEY,JSON.stringify(result));
+  }catch(e){}
+}
+
+function loadHighlights(){
+  try{
+    const saved=localStorage.getItem(HL_LS_KEY);
+    if(saved)hlData=JSON.parse(saved);
+  }catch(e){hlData={};}
+}
+
+// Show toolbar near selection
+function showHlToolbar(x,y){
+  const tb=document.getElementById('hl-toolbar');
+  tb.classList.add('show');
+  _hlToolbarVisible=true;
+  // Position above cursor
+  const tbW=tb.offsetWidth||160;
+  const tbH=tb.offsetHeight||40;
+  let left=x-tbW/2;
+  let top=y-tbH-14;
+  // Clamp
+  left=Math.max(8,Math.min(left,window.innerWidth-tbW-8));
+  top=Math.max(8,top);
+  tb.style.left=left+'px';
+  tb.style.top=top+'px';
+}
+
+function hideHlToolbar(){
+  document.getElementById('hl-toolbar').classList.remove('show');
+  _hlToolbarVisible=false;
+  _hlSelection=null;
+  window.getSelection().removeAllRanges();
+}
+
+// Listen for text selection inside passage-col
+document.addEventListener('mouseup',e=>{
+  // Ignore if target is a form element
+  const tag=e.target.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||tag==='BUTTON'||tag==='LABEL')return;
+
+  // If click is on toolbar itself, don't hide
+  const tb=document.getElementById('hl-toolbar');
+  if(tb.contains(e.target))return;
+
+  // Check if click is on existing highlight span → remove
+  const span=e.target.closest('.hl-span');
+  if(span&&!_hlToolbarVisible){
+    removeHighlight(span);
+    return;
+  }
+
+  const passageCol=document.getElementById('passage-col');
+  const questionsCol=document.getElementById('questions-col');
+  if(!passageCol)return;
+
+  const sel=window.getSelection();
+  if(!sel||sel.isCollapsed||sel.rangeCount===0){
+    if(!tb.contains(e.target))hideHlToolbar();
+    return;
+  }
+
+  const range=sel.getRangeAt(0);
+  const selectedText=sel.toString().trim();
+  if(!selectedText){hideHlToolbar();return;}
+
+  // Check selection is inside passage-col OR questions-col
+  const container=range.commonAncestorContainer;
+  const el=container instanceof Element?container:container.parentElement;
+  const inPassage=passageCol.contains(el);
+  const inQuestions=questionsCol&&questionsCol.contains(el);
+  if(!inPassage&&!inQuestions){hideHlToolbar();return;}
+
+  // Save range for later application
+  _hlSelection=range.cloneRange();
+
+  // Position toolbar above selection
+  const rect=range.getBoundingClientRect();
+  showHlToolbar(rect.left+rect.width/2, rect.top+window.scrollY);
+});
+
+// Hide toolbar on scroll or ESC
+document.addEventListener('keydown',e=>{if(e.key==='Escape')hideHlToolbar();});
+document.addEventListener('scroll',()=>hideHlToolbar(),true);
+
+function applyHighlight(color){
+  if(!_hlSelection)return;
+  const range=_hlSelection;
+
+  try{
+    // Use TreeWalker to handle multi-node selections safely
+    const frag=range.cloneContents();
+    const textNodes=[];
+    const walker=document.createTreeWalker(frag,NodeFilter.SHOW_TEXT);
+    let node;
+    while(node=walker.nextNode())textNodes.push(node);
+    if(!textNodes.length){hideHlToolbar();return;}
+
+    // Apply to actual DOM via surroundContents if possible, else manual
+    wrapRangeWithHighlight(range,color);
+    saveHighlights();
+  }catch(e){
+    console.warn('Highlight error:',e);
+  }
+  hideHlToolbar();
+}
+
+function wrapRangeWithHighlight(range,color){
+  const spanId='hl-'+(Date.now())+'-'+Math.random().toString(36).slice(2,7);
+
+  // Walk all Text nodes that overlap the range and wrap each individually
+  // This avoids surroundContents() which breaks when range crosses element boundaries
+  const startNode=range.startContainer;
+  const endNode=range.endContainer;
+  const passageCol=document.getElementById('passage-col');
+
+  // Collect all text nodes within the range
+  const textNodes=[];
+  const treeWalker=document.createTreeWalker(
+    range.commonAncestorContainer.nodeType===3
+      ? range.commonAncestorContainer.parentNode
+      : range.commonAncestorContainer,
+    NodeFilter.SHOW_TEXT,
+    null
+  );
+
+  let node;
+  while(node=treeWalker.nextNode()){
+    if(range.intersectsNode(node)){
+      textNodes.push(node);
+    }
+  }
+
+  if(!textNodes.length)return;
+
+  textNodes.forEach(tn=>{
+    let start=0,end=tn.textContent.length;
+    if(tn===startNode)start=range.startOffset;
+    if(tn===endNode)end=range.endOffset;
+    if(start>=end)return;
+
+    // Split the text node: [before][selected][after]
+    // Work backwards to preserve offsets
+    if(end<tn.textContent.length)tn.splitText(end);
+    const selectedNode=start>0?tn.splitText(start):tn;
+
+    const sp=document.createElement('span');
+    sp.className='hl-span';
+    sp.dataset.hlId=spanId;
+    sp.dataset.hlColor=color;
+    sp.dataset.hlPassage=String(currentPassage);
+    selectedNode.parentNode.insertBefore(sp,selectedNode);
+    sp.appendChild(selectedNode);
+    sp.addEventListener('click',function(e){
+      e.stopPropagation();
+      if(!_hlToolbarVisible)removeHighlight(this);
+    });
+  });
+}
+
+function removeHighlight(span){
+  // Unwrap: replace span with its text content
+  const parent=span.parentNode;
+  if(!parent)return;
+  while(span.firstChild)parent.insertBefore(span.firstChild,span);
+  parent.removeChild(span);
+  parent.normalize();
+  saveHighlights();
+}
+
+// Re-bind click events on existing hl-spans after passage re-render
+// (highlights don't persist across tab switches in DOM — that's expected;
+//  they persist in localStorage but full DOM restoration is complex;
+//  we keep it session-based within a tab stay)
+function bindExistingHighlightClicks(){
+  document.querySelectorAll('.hl-span').forEach(sp=>{
+    sp.addEventListener('click',function(e){
+      e.stopPropagation();
+      if(!_hlToolbarVisible)removeHighlight(this);
+    });
+  });
+}
+
+// Init
+loadHighlights();
+</script>
+</body>
+</html>
