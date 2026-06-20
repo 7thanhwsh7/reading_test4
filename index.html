@@ -2,1198 +2,1948 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>G.EDU – IELTS Academic Reading Test 4</title>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>G.EDU — IELTS Reading Test 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy: #1a1a2e;
-  --navy-mid: #16213e;
-  --navy-light: #0f3460;
-  --gold: #c9a84c;
-  --gold-light: #e2c97e;
-  --gold-dim: rgba(201,168,76,0.15);
-  --cream: #f8f5ef;
-  --cream-dark: #ede8df;
-  --white: #ffffff;
-  --green: #2d9e6b;
-  --red: #d94f4f;
-  --orange: #e07b39;
-  --gray: #8a8a9a;
-  --text: #1a1a2e;
-  --text-light: #5a5a7a;
-  --border: rgba(201,168,76,0.2);
-  --shadow: 0 4px 24px rgba(26,26,46,0.1);
+/* ============================================================
+   G.EDU — IELTS READING TEST — UX/UI TEMPLATE
+   ------------------------------------------------------------
+   Cách dùng: phần nội dung đề (passages, questions, đáp án) do
+   AI Studio xử lý và chèn vào các vùng [PLACEHOLDER]. File này
+   chịu trách nhiệm toàn bộ khung UX/UI + logic vận hành.
+   ============================================================ */
+
+:root{
+  --navy: #1a1208;
+  --navy-deep: #0f0a05;
+  --gold: #D4AF37;
+  --gold-soft: #e8cf7a;
+  --cream: #fdfcfb;
+  --ink: #2d3436;
+  --ink-soft: #6b6560;
+  --line: #e8e2d8;
+  --flag: #e17055;
+  --danger: #c0392b;
+  --success: #2e7d4f;
+
+  --hl-yellow: #fff176;
+  --hl-green: #a5d6a7;
+  --hl-blue: #90caf9;
+  --hl-pink: #f48fb1;
+
+  --sidebar-w: 280px;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Be Vietnam Pro', sans-serif;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Be Vietnam Pro',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;}
-input,textarea,select{-webkit-user-select:text;user-select:text;cursor:text;pointer-events:all;}
-.passage-text,.questions-col{-webkit-user-select:text;user-select:text;}
-body.allow-select{-webkit-user-select:text;user-select:text;}
 
-/* ===== LOGIN ===== */
-#login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:linear-gradient(145deg,#f8f5ef 0%,#ede8df 100%)}
-.login-card{background:var(--white);border-radius:20px;padding:48px 40px;width:100%;max-width:460px;box-shadow:0 8px 48px rgba(26,26,46,0.12);border:1px solid var(--border)}
-.login-logo{text-align:center;margin-bottom:8px;font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--gold);letter-spacing:1px}
-.login-subtitle{text-align:center;font-size:0.78rem;color:var(--navy);font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
-.login-subtitle span{color:var(--green);font-weight:700}
-.login-warning{background:#fff4f4;border:1.5px solid #f0a0a0;border-radius:10px;padding:14px 16px;margin-bottom:28px;font-size:0.83rem;line-height:1.6;color:#c0392b}
-.login-warning b{display:block;margin-bottom:4px;font-size:0.85rem}
-.login-label{display:block;font-size:0.78rem;font-weight:600;color:var(--navy);margin-bottom:6px;letter-spacing:0.5px;text-transform:uppercase}
-.login-input{width:100%;padding:13px 16px;border:1.5px solid var(--cream-dark);border-radius:10px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.95rem;color:var(--navy);background:var(--cream);transition:all .2s;outline:none;margin-bottom:20px}
-.login-input:focus{border-color:var(--gold);background:var(--white);box-shadow:0 0 0 3px var(--gold-dim)}
-.login-btn{width:100%;padding:15px;background:var(--gold);border:none;border-radius:12px;font-family:'Be Vietnam Pro',sans-serif;font-size:1rem;font-weight:700;color:var(--navy);cursor:pointer;transition:all .2s;letter-spacing:0.5px;opacity:0.5;pointer-events:none}
-.login-btn.active{opacity:1;pointer-events:all}
-.login-btn.active:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,168,76,0.4)}
-
-/* ===== MAIN TEST ===== */
-#test-screen{display:none;flex-direction:column;height:100vh;overflow:hidden}
-.test-header{background:var(--navy);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:100;border-bottom:2px solid var(--gold)}
-.header-logo{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.6rem;letter-spacing:1px}
-.header-center{display:flex;align-items:center;gap:16px}
-.header-info{text-align:right;font-size:0.78rem;color:rgba(255,255,255,0.7);line-height:1.5}
-.header-info strong{color:var(--white);font-size:0.85rem;display:block}
-.timer-box{background:var(--gold);color:var(--navy);font-family:'DM Mono',monospace;font-size:1.1rem;font-weight:700;padding:7px 16px;border-radius:8px;letter-spacing:2px;min-width:90px;text-align:center}
-.timer-box.warning{background:#e74c3c;color:#fff;animation:blink .7s infinite}
-.timer-box.done{background:#2d9e6b;color:#fff}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.6}}
-
-/* tabs */
-.passage-tabs{background:var(--navy-mid);display:flex;align-items:center;padding:0 24px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}
-.ptab{padding:10px 20px;color:rgba(255,255,255,0.5);font-size:0.82rem;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;letter-spacing:0.5px}
-.ptab.active{color:var(--gold);border-bottom-color:var(--gold)}
-.ptab:hover:not(.active){color:rgba(255,255,255,0.8)}
-
-/* main body */
-.test-body{display:flex;flex:1;overflow:hidden}
-.passage-col{flex:1;overflow-y:auto;padding:28px 32px;background:var(--cream);border-right:1px solid var(--cream-dark)}
-.questions-col{overflow-y:auto;padding:24px 20px;background:var(--white);flex-shrink:1;min-height:0;}
-
-/* passage */
-.passage-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--navy);margin-bottom:4px}
-.passage-subtitle{font-size:0.82rem;color:var(--text-light);font-style:italic;margin-bottom:20px}
-.passage-text{font-size:0.93rem;line-height:1.9;color:var(--text)}
-.passage-text p{margin-bottom:16px}
-.passage-text .para-label{font-weight:700;color:var(--navy);margin-right:6px}
-
-/* questions */
-.q-section-title{font-size:0.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.q-instruction{font-size:0.82rem;color:var(--text-light);margin-bottom:16px;line-height:1.6;background:var(--cream);padding:10px 14px;border-radius:8px;border-left:3px solid var(--gold)}
-.q-instruction strong{color:var(--navy)}
-.q-block{margin-bottom:24px}
-.q-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:12px;padding:10px 12px;border-radius:10px;border:1.5px solid transparent;background:var(--cream);transition:all .2s;position:relative}
-.q-row:hover{border-color:var(--border)}
-.q-row.answered{border-color:rgba(45,158,107,0.2)}
-.q-row.flagged{background:#fff8ec;border-color:rgba(224,123,57,0.3)}
-.q-row.answered.flagged{background:#fff8f0;border-color:rgba(224,123,57,0.4)}
-.q-num{font-family:'DM Mono',monospace;font-size:0.78rem;font-weight:500;color:var(--gray);min-width:22px;padding-top:2px}
-.q-content{flex:1}
-.q-text{font-size:0.85rem;color:var(--text);margin-bottom:8px;line-height:1.5}
-.q-input{width:100%;padding:8px 12px;border:1.5px solid var(--cream-dark);border-radius:8px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.88rem;color:var(--navy);background:var(--white);outline:none;transition:all .2s}
-.q-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
-.q-input:disabled{background:var(--cream);color:var(--text-light);cursor:not-allowed}
-.q-options{display:flex;flex-direction:column;gap:6px}
-.q-option{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;transition:background .15s;font-size:0.85rem}
-.q-option:hover{background:var(--cream-dark)}
-.q-option input[type=radio]{accent-color:var(--gold);width:14px;height:14px;cursor:pointer}
-.q-option input[type=radio]:disabled{cursor:not-allowed}
-.q-option label{cursor:pointer;line-height:1.4}
-.q-option.selected-opt{background:var(--gold-dim);border-radius:7px}
-
-/* TFN, YNNG */
-.tfn-group{display:flex;gap:6px;flex-wrap:wrap}
-.tfn-btn{padding:5px 12px;border:1.5px solid var(--cream-dark);border-radius:20px;font-size:0.78rem;font-weight:600;cursor:pointer;background:var(--white);color:var(--text-light);transition:all .2s;letter-spacing:0.3px}
-.tfn-btn:hover{border-color:var(--gold);color:var(--navy)}
-.tfn-btn.sel-TRUE,.tfn-btn.sel-YES,.tfn-btn.sel-FALSE,.tfn-btn.sel-NO,.tfn-btn.sel-NOT_GIVEN{background:var(--navy);border-color:var(--navy);color:var(--white)}
-.tfn-btn:disabled{cursor:not-allowed;opacity:0.7}
-
-/* flag btn */
-.flag-btn{background:none;border:none;cursor:pointer;font-size:0.9rem;padding:2px 4px;border-radius:4px;opacity:0.5;transition:all .15s;flex-shrink:0}
-.flag-btn:hover{opacity:1;transform:scale(1.2)}
-.flag-btn.flagged{opacity:1;filter:drop-shadow(0 0 3px orange)}
-
-/* answer badge (review) */
-.answer-badge{display:none;margin-top:6px;padding:4px 10px;border-radius:6px;font-size:0.78rem;font-weight:600;font-family:'DM Mono',monospace}
-.answer-badge.correct{display:inline-block;background:#e8f5ee;color:var(--green);border:1px solid rgba(45,158,107,0.3)}
-.answer-badge.wrong{display:inline-block;background:#fdf0f0;color:var(--red);border:1px solid rgba(217,79,79,0.3)}
-.answer-badge.blank{display:inline-block;background:#f5f5f5;color:var(--gray);border:1px solid var(--cream-dark)}
-
-/* sidebar */
-.sidebar{width:52px;background:var(--navy);display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:4px;overflow-y:auto;flex-shrink:0}
-.sidebar-q{width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.4);font-family:'DM Mono',monospace;font-size:0.68rem;font-weight:500;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;position:relative;border:none}
-.sidebar-q:hover{background:rgba(201,168,76,0.2);color:var(--gold)}
-.sidebar-q.ans{background:rgba(201,168,76,0.25);color:var(--gold)}
-.sidebar-q.flag{background:rgba(224,123,57,0.3);color:var(--orange)}
-.sidebar-q.ans.flag{background:rgba(201,168,76,0.25);color:var(--gold)}
-.sidebar-q.ans.flag::after{content:'';position:absolute;top:3px;right:3px;width:5px;height:5px;background:var(--orange);border-radius:50%}
-.sidebar-sep{width:28px;height:1px;background:rgba(255,255,255,0.1);margin:4px 0}
-.flag-panel-btn{width:32px;height:32px;border-radius:6px;background:rgba(224,123,57,0.2);border:none;color:var(--orange);font-size:0.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;margin-top:4px}
-.flag-panel-btn:hover{background:rgba(224,123,57,0.4)}
-
-/* submit btn */
-.submit-wrap{padding:16px 20px;border-top:1px solid var(--cream-dark);background:var(--white);flex-shrink:0}
-.submit-btn{width:100%;padding:13px;background:var(--navy);color:var(--white);border:none;border-radius:10px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.92rem;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:0.3px}
-.submit-btn:hover{background:var(--navy-light);transform:translateY(-1px)}
-.submit-btn.submitted{background:var(--green);cursor:default;transform:none}
-
-/* progress */
-.progress-wrap{padding:10px 20px 4px;background:var(--white)}
-.progress-bar{height:4px;background:var(--cream-dark);border-radius:4px;overflow:hidden;margin-bottom:6px}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:4px;transition:width .3s}
-.progress-text{font-size:0.72rem;color:var(--text-light);text-align:center}
-
-/* modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center}
-.modal-overlay.show{display:flex}
-.modal-box{background:var(--white);border-radius:20px;padding:36px 32px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2);text-align:center}
-.modal-icon{font-size:2.4rem;margin-bottom:16px}
-.modal-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--navy);margin-bottom:10px}
-.modal-text{font-size:0.88rem;color:var(--text-light);line-height:1.7;margin-bottom:24px}
-.modal-text strong{color:var(--navy)}
-.modal-btns{display:flex;gap:12px;justify-content:center}
-.modal-btn{padding:11px 28px;border-radius:10px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all .2s;border:none}
-.modal-btn.primary{background:var(--navy);color:var(--white)}
-.modal-btn.primary:hover{background:var(--navy-light)}
-.modal-btn.secondary{background:var(--cream);color:var(--text);border:1px solid var(--cream-dark)}
-.modal-btn.secondary:hover{background:var(--cream-dark)}
-.modal-btn.danger{background:var(--red);color:var(--white)}
-.modal-btn.danger:hover{background:#c0392b}
-
-/* result screen */
-#result-screen{display:none;min-height:100vh;background:linear-gradient(145deg,#f8f5ef,#ede8df);align-items:center;justify-content:center;padding:20px;flex-direction:column}
-.result-card{background:var(--white);border-radius:24px;padding:48px 40px;max-width:520px;width:100%;text-align:center;box-shadow:0 8px 48px rgba(26,26,46,0.12);border:1px solid var(--border)}
-.result-logo{font-family:'Playfair Display',serif;color:var(--gold);font-size:2rem;margin-bottom:8px}
-.result-congrats{font-size:0.82rem;color:var(--text-light);margin-bottom:28px;line-height:1.6}
-.result-congrats strong{font-size:1.1rem;color:var(--navy);display:block;margin-bottom:4px;font-family:'Playfair Display',serif}
-.result-scores{display:flex;gap:20px;justify-content:center;margin-bottom:32px}
-.score-box{background:var(--cream);border-radius:16px;padding:24px 32px;flex:1;border:1px solid var(--border)}
-.score-label{font-size:0.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-light);margin-bottom:8px}
-.score-value{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--navy);line-height:1}
-.score-sub{font-size:0.78rem;color:var(--text-light);margin-top:4px}
-.review-btn{padding:13px 32px;background:var(--navy);color:var(--white);border:none;border-radius:12px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:0.3px}
-.review-btn:hover{background:var(--navy-light);transform:translateY(-1px)}
-
-/* review banner */
-.review-banner{display:none;background:linear-gradient(90deg,var(--navy),var(--navy-light));color:var(--white);padding:10px 24px;font-size:0.82rem;font-weight:600;text-align:center;letter-spacing:0.5px;flex-shrink:0}
-.review-banner span{color:var(--gold)}
-.back-result-btn{background:none;border:1px solid rgba(255,255,255,0.3);color:var(--white);padding:5px 14px;border-radius:6px;font-family:'Be Vietnam Pro',sans-serif;font-size:0.78rem;cursor:pointer;transition:all .2s;margin-left:12px}
-.back-result-btn:hover{background:rgba(255,255,255,0.1)}
-
-/* flag panel overlay */
-#flag-panel{display:none;position:fixed;right:72px;top:100px;width:260px;background:var(--white);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,0.15);border:1px solid var(--border);z-index:200;padding:16px}
-#flag-panel.show{display:block}
-.flag-panel-title{font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.flag-panel-close{background:none;border:none;cursor:pointer;font-size:1rem;color:var(--gray)}
-.flag-item{padding:6px 8px;border-radius:6px;font-size:0.82rem;cursor:pointer;color:var(--text);display:flex;align-items:center;gap:8px;transition:background .15s}
-.flag-item:hover{background:var(--cream)}
-.flag-item-q{font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--orange);font-weight:600;min-width:28px}
-.flag-none{font-size:0.82rem;color:var(--text-light);text-align:center;padding:12px}
-
-/* scrollbar */
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--cream-dark);border-radius:4px}
-.passage-col::-webkit-scrollbar-thumb,.questions-col::-webkit-scrollbar-thumb{background:var(--cream-dark)}
-
-/* Utility */
-.hidden{display:none!important}
-
-/* ===== HIGHLIGHT SYSTEM ===== */
-#hl-toolbar{
-  position:fixed;z-index:9999;display:none;
-  background:var(--navy);border-radius:10px;
-  box-shadow:0 6px 24px rgba(0,0,0,0.25);
-  padding:6px 8px;gap:5px;align-items:center;
-  border:1px solid rgba(255,255,255,0.1);
-  animation:hl-pop .15s cubic-bezier(.34,1.56,.64,1);
+*{ margin:0; padding:0; box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  overflow:hidden;
+  -webkit-font-smoothing: antialiased;
 }
-#hl-toolbar.show{display:flex;}
-@keyframes hl-pop{from{opacity:0;transform:scale(0.85) translateY(4px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.hl-btn{
-  width:24px;height:24px;border-radius:50%;border:2.5px solid transparent;
-  cursor:pointer;transition:all .15s;position:relative;flex-shrink:0;
-}
-.hl-btn:hover{transform:scale(1.2);border-color:rgba(255,255,255,0.6);}
-.hl-btn[data-color="yellow"]{background:#ffe066;}
-.hl-btn[data-color="blue"]{background:#74b9ff;}
-.hl-btn[data-color="green"]{background:#55efc4;}
-.hl-btn[data-color="pink"]{background:#fd79a8;}
-.hl-label{font-size:0.7rem;color:rgba(255,255,255,0.5);padding:0 4px 0 2px;white-space:nowrap;font-family:'Be Vietnam Pro',sans-serif;}
-.hl-sep{width:1px;height:18px;background:rgba(255,255,255,0.15);margin:0 2px;}
-.hl-erase-btn{
-  background:none;border:none;color:rgba(255,255,255,0.5);
-  cursor:pointer;font-size:0.75rem;padding:2px 6px;border-radius:5px;
-  font-family:'Be Vietnam Pro',sans-serif;transition:all .15s;white-space:nowrap;
-}
-.hl-erase-btn:hover{background:rgba(255,255,255,0.1);color:#fff;}
+::selection{ background: var(--gold-soft); color: var(--navy); }
+button{ font-family: inherit; cursor:pointer; border:none; background:none; }
+input, select, textarea{ font-family: inherit; }
+::-webkit-scrollbar{ width:9px; height:9px; }
+::-webkit-scrollbar-track{ background: transparent; }
+::-webkit-scrollbar-thumb{ background: #c9c0ad; border-radius:10px; }
+::-webkit-scrollbar-thumb:hover{ background: var(--gold); }
 
-/* highlight spans */
-.hl-span{cursor:pointer;border-radius:2px;transition:filter .15s;}
-.hl-span:hover{filter:brightness(0.88);}
-.hl-span[data-hl-color="yellow"]{background:#ffe066;color:#1a1a2e;}
-.hl-span[data-hl-color="blue"]{background:#74b9ff;color:#1a1a2e;}
-.hl-span[data-hl-color="green"]{background:#55efc4;color:#1a1a2e;}
-.hl-span[data-hl-color="pink"]{background:#fd79a8;color:#1a1a2e;}
+.screen{ display:none; width:100%; height:100%; }
+.screen.active{ display:flex; }
 
-/* toolbar arrow */
-#hl-toolbar::after{
-  content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);
-  width:10px;height:10px;background:var(--navy);
-  clip-path:polygon(0 0,100% 0,50% 100%);
+/* ============================================================
+   1. LOGIN SCREEN
+   ============================================================ */
+#screen-login{
+  align-items:center; justify-content:center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(212,175,55,0.08), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(212,175,55,0.06), transparent 45%),
+    var(--navy-deep);
+  position:relative;
+}
+#screen-login::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image: linear-gradient(rgba(212,175,55,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+  pointer-events:none;
+}
+.login-card{
+  position:relative;
+  width:min(440px, 92vw);
+  background: var(--cream);
+  border-radius:18px;
+  padding:44px 40px 36px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+  text-align:center;
+  animation: cardIn .6s cubic-bezier(.22,1,.36,1);
+}
+@keyframes cardIn{ from{ opacity:0; transform:translateY(18px) scale(.98);} to{opacity:1; transform:none;} }
+.login-logo{
+  font-family: var(--font-display);
+  font-weight:700; font-size:30px; letter-spacing:2px;
+  color: var(--navy); margin-bottom:2px;
+}
+.login-logo span{ color: var(--gold); }
+.login-sub{
+  font-size:12.5px; letter-spacing:3px; text-transform:uppercase;
+  color: var(--ink-soft); margin-bottom:6px; font-weight:600;
+}
+.login-test-name{
+  font-family: var(--font-display);
+  font-size:17px; color: var(--gold); font-style:italic; margin-bottom:26px;
+}
+.login-divider{
+  width:46px; height:2px; background:var(--gold); margin:0 auto 26px; border-radius:2px;
+}
+.login-field{ text-align:left; margin-bottom:16px; }
+.login-field label{
+  display:block; font-size:11.5px; font-weight:700; letter-spacing:1px;
+  text-transform:uppercase; color: var(--ink-soft); margin-bottom:7px;
+}
+.login-field input{
+  width:100%; padding:13px 14px; border:1.5px solid var(--line); border-radius:9px;
+  font-size:15px; font-weight:600; letter-spacing:0.5px; color:var(--navy);
+  background:#fff; transition: border-color .2s, box-shadow .2s;
+  text-transform:uppercase;
+}
+.login-field input::placeholder{ text-transform:none; font-weight:400; color:#b6afa2; font-size:13px; }
+.login-field input:focus{ outline:none; border-color: var(--gold); box-shadow:0 0 0 3px rgba(212,175,55,0.18); }
+.login-note{
+  font-size:12px; line-height:1.6; color: var(--ink-soft); background:#f6f2e9;
+  border-radius:9px; padding:12px 13px; margin: 18px 0 22px; text-align:left;
+  border-left:3px solid var(--gold);
+}
+.login-btn{
+  width:100%; padding:14px; border-radius:9px; background: var(--navy);
+  color: var(--gold); font-weight:700; font-size:14.5px; letter-spacing:1.5px;
+  text-transform:uppercase; transition: transform .15s, box-shadow .15s, background .2s;
+}
+.login-btn:hover{ background: var(--navy-deep); box-shadow:0 8px 22px rgba(0,0,0,0.25); transform:translateY(-1px); }
+.login-btn:active{ transform:translateY(0); }
+.login-error{
+  display:none; color: var(--danger); font-size:12.5px; font-weight:600;
+  margin-top:12px; text-align:left;
+}
+
+/* ============================================================
+   2. EXAM SCREEN — LAYOUT
+   ============================================================ */
+#screen-exam{ display:none; height:100%; width:100%; }
+#screen-exam.active{ display:flex; }
+
+.exam-shell{
+  display:flex; width:100%; height:100%;
+}
+
+/* ---- Sidebar ---- */
+.sidebar{
+  width: var(--sidebar-w); min-width:var(--sidebar-w);
+  background: var(--navy); color:#fff;
+  display:flex; flex-direction:column;
+  height:100%;
+}
+.sb-brand{
+  padding:22px 22px 16px; border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.sb-brand-logo{
+  font-family: var(--font-display); font-weight:700; font-size:21px; color: var(--gold); letter-spacing:1.5px;
+}
+.sb-brand-sub{ font-size:10.5px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.45); margin-top:3px; }
+
+.sb-student{
+  padding:14px 22px; border-bottom:1px solid rgba(255,255,255,0.08);
+  font-size:12.5px; color:rgba(255,255,255,0.75); line-height:1.7;
+}
+.sb-student b{ color:#fff; font-weight:600; }
+
+.sb-timer-wrap{ padding:16px 22px; border-bottom:1px solid rgba(255,255,255,0.08); }
+.sb-timer-label{ font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.45); margin-bottom:6px; }
+.sb-timer{
+  font-family: var(--font-display); font-weight:700; font-size:30px; color:#fff; letter-spacing:1px;
+  font-variant-numeric: tabular-nums;
+}
+.sb-timer.warn{ color: var(--flag); animation: pulseWarn 1s infinite; }
+@keyframes pulseWarn{ 0%,100%{opacity:1;} 50%{opacity:.55;} }
+
+.sb-map-wrap{ flex:1; overflow-y:auto; padding:16px 22px; }
+.sb-map-label{
+  font-size:10.5px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.45);
+  margin-bottom:10px; display:flex; align-items:center; justify-content:space-between;
+}
+.qmap{
+  display:grid; grid-template-columns: repeat(5, 1fr); gap:7px;
+}
+.qmap-cell{
+  aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+  border-radius:6px; border:1.5px solid rgba(255,255,255,0.18);
+  font-size:12px; font-weight:600; color:rgba(255,255,255,0.55);
+  background:rgba(255,255,255,0.03);
+  transition: all .15s;
+}
+.qmap-cell:hover{ border-color: var(--gold); color:#fff; }
+.qmap-cell.answered{ background: var(--gold); border-color:var(--gold); color: var(--navy); }
+.qmap-cell.flagged{ border-color: var(--flag); color: var(--flag); }
+.qmap-cell.answered.flagged{ background: var(--gold); border-color: var(--flag); color: var(--navy); position:relative; }
+.qmap-cell.answered.flagged::after{
+  content:""; position:absolute; top:-3px; right:-3px; width:8px; height:8px;
+  border-radius:50%; background: var(--flag); border:1.5px solid var(--navy);
+}
+.qmap-cell.current{ outline:2px solid #fff; outline-offset:1px; }
+
+.sb-actions{ padding:16px 22px 20px; border-top:1px solid rgba(255,255,255,0.08); display:flex; flex-direction:column; gap:9px; }
+.sb-btn{
+  width:100%; padding:11px; border-radius:8px; font-size:12.5px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase; transition: all .15s; text-align:center;
+}
+.sb-btn-flag{
+  background:transparent; border:1.5px solid var(--flag); color: var(--flag);
+}
+.sb-btn-flag:hover{ background: rgba(225,112,85,0.12); }
+.sb-btn-submit{
+  background: transparent; border:1.5px solid var(--gold); color: var(--gold);
+}
+.sb-btn-submit:hover{ background: var(--gold); color: var(--navy); }
+
+/* ---- Main exam area ---- */
+.exam-main{ flex:1; display:flex; flex-direction:column; height:100%; min-width:0; }
+
+.tabs-bar{
+  display:flex; gap:4px; padding:0 18px; background:#fff; border-bottom:2px solid var(--navy);
+  flex-shrink:0;
+}
+.tab-btn{
+  padding:13px 22px; font-size:13.5px; font-weight:600; color: var(--ink-soft);
+  border-radius:8px 8px 0 0; transition:all .15s; position:relative; top:1px;
+}
+.tab-btn:hover{ color: var(--navy); background:#f6f2e9; }
+.tab-btn.active{ color: var(--navy); background: var(--cream); border:2px solid var(--navy); border-bottom:2px solid var(--cream); }
+
+.split-container{
+  flex:1; display:flex; min-height:0; position:relative;
+  user-select:text;
+}
+.split-container.locked-select{ user-select:none; }
+
+.panel{
+  height:100%; overflow-y:auto; background:#fff;
+}
+.panel-left{ width:50%; padding:34px 38px; border-right:1px solid var(--line); }
+.panel-right{ width:50%; padding:34px 38px; background: var(--cream); }
+
+.resizer{
+  width:7px; cursor:col-resize; background: var(--line); flex-shrink:0;
+  transition: background .15s; position:relative;
+}
+.resizer:hover, .resizer.active{ background: var(--gold); }
+.resizer::after{
+  content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:3px; height:34px; border-radius:3px; background:rgba(0,0,0,0.15);
+}
+
+.passage-title{
+  font-family: var(--font-display); font-weight:700; font-size:21px; color: var(--navy);
+  margin-bottom:4px;
+}
+.passage-meta{ font-size:11.5px; color: var(--ink-soft); text-transform:uppercase; letter-spacing:1px; margin-bottom:22px; }
+.passage-body{ font-size:15px; line-height:1.85; color:#33302b; }
+.passage-body p{ margin-bottom:16px; text-align:justify; }
+.passage-body strong{ color: var(--navy); }
+
+.qgroup{ margin-bottom:32px; }
+.qgroup-instructions{
+  background:#fff; border:1px solid var(--line); border-left:3px solid var(--gold);
+  border-radius:8px; padding:14px 16px; margin-bottom:16px; font-size:13.5px; line-height:1.6; color: var(--ink);
+}
+.qgroup-instructions b{ color:var(--navy); }
+
+.qitem{
+  display:flex; gap:12px; padding:14px 14px 14px 10px; border-radius:10px;
+  margin-bottom:8px; background:#fff; border:1px solid var(--line);
+  scroll-margin-top: 24px; transition: border-color .2s, box-shadow .2s;
+}
+.qitem:hover{ border-color:#d8cfba; }
+.qitem.answered{ border-left:3px solid var(--gold); }
+.qitem.flagged{ box-shadow: inset 3px 0 0 var(--flag); }
+
+.qnum{
+  flex-shrink:0; width:30px; height:30px; border-radius:50%;
+  background: var(--navy); color: var(--gold); font-weight:700; font-size:13px;
+  display:flex; align-items:center; justify-content:center;
+}
+.qbody{ flex:1; min-width:0; }
+.qtext{ font-size:14.5px; line-height:1.6; margin-bottom:10px; color: var(--ink); }
+
+.qflag-btn{
+  flex-shrink:0; width:22px; height:22px; border-radius:6px; border:1.5px solid var(--line);
+  display:flex; align-items:center; justify-content:center; font-size:12px;
+  color:#c9c0ad; transition: all .15s; align-self:flex-start;
+}
+.qflag-btn:hover{ border-color: var(--flag); }
+.qflag-btn.on{ background: var(--flag); border-color: var(--flag); color:#fff; }
+
+/* answer inputs */
+.ans-text{
+  width:100%; max-width:260px; padding:9px 11px; border:1.5px solid var(--line);
+  border-radius:7px; font-size:14px; font-weight:500; color: var(--navy); background:#fff;
+}
+.ans-text:focus{ outline:none; border-color: var(--gold); box-shadow:0 0 0 3px rgba(212,175,55,0.15); }
+
+.ans-select{
+  padding:9px 11px; border:1.5px solid var(--line); border-radius:7px; font-size:14px;
+  background:#fff; color: var(--navy); font-weight:500; min-width:90px;
+  max-width:100%; width:auto;
+}
+.ans-select:focus{ outline:none; border-color: var(--gold); }
+
+.ans-options{ display:flex; flex-direction:column; gap:8px; }
+.ans-opt{
+  display:flex; align-items:flex-start; gap:9px; padding:9px 11px; border-radius:7px;
+  border:1.5px solid var(--line); cursor:pointer; transition: all .15s; background:#fff;
+}
+.ans-opt:hover{ border-color: var(--gold-soft); background:#fdfaf0; }
+.ans-opt input{ margin-top:2px; accent-color: var(--gold); flex-shrink:0; }
+.ans-opt span{ font-size:13.5px; line-height:1.5; }
+.ans-opt.checked{ border-color: var(--gold); background:#fdfaf0; }
+
+/* highlight marks */
+.hl-yellow{ background: var(--hl-yellow); border-radius:2px; }
+.hl-green{ background: var(--hl-green); border-radius:2px; }
+.hl-blue{ background: var(--hl-blue); border-radius:2px; }
+.hl-pink{ background: var(--hl-pink); border-radius:2px; }
+
+/* highlight floating toolbar */
+.hl-toolbar{
+  position:fixed; display:none; gap:6px; background: var(--navy); padding:7px 8px;
+  border-radius:10px; box-shadow:0 10px 28px rgba(0,0,0,0.3); z-index:500;
+  align-items:center;
+}
+.hl-toolbar.show{ display:flex; }
+.hl-swatch{
+  width:24px; height:24px; border-radius:50%; border:2px solid rgba(255,255,255,0.5);
+  transition: transform .12s;
+}
+.hl-swatch:hover{ transform:scale(1.15); }
+.hl-swatch[data-c="yellow"]{ background: var(--hl-yellow); }
+.hl-swatch[data-c="green"]{ background: var(--hl-green); }
+.hl-swatch[data-c="blue"]{ background: var(--hl-blue); }
+.hl-swatch[data-c="pink"]{ background: var(--hl-pink); }
+.hl-swatch-erase{
+  width:24px; height:24px; border-radius:50%; border:2px solid rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.08); color:#fff; font-size:12px; display:flex; align-items:center; justify-content:center;
+}
+
+/* ============================================================
+   3. MODALS / OVERLAYS
+   ============================================================ */
+.overlay{
+  position:fixed; inset:0; background:rgba(15,10,5,0.55); backdrop-filter:blur(2px);
+  display:none; align-items:center; justify-content:center; z-index:1000; padding:20px;
+}
+.overlay.show{ display:flex; }
+.modal{
+  background:#fff; border-radius:16px; max-width:460px; width:100%;
+  padding:32px 30px 26px; box-shadow:0 30px 70px rgba(0,0,0,0.4);
+  animation: cardIn .35s cubic-bezier(.22,1,.36,1);
+}
+.modal-title{ font-family: var(--font-display); font-weight:700; font-size:21px; color: var(--navy); margin-bottom:10px; }
+.modal-text{ font-size:14px; line-height:1.65; color: var(--ink-soft); margin-bottom:22px; }
+.modal-text b{ color: var(--danger); }
+.modal-actions{ display:flex; gap:10px; }
+.modal-btn{
+  flex:1; padding:12px; border-radius:9px; font-size:13.5px; font-weight:700;
+  letter-spacing:0.5px; transition: all .15s;
+}
+.modal-btn-secondary{ background:#f1ede4; color: var(--ink); }
+.modal-btn-secondary:hover{ background:#e8e2d4; }
+.modal-btn-primary{ background: var(--navy); color: var(--gold); }
+.modal-btn-primary:hover{ background: var(--navy-deep); }
+
+/* Flagged questions panel */
+.flagpanel{
+  background:#fff; border-radius:16px; max-width:560px; width:100%; max-height:80vh;
+  display:flex; flex-direction:column; box-shadow:0 30px 70px rgba(0,0,0,0.4);
+  animation: cardIn .35s cubic-bezier(.22,1,.36,1);
+}
+.flagpanel-head{ padding:22px 26px 16px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; }
+.flagpanel-head h3{ font-family: var(--font-display); font-size:19px; color: var(--navy); }
+.flagpanel-close{ font-size:20px; color: var(--ink-soft); width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.flagpanel-close:hover{ background:#f1ede4; }
+.flagpanel-body{ padding:14px 26px 22px; overflow-y:auto; }
+.flagpanel-empty{ text-align:center; padding:40px 0; color: var(--ink-soft); font-size:13.5px; }
+.flagitem{
+  display:flex; justify-content:space-between; align-items:center; padding:12px 14px;
+  border:1px solid var(--line); border-radius:9px; margin-bottom:8px; transition: all .15s;
+}
+.flagitem:hover{ border-color: var(--gold); background:#fdfaf0; }
+.flagitem-left{ display:flex; align-items:center; gap:10px; }
+.flagitem-num{ width:26px; height:26px; border-radius:50%; background: var(--navy); color: var(--gold); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.flagitem-ans{ font-size:12.5px; color: var(--ink-soft); }
+.flagitem-ans.empty{ color: var(--flag); font-style:italic; }
+.flagitem-go{ font-size:11.5px; font-weight:700; color: var(--gold); text-transform:uppercase; letter-spacing:0.5px; }
+
+/* ============================================================
+   4. RESULT SCREEN
+   ============================================================ */
+#screen-result{
+  align-items:center; justify-content:center; overflow-y:auto;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(212,175,55,0.07), transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(212,175,55,0.05), transparent 45%),
+    var(--navy-deep);
+  padding:40px 20px;
+}
+.result-wrap{ width:min(560px, 100%); }
+.result-card{
+  background:#fff; border-radius:22px; padding:46px 42px 38px; text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,0.45);
+  animation: cardIn .6s cubic-bezier(.22,1,.36,1);
+}
+.result-check{
+  width:74px; height:74px; border-radius:50%; background: var(--gold);
+  display:flex; align-items:center; justify-content:center; margin:0 auto 22px;
+  box-shadow:0 10px 26px rgba(212,175,55,0.35);
+}
+.result-check svg{ width:32px; height:32px; }
+.result-title{
+  font-family: var(--font-display); font-weight:700; font-size:25px; color: var(--navy);
+  line-height:1.35;
+}
+.result-title .name-hl{ color: var(--gold); }
+.result-sub{
+  font-size:12.5px; letter-spacing:1.5px; text-transform:uppercase; color: var(--ink-soft);
+  font-weight:600; margin:10px 0 28px;
+}
+.result-stats{
+  display:flex; align-items:stretch; justify-content:center; gap:0; margin-bottom:30px;
+}
+.result-stat{ flex:1; padding:0 18px; }
+.result-stat-divider{ width:1px; background: var(--line); }
+.result-stat-num{
+  font-family: var(--font-display); font-weight:700; font-size:36px; color: var(--navy);
+}
+.result-stat-num.gold{ color: var(--gold); }
+.result-stat-label{
+  font-size:11px; letter-spacing:1px; text-transform:uppercase; color: var(--ink-soft);
+  font-weight:600; margin-top:4px;
+}
+.result-cta-row{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+.result-cta{
+  padding:14px; border-radius:11px; font-size:14.5px; font-weight:700;
+  letter-spacing:0.3px; transition: all .15s; display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.result-cta-primary{ background: var(--navy); color: var(--gold); }
+.result-cta-primary:hover{ background: var(--navy-deep); transform:translateY(-1px); }
+.result-cta-secondary{ background:#fdfaf0; border:1.5px solid var(--gold-soft); color: var(--navy); }
+.result-cta-secondary:hover{ background:#fbf3da; }
+
+/* ============================================================
+   5. ANSWER SHEET SCREEN (screenshot-friendly grid)
+   ============================================================ */
+#screen-sheet{
+  align-items:flex-start; justify-content:center; overflow-y:auto;
+  background: var(--cream); padding:36px 20px;
+}
+.sheet-wrap{ width:min(980px, 100%); }
+.sheet-card{
+  background:#fff; border-radius:18px; padding:32px 34px; box-shadow:0 20px 50px rgba(0,0,0,0.1);
+  border:1px solid var(--line);
+}
+.sheet-head{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; flex-wrap:wrap; gap:10px; }
+.sheet-title{ font-family: var(--font-display); font-weight:700; font-size:22px; color: var(--navy); }
+.sheet-meta{ font-size:12.5px; color: var(--ink-soft); text-align:right; line-height:1.6; }
+.sheet-warn{
+  background:#fff0e9; border:1.5px solid #f3c4a8; border-left:4px solid var(--flag);
+  border-radius:10px; padding:13px 16px; font-size:13px; line-height:1.6; color:#8a3d22;
+  margin:18px 0 22px; font-weight:600;
+}
+.sheet-grid{
+  display:grid; grid-template-columns: repeat(10, 1fr); gap:8px;
+}
+.sheet-cell{
+  border:1.5px solid var(--line); border-radius:8px; padding:8px 6px; text-align:center;
+}
+.sheet-cell .n{ font-size:10.5px; color: var(--ink-soft); font-weight:700; margin-bottom:3px; }
+.sheet-cell .v{ font-size:13px; font-weight:700; color: var(--navy); word-break:break-word; }
+.sheet-cell .v.empty{ color:#c9c0ad; font-weight:500; font-style:italic; font-size:11px; }
+.sheet-footer{ display:flex; justify-content:center; margin-top:26px; }
+
+/* ============================================================
+   6. REVIEW MODE BANNER
+   ============================================================ */
+.review-banner{
+  display:none; background: var(--navy); color:#fff; padding:11px 22px;
+  align-items:center; justify-content:space-between; flex-shrink:0;
+  font-size:12.5px;
+}
+.review-banner.show{ display:flex; }
+.review-banner b{ color: var(--gold); }
+.review-banner-btn{
+  background: var(--gold); color: var(--navy); padding:8px 16px; border-radius:7px;
+  font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;
+}
+.review-banner-btn:hover{ opacity:0.88; }
+
+/* ============================================================
+   7. LOADING / TOAST
+   ============================================================ */
+.toast{
+  position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
+  background: var(--navy); color:#fff; padding:13px 22px; border-radius:10px;
+  font-size:13px; box-shadow:0 12px 30px rgba(0,0,0,0.3); z-index:2000;
+  opacity:0; pointer-events:none; transition: all .3s;
+}
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+.spinner{
+  width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff;
+  border-radius:50%; animation: spin .7s linear infinite; display:inline-block; vertical-align:middle; margin-right:8px;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+/* ============================================================
+   8. RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px){
+  .sidebar{ width:230px; min-width:230px; }
+  .panel-left, .panel-right{ padding:24px 22px; }
+}
+@media (max-width: 860px){
+  .exam-shell{ flex-direction:column; }
+  .sidebar{ width:100%; min-width:0; flex-direction:row; flex-wrap:wrap; height:auto; }
+  .split-container{ flex-direction:column; }
+  .resizer{ display:none; }
+  .panel-left, .panel-right{ width:100% !important; height:50%; }
+  .sheet-grid{ grid-template-columns: repeat(5,1fr); }
+}
+
+/* fit-to-screen safeguard: shrink sidebar font/padding on short viewports */
+@media (max-height: 720px){
+  .sb-brand{ padding:14px 22px 10px; }
+  .sb-student{ padding:8px 22px; }
+  .sb-timer-wrap{ padding:10px 22px; }
+  .sb-timer{ font-size:24px; }
+  .sb-actions{ padding:10px 22px 14px; }
 }
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
-<div id="login-screen">
+<!-- ================= 1. LOGIN SCREEN ================= -->
+<div class="screen active" id="screen-login">
   <div class="login-card">
-    <div class="login-logo">G.EDU</div>
-    <div class="login-subtitle">IELTS Academic Reading – <span>Reading Test 4</span></div>
-    <div class="login-warning">
-      <b>⚠ Lưu ý quan trọng:</b>
-      Khi đồng hồ còn 30 giây, hãy bấm nút <strong>Nộp bài</strong> để đảm bảo kết quả làm bài được lưu thành công về hệ thống.
+    <div class="login-logo">G<span>.</span>EDU</div>
+    <div class="login-sub">IELTS Academic Reading</div>
+    <div class="login-test-name" id="login-test-name">[TÊN BÀI TEST — VD: Reading Test 7]</div>
+    <div class="login-divider"></div>
+
+    <div class="login-field">
+      <label>Họ và tên học sinh</label>
+      <input type="text" id="input-name" placeholder="VIẾT IN HOA" autocomplete="off">
     </div>
-    <label class="login-label">Họ và tên đầy đủ</label>
-    <input class="login-input" id="inp-name" type="text" placeholder="Họ và tên học sinh" autocomplete="off">
-    <label class="login-label">Mã lớp (Class ID)</label>
-    <input class="login-input" id="inp-class" type="text" placeholder="Lớp học" autocomplete="off">
-    <button class="login-btn" id="start-btn" onclick="startTest()">🚀 Bắt đầu làm bài</button>
+    <div class="login-field">
+      <label>Lớp học</label>
+      <input type="text" id="input-class" placeholder="VIẾT IN HOA" autocomplete="off">
+    </div>
+
+    <div class="login-note" data-locked-id="login-note"><!-- nội dung được khóa, JS sẽ tự bơm vào lúc tải trang --></div>
+
+    <button class="login-btn" id="btn-start">Bắt đầu làm bài</button>
+    <div class="login-error" id="login-error"></div>
   </div>
 </div>
 
-<!-- TEST SCREEN -->
-<div id="test-screen">
-  <div class="test-header">
-    <div class="header-logo">G.EDU</div>
-    <div class="header-center">
-      <div class="timer-box" id="timer-box">60:00</div>
-    </div>
-    <div class="header-info">
-      <strong id="hdr-name">—</strong>
-      <span id="hdr-class">—</span>
-    </div>
-  </div>
-  <div class="review-banner" id="review-banner">
-    <span>📋 Chế độ xem lại — không thể chỉnh sửa</span>
-    <button class="back-result-btn" onclick="goToResult()">← Về kết quả</button>
-  </div>
-  <div class="passage-tabs">
-    <div class="ptab active" id="tab-p1" onclick="switchPassage(1)">Passage 1</div>
-    <div class="ptab" id="tab-p2" onclick="switchPassage(2)">Passage 2</div>
-    <div class="ptab" id="tab-p3" onclick="switchPassage(3)">Passage 3</div>
-  </div>
-  <div class="test-body">
-    <!-- Passage column -->
-    <div class="passage-col" id="passage-col">
-      <!-- rendered by JS -->
-    </div>
-    <!-- Questions column -->
-    <div style="display:flex;flex-direction:column;width:420px;flex-shrink:0;background:var(--white);overflow:hidden;min-height:0;">
-      <div class="progress-wrap">
-        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-        <div class="progress-text" id="progress-text">0 / 40 câu đã trả lời</div>
+<!-- ================= 2. EXAM SCREEN ================= -->
+<div class="screen" id="screen-exam">
+  <div class="exam-shell">
+
+    <!-- ---- Sidebar ---- -->
+    <aside class="sidebar">
+      <div class="sb-brand">
+        <div class="sb-brand-logo">G<span style="color:var(--gold)">.</span>EDU</div>
+        <div class="sb-brand-sub" id="sb-test-name">[TÊN BÀI TEST]</div>
       </div>
-      <div class="questions-col" id="questions-col" style="flex:1;min-height:0;overflow-y:auto;">
-        <!-- rendered by JS -->
+
+      <div class="sb-student">
+        <b id="sb-student-name">—</b><br>
+        Lớp: <span id="sb-student-class">—</span>
       </div>
-      <div class="submit-wrap" id="submit-wrap">
-        <button class="submit-btn" id="submit-btn" onclick="showSubmitModal()">📤 Nộp bài</button>
+
+      <div class="sb-timer-wrap">
+        <div class="sb-timer-label">Thời gian còn lại</div>
+        <div class="sb-timer" id="sb-timer">60:00</div>
       </div>
-    </div>
-    <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-      <div class="flag-panel-btn" onclick="toggleFlagPanel()" title="Câu đã đánh dấu">🚩</div>
-      <div class="sidebar-sep"></div>
-      <!-- rendered by JS -->
-    </div>
+
+      <div class="sb-map-wrap">
+        <div class="sb-map-label">
+          <span>Question Map</span>
+          <span id="sb-map-progress">0/40</span>
+        </div>
+        <div class="qmap" id="qmap"><!-- [JS GENERATED: 40 ô qmap-cell] --></div>
+      </div>
+
+      <div class="sb-actions">
+        <button class="sb-btn sb-btn-flag" id="btn-open-flags">🚩 Xem câu đánh dấu</button>
+        <button class="sb-btn sb-btn-submit" id="btn-submit">Nộp bài</button>
+      </div>
+    </aside>
+
+    <!-- ---- Main ---- -->
+    <main class="exam-main">
+      <div class="review-banner" id="review-banner">
+        <span data-locked-id="review-banner-text"><!-- khóa, JS bơm --></span>
+        <button class="review-banner-btn" id="btn-back-to-result">Quay lại kết quả</button>
+      </div>
+
+      <div class="tabs-bar" id="tabs-bar"><!-- [JS GENERATED: passage tab buttons] --></div>
+
+      <div class="split-container" id="split-container">
+        <div class="panel panel-left" id="panel-passage">
+          <!-- [PLACEHOLDER: PASSAGE CONTENT — AI Studio chèn vào đây cho từng tab/passage] -->
+          <div class="passage-title">[Tiêu đề bài đọc]</div>
+          <div class="passage-meta">Passage 1</div>
+          <div class="passage-body">
+            <p>[Nội dung đoạn văn...]</p>
+          </div>
+        </div>
+
+        <div class="resizer" id="resizer"></div>
+
+        <div class="panel panel-right" id="panel-questions">
+          <!-- [PLACEHOLDER: QUESTION GROUPS — AI Studio chèn .qgroup theo từng passage] -->
+          <div class="qgroup">
+            <div class="qgroup-instructions"><b>Questions 1–5</b><br>[Hướng dẫn câu hỏi...]</div>
+            <!-- mỗi câu hỏi: .qitem có qnum / qtext / input đáp án / qflag-btn -->
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 </div>
 
-<!-- RESULT SCREEN -->
-<div id="result-screen">
-  <div class="result-card">
-    <div class="result-logo">G.EDU</div>
-    <div class="result-congrats">
-      <strong id="res-name">—</strong>
-      đã hoàn thành bài thi IELTS Academic Reading Test 4
-    </div>
-    <div class="result-scores">
-      <div class="score-box">
-        <div class="score-label">Số câu đúng</div>
-        <div class="score-value"><span id="res-correct">0</span><span style="font-size:1.4rem;color:var(--text-light)">/40</span></div>
-        <div class="score-sub">câu trả lời đúng</div>
-      </div>
-      <div class="score-box">
-        <div class="score-label">Band Score</div>
-        <div class="score-value" id="res-band">0.0</div>
-        <div class="score-sub">IELTS Academic</div>
-      </div>
-    </div>
-    <button class="review-btn" onclick="enterReviewMode()">👁 Xem lại bài làm</button>
-  </div>
+<!-- Floating highlight toolbar -->
+<div class="hl-toolbar" id="hl-toolbar">
+  <div class="hl-swatch" data-c="yellow"></div>
+  <div class="hl-swatch" data-c="green"></div>
+  <div class="hl-swatch" data-c="blue"></div>
+  <div class="hl-swatch" data-c="pink"></div>
+  <div class="hl-swatch-erase" id="hl-erase">✕</div>
 </div>
 
-<!-- Flag Panel -->
-<div id="flag-panel">
-  <div class="flag-panel-title">
-    🚩 Câu đã đánh dấu
-    <button class="flag-panel-close" onclick="toggleFlagPanel()">✕</button>
-  </div>
-  <div id="flag-list"></div>
-</div>
+<!-- ================= MODALS ================= -->
 
-<!-- Submit Modal -->
-<div class="modal-overlay" id="modal-submit">
-  <div class="modal-box">
-    <div class="modal-icon">📤</div>
-    <div class="modal-title">Xác nhận nộp bài</div>
+<!-- Submit confirm modal -->
+<div class="overlay" id="overlay-submit">
+  <div class="modal">
+    <div class="modal-title" data-locked-id="submit-modal-title"><!-- khóa, JS bơm --></div>
     <div class="modal-text">
-      Bạn đã trả lời <strong id="modal-answered">0</strong>/40 câu.<br>
-      Sau khi nộp, bạn <strong>không thể chỉnh sửa</strong> câu trả lời.
+      <span data-locked-id="submit-modal-prefix"><!-- khóa --></span> <b id="modal-answered-count">0</b><span data-locked-id="submit-modal-suffix"><!-- khóa --></span>
+      <span id="modal-unanswered-warn"></span><br><br>
+      <span data-locked-id="submit-modal-footer"><!-- khóa --></span>
     </div>
-    <div class="modal-btns">
-      <button class="modal-btn secondary" onclick="closeModal('modal-submit')">Quay lại</button>
-      <button class="modal-btn danger" onclick="submitTest()">✓ Nộp bài</button>
-    </div>
-  </div>
-</div>
-
-<!-- Auto submit modal -->
-<div class="modal-overlay" id="modal-timeout">
-  <div class="modal-box">
-    <div class="modal-icon">⏰</div>
-    <div class="modal-title">Hết giờ!</div>
-    <div class="modal-text">Thời gian làm bài đã kết thúc. Hệ thống đã tự động lưu bài làm của bạn.</div>
-    <div class="modal-btns">
-      <button class="modal-btn primary" onclick="closeModal('modal-timeout');showResult()">Xem kết quả</button>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-secondary" id="btn-cancel-submit">Làm tiếp</button>
+      <button class="modal-btn modal-btn-primary" id="btn-confirm-submit">Nộp bài</button>
     </div>
   </div>
 </div>
 
-<!-- Highlight Toolbar -->
-<div id="hl-toolbar">
-  <span class="hl-label">✏️</span>
-  <button class="hl-btn" data-color="yellow" title="Vàng" onclick="applyHighlight('yellow')"></button>
-  <button class="hl-btn" data-color="blue" title="Xanh dương" onclick="applyHighlight('blue')"></button>
-  <button class="hl-btn" data-color="green" title="Xanh lá" onclick="applyHighlight('green')"></button>
-  <button class="hl-btn" data-color="pink" title="Hồng" onclick="applyHighlight('pink')"></button>
-  <div class="hl-sep"></div>
-  <button class="hl-erase-btn" onclick="hideHlToolbar()">✕</button>
+<!-- Flagged questions panel -->
+<div class="overlay" id="overlay-flags">
+  <div class="flagpanel">
+    <div class="flagpanel-head">
+      <h3>🚩 Câu đã đánh dấu</h3>
+      <button class="flagpanel-close" id="btn-close-flags">✕</button>
+    </div>
+    <div class="flagpanel-body" id="flagpanel-body">
+      <div class="flagpanel-empty" data-locked-id="flagpanel-empty"><!-- khóa, JS bơm --></div>
+    </div>
+  </div>
 </div>
+
+<!-- ================= 3. RESULT SCREEN ================= -->
+<div class="screen" id="screen-result">
+  <div class="result-wrap">
+    <div class="result-card">
+      <div class="result-check">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 13l4 4L19 7" stroke="#1a1208" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="result-title">
+        Chúc mừng <span class="name-hl" id="result-name">—</span><br>đã hoàn thành bài thi!
+      </div>
+      <div class="result-sub">G.EDU — <span id="result-test-name">[Tên bài test]</span></div>
+
+      <div class="result-stats">
+        <div class="result-stat">
+          <div class="result-stat-num" id="result-score">0/40</div>
+          <div class="result-stat-label">Số câu đúng</div>
+        </div>
+        <div class="result-stat-divider"></div>
+        <div class="result-stat">
+          <div class="result-stat-num gold" id="result-band">—</div>
+          <div class="result-stat-label">Band Score</div>
+        </div>
+      </div>
+
+      <div class="result-cta-row">
+        <button class="result-cta result-cta-primary" id="btn-go-sheet">📋 Xem Bảng Tổng Hợp Đáp Án</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 4. ANSWER SHEET SCREEN ================= -->
+<div class="screen" id="screen-sheet">
+  <div class="sheet-wrap">
+    <div class="sheet-card">
+      <div class="sheet-head">
+        <div class="sheet-title">Answer Sheet</div>
+        <div class="sheet-meta">
+          <span id="sheet-name">—</span> · Lớp <span id="sheet-class">—</span><br>
+          <span id="sheet-test-name">[TÊN BÀI TEST]</span>
+        </div>
+      </div>
+      <div class="sheet-warn" data-locked-id="sheet-warn"><!-- khóa, JS bơm --></div>
+      <div class="sheet-grid" id="sheet-grid"><!-- [JS GENERATED: 40 sheet-cell] --></div>
+      <div class="sheet-footer">
+        <button class="result-cta result-cta-primary" id="btn-go-review">Đã lưu — Xem lại bài làm →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
 <script>
+/* ============================================================
+   G.EDU IELTS READING — CORE LOGIC
+   ------------------------------------------------------------
+   AI STUDIO HƯỚNG DẪN CHÈN DATA: tìm các khối đánh dấu
+   "// ===== TODO[AI STUDIO]" bên dưới — đó là toàn bộ chỗ cần
+   nhét nội dung đề + đáp án. Phần còn lại là logic UX/UI dùng
+   chung, không cần đụng vào.
+   ============================================================ */
 
-// ===== ANSWER KEY (obfuscated) =====
-const _k = (()=>{
-  const raw = [
-    'FALSE','NG','NG','TRUE','NG','FALSE',
-    'waterproof cloth','waste strips','rigid','stabilise','steam engines','pneumatic tyre','mass production',
-    'VII','V','I','VI','III',
-    'C','E','B','B','D',
-    'sunset','dreams','thieves',
-    'IV','VIII','VI','VII','V','IX','II',
-    'C','B','D',
-    'barchans','shape','tone','minerals'
-  ];
-  return raw;
-})();
+/* ---------- 0. CONFIG — TODO[AI STUDIO]: điền các giá trị này ---------- */
+const TEST_NAME   = 'reading_test4';        // TODO: vd 'reading_test7' — dùng để route sheet tab + localStorage prefix
+const TEST_LABEL  = 'Reading Test 4';       // TODO: tên hiển thị, vd 'Reading Test 7'
+const GAS_URL     = 'https://script.google.com/macros/s/AKfycbze-ULqfpnB5IcJxAvg2m7IfSqkoUY4JmoHnjvpuGvxodzmLbhHHlcqxfcnha2aahY/exec';
+const DURATION_MIN = 60;                    // phút làm bài
+const TOTAL_QUESTIONS = 40;
+const LS_PREFIX = TEST_NAME.replace('reading_','rt_') + '_'; // vd rt_testX_ -> tuỳ chỉnh nếu muốn ngắn hơn (rt7_)
 
-// Band score table (Academic Reading)
-function getBand(correct){
-  if(correct>=39)return'9.0';if(correct>=37)return'8.5';if(correct>=35)return'8.0';
-  if(correct>=33)return'7.5';if(correct>=30)return'7.0';if(correct>=27)return'6.5';
-  if(correct>=23)return'6.0';if(correct>=19)return'5.5';if(correct>=15)return'5.0';
-  if(correct>=13)return'4.5';if(correct>=10)return'4.0';if(correct>=8)return'3.5';
-  if(correct>=6)return'3.0';if(correct>=4)return'2.5';return'2.0';
+document.getElementById('login-test-name').textContent = TEST_LABEL;
+document.getElementById('sb-test-name').textContent = TEST_LABEL;
+document.getElementById('sheet-test-name').textContent = TEST_LABEL;
+
+/* ============================================================
+   ⚠️ KHÓA NỘI DUNG NOTICE / CẢNH BÁO — KHÔNG ĐƯỢC SỬA, KHÔNG ĐƯỢC
+   VIẾT LẠI, KHÔNG ĐƯỢC DIỄN GIẢI LẠI BẰNG AI KHI MERGE DATA.
+   ------------------------------------------------------------
+   AI STUDIO / BẤT KỲ CÔNG CỤ MERGE NÀO: đây là các đoạn văn bản
+   pháp lý/vận hành cố định của G.EDU (cảnh báo nộp bài, lưu ý
+   chụp Answer Sheet, banner review mode...). TUYỆT ĐỐI không
+   được tự ý đổi câu chữ, rút gọn, dịch lại, hay "cải thiện văn
+   phong" các giá trị bên dưới khi xử lý/merge nội dung đề thi.
+   Nếu cần thay đổi nội dung đề thi, chỉ được sửa các biến ở mục
+   "0. CONFIG", "1. PASSAGES & QUESTIONS DATA" và "2. ĐÁP ÁN ĐÚNG"
+   phía trên — KHÔNG đụng vào khối LOCKED_NOTICES này.
+
+   Cơ chế bảo vệ: toàn bộ text bên dưới được JS bơm vào DOM lúc
+   khởi động (không hard-code sẵn trong HTML) + có hàm
+   verifyLockedNotices() kiểm tra lại sau khi DOM sẵn sàng, nếu
+   phát hiện bị ghi đè sai lệch sẽ tự động phục hồi đúng bản gốc.
+   ============================================================ */
+const LOCKED_NOTICES = Object.freeze({
+  'login-note': 'Vui lòng nhập Họ tên và Lớp bằng <b>CHỮ IN HOA</b>. Thông tin chính xác sẽ giúp hệ thống ghi nhận và khôi phục bài làm nếu bạn thoát hoặc tải lại trang.',
+  'review-banner-text': '📖 Đang xem lại bài làm — <b>chế độ chỉ xem, không thể chỉnh sửa</b>',
+  'sheet-warn': '📸 Vui lòng chụp lại Answer Sheet để lưu bài làm — phòng trường hợp thoát trang hoặc đổi thiết bị làm mất kết quả.',
+  'submit-modal-title': 'Xác nhận nộp bài?',
+  'submit-modal-prefix': 'Bạn đã trả lời',
+  'submit-modal-suffix': '/40 câu.',
+  'submit-modal-footer': 'Sau khi nộp, bạn sẽ không thể chỉnh sửa đáp án.',
+  'flagpanel-empty': 'Chưa có câu nào được đánh dấu.'
+});
+
+function applyLockedNotices(){
+  document.querySelectorAll('[data-locked-id]').forEach(el=>{
+    const key = el.getAttribute('data-locked-id');
+    if(LOCKED_NOTICES.hasOwnProperty(key)){
+      el.innerHTML = LOCKED_NOTICES[key];
+    }
+  });
 }
 
-// State
-let studentName='',studentClass='',answers=new Array(40).fill(''),flags=new Array(40).fill(false);
-let timerInterval=null,timeLeft=60*60,submitted=false,reviewMode=false,sheetSent=false;
-const SCRIPT_URL='https://script.google.com/macros/s/AKfycbze-ULqfpnB5IcJxAvg2m7IfSqkoUY4JmoHnjvpuGvxodzmLbhHHlcqxfcnha2aahY/exec';
-const LS_KEY='gedu_rt3_state';
-
-// ===== LOGIN =====
-document.getElementById('inp-name').addEventListener('input',checkLogin);
-document.getElementById('inp-class').addEventListener('input',checkLogin);
-function checkLogin(){
-  const n=document.getElementById('inp-name').value.trim();
-  const c=document.getElementById('inp-class').value.trim();
-  const btn=document.getElementById('start-btn');
-  btn.classList.toggle('active',n.length>0&&c.length>0);
-}
-function startTest(){
-  studentName=document.getElementById('inp-name').value.trim();
-  studentClass=document.getElementById('inp-class').value.trim();
-  if(!studentName||!studentClass)return;
-  // Restore from localStorage
-  const saved=localStorage.getItem(LS_KEY);
-  if(saved){try{const s=JSON.parse(saved);if(s.name===studentName&&s.cls===studentClass){answers=s.answers||answers;flags=s.flags||flags;timeLeft=s.timeLeft||timeLeft;submitted=s.submitted||false;}}catch(e){}}
-  document.getElementById('login-screen').style.display='none';
-  document.getElementById('test-screen').style.display='flex';
-  document.getElementById('hdr-name').textContent=studentName;
-  document.getElementById('hdr-class').textContent='Lớp: '+studentClass;
-  buildSidebar();
-  switchPassage(1);
-  if(!submitted)startTimer();
-  else{showSubmittedState();}
-  updateProgress();
-  document.body.classList.add('allow-select');
+/* Tự kiểm tra & tự chữa lành: chạy lại sau khi toàn bộ app khởi tạo,
+   phòng trường hợp công cụ merge bên ngoài (AI Studio) đã ghi đè
+   trực tiếp innerHTML của các phần tử data-locked-id bằng nội dung
+   khác trước khi/khi nạp trang. */
+let _isFixingLockedNotices = false;
+function verifyLockedNotices(){
+  if(_isFixingLockedNotices) return; // tránh vòng lặp với MutationObserver
+  let fixedCount = 0;
+  document.querySelectorAll('[data-locked-id]').forEach(el=>{
+    const key = el.getAttribute('data-locked-id');
+    const expected = LOCKED_NOTICES[key];
+    if(expected !== undefined && el.innerHTML.trim() !== expected.trim()){
+      _isFixingLockedNotices = true;
+      el.innerHTML = expected;
+      _isFixingLockedNotices = false;
+      fixedCount++;
+    }
+  });
+  if(fixedCount > 0){
+    console.warn('[G.EDU LOCK] Phát hiện ' + fixedCount + ' đoạn notice bị thay đổi sai lệch — đã tự động khôi phục về bản gốc.');
+  }
 }
 
-// ===== TIMER =====
-function startTimer(){
-  updateTimerDisplay();
-  timerInterval=setInterval(()=>{
-    timeLeft--;
-    if(timeLeft<=0){timeLeft=0;updateTimerDisplay();clearInterval(timerInterval);autoSubmit();return;}
-    updateTimerDisplay();
-    saveLocal();
-  },1000);
-}
-function updateTimerDisplay(){
-  const m=Math.floor(timeLeft/60),s=timeLeft%60;
-  const el=document.getElementById('timer-box');
-  el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-  el.classList.toggle('warning',timeLeft<=30&&timeLeft>0);
-  el.classList.toggle('done',submitted);
-  if(submitted){el.textContent='✓ Đã nộp';el.classList.remove('warning');}
-}
-function autoSubmit(){
-  if(submitted)return;
-  doSubmit();
-  document.getElementById('modal-timeout').classList.add('show');
-}
+applyLockedNotices();
+verifyLockedNotices();
+/* Lớp bảo vệ bổ sung: theo dõi DOM thời gian thực, nếu bất kỳ phần tử
+   data-locked-id nào bị thay đổi nội dung sau khi trang đã chạy (vd do
+   script merge bên ngoài chèn lại) thì tự động phục hồi ngay lập tức. */
+const lockedNoticeObserver = new MutationObserver(()=> verifyLockedNotices());
+document.querySelectorAll('[data-locked-id]').forEach(el=>{
+  lockedNoticeObserver.observe(el, { childList:true, characterData:true, subtree:true });
+});
 
-// ===== PASSAGES =====
-const PASSAGES=[
+/* ---------- 1. PASSAGES & QUESTIONS DATA — TODO[AI STUDIO] ----------
+   Khai báo toàn bộ nội dung đề tại đây. Cấu trúc mẫu bên dưới.
+   QUESTION_DEFS: mảng mô tả từng câu hỏi để hệ thống tự sinh
+   qmap, sheet, flag, validate — không cần viết tay HTML câu hỏi
+   trong panel-questions (nhưng nếu AI Studio muốn viết tay HTML
+   trực tiếp thay vì dùng renderer, vẫn được — chỉ cần đảm bảo
+   mỗi qitem có id="anchor-{n}", input có atribute data-q="{n}",
+   và nút flag có class qflag-btn data-q="{n}").
+
+   type hỗ trợ: 'text' (fill-in/short answer), 'select' (dropdown,
+   dùng cho matching/letter bank), 'radio' (MCQ chọn 1),
+   'checkbox-pair' (MCQ chọn 2, vd Q19-20 dùng chung 1 group key)
+
+   PASSAGES: mảng 3 phần tử {title, meta, html} cho 3 tab.
+------------------------------------------------------------- */
+const PASSAGES = [
   {
-    title:'Rubber',
-    subtitle:'T and W Musgrove discuss the origins and early uses of rubber',
-    text:`<p>The plants that produce rubber are spread right across the globe, and grow in many different habitats. One might think it likely, therefore, that humankind has known about rubber for thousands of years. Yet, unlike other crops of economic importance, rubber led a relatively anonymous life until the last 150 years or so. The Indians of South America appear to be the first people to have understood the properties of rubber, and the Aztecs of what is now Mexico were the first to be recorded using the substance; a wall painting dating back to the sixth century depicts a scene of a tributary offering of crude rubber. With the arrival of Columbus in the Americas and the resulting Spanish influx, further evidence starts to appear concerning the Native American use of rubber. Antonio de Herrera y Tordesillas describes a ritual game played with a rubber ball at the court of the Aztec Emperor Montezuma II, and the Mayan and Toltec people are known to have taken part in similar activities. Rubber was also used to make raincoats, shoes, jars, torches and musical instruments, all of which must have been made from the indigenous Castilla elastica, as the Para plant now favoured for rubber cultivation does not grow in the Mexican region.</p>
+    title: 'Rubber',
+    meta: 'T and W Musgrove discuss the origins and early uses of rubber',
+    html: `<p>The plants that produce rubber are spread right across the globe, and grow in many different habitats. One might think it likely, therefore, that humankind has known about rubber for thousands of years. Yet, unlike other crops of economic importance, rubber led a relatively anonymous life until the last 150 years or so. The Indians of South America appear to be the first people to have understood the properties of rubber, and the Aztecs of what is now Mexico were the first to be recorded using the substance; a wall painting dating back to the sixth century depicts a scene of a tributary offering of crude rubber. With the arrival of Columbus in the Americas and the resulting Spanish influx, further evidence starts to appear concerning the Native American use of rubber. Antonio de Herrera y Tordesillas describes a ritual game played with a rubber ball at the court of the Aztec Emperor Montezuma II, and the Mayan and Toltec people are known to have taken part in similar activities. Rubber was also used to make raincoats, shoes, jars, torches and musical instruments, all of which must have been made from the indigenous Castilla elastica, as the Para plant now favoured for rubber cultivation does not grow in the Mexican region.</p>
 <p>The first description of latex (liquid rubber) extraction is made by Juan de Torquemada, who noted that if a receptacle was not at hand the Native Americans would place the latex on their bodies to allow it to solidify. However, no real interest in rubber was shown by any European until Charles de la Condamine, a French mathematician, published an account of his journey to South America in 1735. The journey was undertaken on behalf of the Paris Academy of Sciences to measure an arc of the meridian line on the equator, but the journey home was to turn out to be more significant than the true purpose of the trip. Condamine explored Brazil and Peru and discovered how the local people used one single piece of coagulated latex to make boots. The boots were impervious to water and, when smoked, looked like real leather. In 1747 the first description of the rubber tree and latex tapping was made by a military engineer and amateur botanist, François Fresneau, who was posted to French Guiana. The publications of Condamine and Fresneau created considerable excitement among French scientists, and an attempt was made to discover a solvent that could turn the crude rubber into a substance for commercial exploitation.</p>
-<p>In 1818 a British medical student named James Syme first used rubber to make waterproof cloth. Another early use of the substance was as an eraser of pencil marks, hence the name 'rubber'. This was complemented by balloons, rubber bands, braces, boots for the army and other ideas that met with varying degrees of success. In 1820 Thomas Hancock, an English manufacturer of rubber goods such as driving belts, industrial rollers and rubber hoses, invented a machine he called the 'pickle', which chewed up waste strips for re-use. It was discovered that the masticated rubber was more malleable, while maintaining much of its elasticity. In Scotland at the same time Charles Mackintosh had discovered a way of using rubber as waterproofing material, by a process he patented in 1823. Hancock and Mackintosh joined forces in 1834, and three years later Hancock invented a machine for spreading rubber onto material.</p>
+<p>In 1818 a British medical student named James Syme first used rubber to make waterproof cloth. Another early use of the substance was as an eraser of pencil marks, hence the name 'rubber'. This was complemented by balloons, rubber bands, braces, boots for the army and other ideas that met with varying degrees of success. In 1820 Thomas Hancock, an English manufacturer of rubber goods such as driving belts, industrial rollers and rubber hoses, invented a machine he called the 'piokle', which chewed up waste strips for re-use. It was discovered that the masticated rubber was more malleable, while maintaining much of its elasticity. In Scotland at the same time Charles Mackintosh had discovered a way of using rubber as waterproofing material, by a process he patented in 1823. Hancock and Mackintosh joined forces in 1834, and three years later Hancock invented a machine for spreading rubber onto material.</p>
 <p>Despite their beneficial qualities, such as waterproofing, rubber goods were still not particularly popular as they had some major flaws, including the fact that they dissolved malodorously. They also became pliant when warm and rigid when cold. Then in 1839 the American Charles Goodyear discovered that it was possible to stabilise rubber by mixing it with sulphur while exposing it to heat - a process he called vulcanisation - and the full versatility of this extraordinary substance became apparent.</p>
 <p>Rubber goods could now be manufactured which had all the beneficial qualities of the material, such as durability, elasticity and variability, but which were not sticky, soluble or governed by the vagaries of the weather. The economic potential of rubber was now clearly evident. It played an important role in the Industrial Revolution, being employed in the steam engines found in factories, mills, mines and railways. It made a triumphant entrance as a new and innovative material at the Great Exhibition of 1851, where shoes, airbeds, furniture and clothing made out of newly improved rubber were proudly displayed.</p>
 <p>One of the most important rubber inventions was made in 1888, when an Irishman called John Boyd Dunlop produced the first pneumatic tyre. Solid rubber tyres had been used for the previous 18 years, but Dunlop's new design, which he updated in 1890, immediately became popular. In 1895 Dunlop's tyres were first used in motor cars, and with the mass production of cars just over the horizon the rubber industry had never looked healthier. The import levels of rubber over the nineteenth century bear witness to its irrepressible rise. In 1830 Britain had imported just 211 kg of crude rubber. This had risen to 10,000kg in 1857, and by 1874 levels were just under six times as much again.</p>`
   },
   {
-    title:'The Myth of the Eight-hour Sleep',
-    subtitle:'',
-    text:`<p><strong>(14) ……</strong><br>We often worry about lying awake in the middle of the night – but it could be good for you Indications from both science and history suggest that the eight-hour sleep may not be a natural or inborn pattern for humans. In the early 1990s, psychiatrist Thomas Wehr conducted research which implies just that Wehr kept a group of people in a darkened room or 14 hours a day for a month. It took some time for their sleep to regulate, but by the fourth week the subjects had settled into a very distinct sleeping pattern. Firstly, they slept four hours, then woke for one or two hours before falling into a second four-hour sleep. Though sleep scientists were impressed by the implications of the study, the idea that we must sleep for eight consecutive hours persists amongst the general public.</p>
-<p><strong>(15) ……</strong><br>In 2001, historian Roger Ekirch of Virginia Tech University in the US published a paper drawn from 16 years of research, revealing historical evidence that humans used to sleep in two distinct periods of time each night. Ekirch's research found more than 500 references to a segmented sleeping pattern – in diaries, court recorders, medical books and literature, from the ancient Greeks to tribes in Nigeria. Much like Wehr's findings, these references describe a first sleep which began not long following sunset. Then there was a waking period of one or two hours and after that a second sleep. During the waking period, people could be quite active. They sometimes got up and moved around the house, although most people stayed in bed, and perhaps read or wrote if they had enough money for candles. In many historic accounts, Ekirch found that people used the time that they were awake between periods of sleep to think about and attempt to analyse their dreams. In his book, Evening's Empire, historian Craig Koslofsky suggested an explanation for this divided sleep pattern in Europe. 'Associations with night before the 17th century were not good,' he writes. He goes on to explain that the streets of cities and towns at night were often populated by thieves or worse. The streets at night consequently scared many people. Even the wealthy, who could afford to light their way, had better things to spend their money on. There was no prestige or social value with going out or staying up late at night.</p>
-<p><strong>(16) ……</strong><br>Ekirch found that references to the first and second sleep started to disappear during the late 17th century. The pattern began to alter first among the urban upper classes changing amongst the rest of Western society. By the 1920s, the idea of a first and second sleep had receded entirely from our social consciousness. Ekirch attributes the initial shift to improvements in street and home lighting. As the night became a time for all kinds of activity, the length of time people used for rest declined.</p>
-<p>In 1667, Paris became the first city in the world to light its streets, using wax candles in glass lamps. It was followed by another French city, Lille, in the same year and by Amsterdam in Holland two years later, where a much more efficient oil-powered lamp was developed. London didn't light its streets until 1584, but by the end of the 17th century, more than 50 of Europe's major towns and cities were lit at night. Coffee houses emerged as a fashionable phenomenon and many were open virtually around the clock. Going out at night became commonplace, and spending hours lying in bad was considered a waste of time. 'People were becoming increasingly time-conscious and sensitive to efficiency, certainly before the 19th century,' says Ekirch. 'But the Industrial Revolution intensified that attitude considerably.' Strong evidence of this shifting attitude is contained in a medical journal from 1829 which urged parents to force their children out of the pattern of first and second sleep.</p>
-<p><strong>(17) ……</strong><br>Today, most people seem to have adapted quite well to the eight-hour sleep, but Ekirch believes many sleeping problems may have roots in the human body's natural preference for divided sleep, as well as in difficulties caused by extended exposure to artificial light in the modern world. This could be the cause of a condition called sleep maintenance insomnia, where people wake during the night and have trouble getting back to sleep. The condition first appears in literature at the end of the 19th century, at the same time as accounts of interrupted sleep disappear.</p>
-<p><strong>(18) ……</strong><br>Sleep psychologist, Gregg Jacobs, says that the idea that we must sleep for an extended period of time could be changing. If it makes people who wake up in the night anxious, as this anxiety can itself discourage sleep and is likely to affect waking life too. Jacobs suggests that the waking period between sleeping, when people simply rested and relaxed, could have played an important part in the human capacity to regulate stress naturally. Russell Foster, a professor of circadian (body clock) neuroscience at Oxford University in the UK, shares this point of view. 'Over 30% of the medical problems that doctors are faced with stem directly or indirectly from sleep. But sleep has been ignored in medical training, and there are very few countries where sleep is studied,' Foster says. He feels this needs to change.</p>`
+    title: 'The Myth of the Eight-hour Sleep',
+    meta: 'Passage 2',
+    html: `<p><b>[14]</b> We often worry about lying awake in the middle of the night – but it could be good for you. Indications from both science and history suggest that the eight-hour sleep may not be a natural or inborn pattern for humans. In the early 1990s, psychiatrist Thomas Wehr conducted research which implies just that. Wehr kept a group of people in a darkened room for 14 hours a day for a month. It took some time for their sleep to regulate, but by the fourth week the subjects had settled into a very distinct sleeping pattern. Firstly, they slept four hours, then woke for one or two hours before falling into a second four-hour sleep. Though sleep scientists were impressed by the implications of the study, the idea that we must sleep for eight consecutive hours persists amongst the general public.</p>
+<p><b>[15]</b> In 2001, historian Roger Ekirch of Virginia Tech University in the US published a paper drawn from 16 years of research, revealing historical evidence that humans used to sleep in two distinct periods of time each night. Ekirch's research found more than 500 references to a segmented sleeping pattern – in diaries, court recorders, medical books and literature, from the ancient Greeks to tribes in Nigeria. Much like Wehr's findings, these references describe a first sleep which began not long following sunset. Then there was a waking period of one or two hours and after that a second sleep. During the waking period, people could be quite active. They sometimes got up and moved around the house, although most people stayed in bed, and perhaps read or wrote if they had enough money for candles. In many historic accounts, Ekirch found that people used the time that they were awake between periods of sleep to think about and attempt to analyse their dreams. In his book, <i>Evening's Empire</i>, historian Craig Koslofsky suggested an explanation for this divided sleep pattern in Europe. 'Associations with night before the 17th century were not good,' he writes. He goes on to explain that the streets of cities and towns at night were often populated by thieves or worse. The streets at night consequently scared many people. Even the wealthy, who could afford to light their way, had better things to spend their money on. There was no prestige or social value with going out or staying up late at night.</p>
+<p><b>[16]</b> Ekirch found that references to the first and second sleep started to disappear during the late 17th century. The pattern began to alter first among the urban upper classes changing amongst the rest of Western society. By the 1920s, the idea of a first and second sleep had receded entirely from our social consciousness. Ekirch attributes the initial shift to improvements in street and home lighting. As the night became a time for all kinds of activity, the length of time people used for rest declined. In 1667, Paris became the first city in the world to light its streets, using wax candles in glass lamps. It was followed by another French city, Lille, in the same year and by Amsterdam in Holland two years later, where a much more efficient oil-powered lamp was developed. London didn't light its streets until 1584, but by the end of the 17th century, more than 50 of Europe's major towns and cities were lit at night. Coffee houses emerged as a fashionable phenomenon and many were open virtually around the clock. Going out at night became commonplace, and spending hours lying in bed was considered a waste of time. 'People were becoming increasingly time-conscious and sensitive to efficiency, certainly before the 19th century,' says Ekirch. 'But the Industrial Revolution intensified that attitude considerably.' Strong evidence of this shifting attitude is contained in a medical journal from 1829 which urged parents to force their children out of the pattern of first and second sleep.</p>
+<p><b>[17]</b> Today, most people seem to have adapted quite well to the eight-hour sleep, but Ekirch believes many sleeping problems may have roots in the human body's natural preference for divided sleep, as well as in difficulties caused by extended exposure to artificial light in the modern world. This could be the cause of a condition called sleep maintenance insomnia, where people wake during the night and have trouble getting back to sleep. The condition first appears in literature at the end of the 19th century, at the same time as accounts of interrupted sleep disappear.</p>
+<p><b>[18]</b> Sleep psychologist, Gregg Jacobs, says that the idea that we must sleep for an extended period of time could be changing. If it makes people who wake up in the night anxious, as this anxiety can itself discourage sleep and is likely to affect waking life too. Jacobs suggests that the waking period between sleeping, when people simply rested and relaxed, could have played an important part in the human capacity to regulate stress naturally. Russell Foster, a professor of circadian (body clock) neuroscience at Oxford University in the UK, shares this point of view. 'Over 30% of the medical problems that doctors are faced with stem directly or indirectly from sleep. But sleep has been ignored in medical training, and there are very few countries where sleep is studied,' Foster says. He feels this needs to change.</p>`
   },
   {
-    title:'Living Dunes',
-    subtitle:'Things don\'t come much stranger than heaps of sand that can move and sing of their own accord. Sally Palmer investigates',
-    text:`<p><strong>(27) ……</strong><br>Armies of giant sand dunes are advancing across the world's deserts, engulfing anything that crosses their path. They are tens of metres tall and hundreds of metres long. Fortunately, they aren't going very fast. Even the smallest, speediest dunes only travel about 100 metres over the course of a year, while the bigger ones, which weigh something in the order of 10,000 tonnes, barely move one metre in that time. However, their insidious creep can have serious consequences if there is an oil installation or a railway line in their path.</p>
-<p><strong>(28) ……</strong><br>About 47% of the world's land mass, including Antarctica, most of Australia and large areas of Africa, is classified as arid or semi-arid desert. Only around 20% of that is sand-covered, however, and over half of that is classified as linear' sand dunes. These form in a long curving wave, as a result of wind blowing strongly from several quarters, flipping them from side to side. Although linear dunes are static, sand blowing off them can cause problems for desert villages, burying crops and buildings.</p>
-<p><strong>(29) ……</strong><br>Moving dunes make up just a small percentage of the rest, but they are of the most interest to scientists. They are known as 'barchans': heavy, crescent-shaped sand piles with a ridged crest and two elongated arms, one curving away to either side. 'Barchan dunes only tend to form where you have one-directional winds on the edge of sandy deserts near coastal areas,' says Giles Wiggs, a geomorphologist at Oxford University, who has been studying the formation and movement of sand dunes for more than a decade.</p>
-<p><strong>(30) ……</strong><br>But even with strong winds, how can entire barchans move while retaining their form? That question was first answered in the mid-20th century by British explorer Ralph Alger Bagnold, and his answer hinges on the fact that dunes aren't solid, but granular. Bagnold figured out how barchan dunes are able to move grain by grain. Imagine a single grain of sand being blown up the back of a dune by the wind and deposited on the top. More grains follow the same pattern, until the accumulated weight of piled-up sand finally pushes the top down the dune face. The grain tumbles, then stops on the face until subsequent mini-avalanches bury it. Eventually, it reappears at the back of the dune, ready to repeat the process. As this happens to every grain of sand in the dune, the whole thing creeps in the direction of the prevailing wind.</p>
-<p><strong>(31) ……</strong><br>The relationship between the wind and barchan dunes is complex. As a dune grows, it modifies the speed and course of the wind, which in turn alters how that dune and its neighbours evolve. 'Interestingly, the dune can regulate its own shape, and maintain it as it moves,' says Dr Stéphane Douady, a physicist at Ecole Normale Supérieure (ENS) in France. 'Even when two dunes collide, they quickly take on their distinctive shapes again. It's like a living organism.'</p>
-<p><strong>(32) ……</strong><br>Douady and his colleagues have also been studying an even odder phenomenon than moving dunes: some barchans actually sing. Local legends attributed the sounds to dangerous spirits which were trying to trap unwary travellers. Douady is more pragmatic. 'It's a strong booming noise with a low frequency,' he explains, making a noise like a foghorn to demonstrate. 'It can last for a long time - up to several minutes. It's a very loud sound and you don't understand where it's coming from when you first hear it.' There are about 50 dunes distributed across 35 deserts round the world that are known to sing. Douady says the sound is caused by the way sand avalanches down the faces of particular dunes. Rather than tumbling randomly, the sand grains flow in synchrony and set each other vibrating like the membrane on a gigantic loudspeaker. The synchronisation causes the air to move in and out between the grains, creating a powerful sound wave.</p>
-<p><strong>(33) ……</strong><br>What really surprised the scientists, however, was that they were able to take samples of the singing sand back to France and replicate the sound at ENS, proving that it's the sand, not the dune shape, that causes the sound. Their studies show the grains are a uniform shape, well-rounded from years of striking each other, and that the variations in size affect the tone. Crucially, the grains are coated with a special veneer, which Douady calls 'desert glaze', made from a precise combination of minerals from surrounding rocks including iron, aluminium, manganese, silicon and calcium. The team found that after a month or so, the veneer wore off and the grains lost their 'voice'. 'We managed to reproduce the desert glaze and then the grains started to sing again,' says Douady. 'We tried putting the coating onto different grains, but they weren't round enough and it didn't work. But some American colleagues made some artificial grains and managed to make them sing, after covering them in desert glaze.' Douady has now made recordings of dunesong from all over the world which are to be made into a CD.</p>`
-  }
+    title: 'Living dunes',
+    meta: 'Things don\'t come much stranger than heaps of sand that can move and sing of their own accord. Sally Palmer investigates',
+    html: `<p><b>[27]</b> Armies of giant sand dunes are advancing across the world's deserts, engulfing anything that crosses their path. They are tens of metres tall and hundreds of metres long. Fortunately, they aren't going very fast. Even the smallest, speediest dunes only travel about 100 metres over the course of a year, while the bigger ones, which weigh something in the order of 10,000 tonnes, barely move one metre in that time. However, their insidious creep can have serious consequences if there is an oil installation or a railway line in their path.</p>
+<p><b>[28]</b> About 47% of the world's land mass, including Antarctica, most of Australia and large areas of Africa, is classified as arid or semi-arid desert. Only around 20% of that is sand-covered, however, and over half of that is classified as 'linear' sand dunes. These form in a long curving wave, as a result of wind blowing strongly from several quarters, flipping them from side to side. Although linear dunes are static, sand blowing off them can cause problems for desert villages, burying crops and buildings.</p>
+<p><b>[29]</b> Moving dunes make up just a small percentage of the rest, but they are of the most interest to scientists. They are known as 'barchans': heavy, crescent-shaped sand piles with a ridged crest and two elongated arms, one curving away to either side. 'Barchan dunes only tend to form where you have one-directional winds on the edge of sandy deserts near coastal areas,' says Giles Wiggs, a geomorphologist at Oxford University, who has been studying the formation and movement of sand dunes for more than a decade.</p>
+<p><b>[30]</b> But even with strong winds, how can entire barchans move while retaining their form? That question was first answered in the mid-20th century by British explorer Ralph Alger Bagnold, and his answer hinges on the fact that dunes aren't solid, but granular. Bagnold figured out how barchan dunes are able to move grain by grain. Imagine a single grain of sand being blown up the back of a dune by the wind and deposited on the top. More grains follow the same pattern, until the accumulated weight of piled-up sand finally pushes the top down the dune face. The grain tumbles, then stops on the face until subsequent mini-avalanches bury it. Eventually, it reappears at the back of the dune, ready to repeat the process. As this happens to every grain of sand in the dune, the whole thing creeps in the direction of the prevailing wind.</p>
+<p><b>[31]</b> The relationship between the wind and barchan dunes is complex. As a dune grows, it modifies the speed and course of the wind, which in turn alters how that dune and its neighbours evolve. 'Interestingly, the dune can regulate its own shape, and maintain it as it moves,' says Dr Stéphane Douady, a physicist at Ecole Normale Supérieure (ENS) in France. 'Even when two dunes collide, they quickly take on their distinctive shapes again. It's like a living organism.'</p>
+<p><b>[32]</b> Douady and his colleagues have also been studying an even odder phenomenon than moving dunes: some barchans actually sing. Local legends attributed the sounds to dangerous spirits which were trying to trap unwary travellers. Douady is more pragmatic. 'It's a strong booming noise with a low frequency,' he explains, making a noise like a foghorn to demonstrate. 'It can last for a long time - up to several minutes. It's a very loud sound and you don't understand where it's coming from when you first hear it.' There are about 50 dunes distributed across 35 deserts round the world that are known to sing. Douady says the sound is caused by the way sand avalanches down the faces of particular dunes. Rather than tumbling randomly, the sand grains flow in synchrony and set each other vibrating like the membrane on a gigantic loudspeaker. The synchronisation causes the air to move in and out between the grains, creating a powerful sound wave.</p>
+<p><b>[33]</b> What really surprised the scientists, however, was that they were able to take samples of the singing sand back to France and replicate the sound at ENS, proving that it's the sand, not the dune shape, that causes the sound. Their studies show the grains are a uniform shape, well-rounded from years of striking each other, and that the variations in size affect the tone. Crucially, the grains are coated with a special veneer, which Douady calls 'desert glaze', made from a precise combination of minerals from surrounding rocks including iron, aluminium, manganese, silicon and calcium. The team found that after a month or so, the veneer wore off and the grains lost their 'voice'. 'We managed to reproduce the desert glaze and then the grains started to sing again,' says Douady. 'We tried putting the coating onto different grains, but they weren't round enough and it didn't work. But some American colleagues made some artificial grains and managed to make them sing, after covering them in desert glaze.' Douady has now made recordings of dunesong from all over the world which are to be made into a CD.</p>`
+  },
 ];
 
-// ===== QUESTION DEFINITIONS =====
-const QUESTIONS=[
-  // Q1-6: T/F/NG
-  {id:0,type:'tfn',text:'Rubber plants grow only in certain regions of the world.',p:1},
-  {id:1,type:'tfn',text:'Rubber was extracted in Mexico as early as the sixth century.',p:1},
-  {id:2,type:'tfn',text:'Rubber from the Castilla elastica plant is of poorer quality than that from the Para plant.',p:1},
-  {id:3,type:'tfn',text:'A French mathematician inspired real interest in rubber amongst Europeans.',p:1},
-  {id:4,type:'tfn',text:'The process of vulcanisation was discovered by accident.',p:1},
-  {id:5,type:'tfn',text:'Imports of crude rubber into Britain fell during the nineteenth century.',p:1},
-  // Q7-13: Fill in
-  {id:6,type:'fill',text:'In 1818, (7) _________________ was produced using rubber.',p:1},
-  {id:7,type:'fill',text:'In 1820 a machine was invented for recycling (8) _________________ of rubber.',p:1},
-  {id:8,type:'fill',text:'Rubber products could turn either soft or (9) _________________ depending on temperature.',p:1},
-  {id:9,type:'fill',text:'In 1839 a new process to (10) _________________ rubber was discovered.',p:1},
-  {id:10,type:'fill',text:'Rubber was used in the creation of the (11) _________________ industry during the Industrial Revolution.',p:1},
-  {id:11,type:'fill',text:'Then in 1888 the (12) _________________ was developed.',p:1},
-  {id:12,type:'fill',text:'A few years later the (13) _________________ of the motor car began.',p:1},
-  // Q14-18: Heading match
-  {id:13,type:'heading',text:'Section (14)',p:2,options:['i','ii','iii','iv','v','vi','vii']},
-  {id:14,type:'heading',text:'Section (15)',p:2,options:['i','ii','iii','iv','v','vi','vii']},
-  {id:15,type:'heading',text:'Section (16)',p:2,options:['i','ii','iii','iv','v','vi','vii']},
-  {id:16,type:'heading',text:'Section (17)',p:2,options:['i','ii','iii','iv','v','vi','vii']},
-  {id:17,type:'heading',text:'Section (18)',p:2,options:['i','ii','iii','iv','v','vi','vii']},
-  // Q19-23: Matching academics
-  {id:18,type:'academic',text:'In certain historical periods, the threat of criminal danger led to segmented sleep.',p:2,options:['A','B','C','D','E']},
-  {id:19,type:'academic',text:'Physicians should learn more about treating people with sleeping difficulties.',p:2,options:['A','B','C','D','E']},
-  {id:20,type:'academic',text:'Historically, when people experienced interrupted sleep, they used the waking period at night for different activities.',p:2,options:['A','B','C','D','E']},
-  {id:21,type:'academic',text:'Technological changes in Europe made people more likely to sleep throughout the night.',p:2,options:['A','B','C','D','E']},
-  {id:22,type:'academic',text:'The belief that humans should have a long continuous sleep can be psychologically harmful.',p:2,options:['A','B','C','D','E']},
-  // Q24-26: Fill
-  {id:23,type:'fill',text:'People habitually went to bed early, soon after (24) _________.',p:2},
-  {id:24,type:'fill',text:'People used the time awake between sleeps to think about (25) _________.',p:2},
-  {id:25,type:'fill',text:'In 16th-century Europe, people feared (26) _________ on large unit city.',p:2},
-  // Q27-32: Paragraph headings P3
-  {id:26,type:'para-head',text:'Paragraph (27)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
-  {id:27,type:'para-head',text:'Paragraph (28)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
-  {id:28,type:'para-head',text:'Paragraph (29)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
-  {id:29,type:'para-head',text:'Paragraph (30)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
-  {id:30,type:'para-head',text:'Paragraph (31)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
-  {id:31,type:'para-head',text:'Paragraph (32)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
-  {id:32,type:'para-head',text:'Paragraph (33)',p:3,options:['i','ii','iii','iv','v','vi','vii','viii','ix']},
-  // Q34-36: MCQ
-  {id:33,type:'mcq',text:'What are we told about linear dunes?',p:3,options:['A. They are formed by strong winds blowing from one direction.','B. They can move up to 100 metres in a twelve-month period.','C. They develop in a recognisable shape.','D. They make up about 20% of the world\'s deserts.']},
-  {id:34,type:'mcq',text:'Bagnold discovered that movement in barchans was caused by',p:3,options:['A. the long straight shape of the dunes.','B. the particular composition of the dunes.','C. the exceptionally heavy nature of the sand grains.','D. the unusual strength of the wind in certain seasons.']},
-  {id:35,type:'mcq',text:'Why does Dr Douady compare a barchan dune to a living organism?',p:3,options:['A. It starts small and then increases in size.','B. It has an effect on its immediate surroundings.','C. Its relations with desert organisms are quite developed.','D. Its outline stays the same even after a period of movement.']},
-  // Q37-40: Fill
-  {id:36,type:'fill',text:'Singing dunes, which belong to the type known as (37) _________________, produce a very loud sound.',p:3},
-  {id:37,type:'fill',text:'Researchers have worked out that individual grains have a similar (38) _________________.',p:3},
-  {id:38,type:'fill',text:'The differences in dimensions alter the (39) _________________ of the song.',p:3},
-  {id:39,type:'fill',text:'Each grain is covered with a mixture of different (40) _________________.',p:3}
+/* Mỗi nhóm câu hỏi gắn với 1 passage (passageIndex 0/1/2) và có
+   instructionsHtml hiển thị phía trên nhóm. */
+const QUESTION_GROUPS = [
+  {
+    passageIndex: 0,
+    instructionsHtml: '<b>Questions 1–6</b><br>Do the following statements agree with the information given in the passage?<br>In boxes 1–6 on your answer sheet, write<br><b>TRUE</b> if the statement agrees with the information<br><b>FALSE</b> if the statement contradicts the information<br><b>NOT GIVEN</b> if there is no information on this',
+    questions: [
+      { n:1, type:'select', text:'Rubber plants grow only in certain regions of the world.', options:[{key:'TRUE',label:'TRUE'},{key:'FALSE',label:'FALSE'},{key:'NOT GIVEN',label:'NOT GIVEN'}] },
+      { n:2, type:'select', text:'Rubber was extracted in Mexico as early as the sixth century.', options:[{key:'TRUE',label:'TRUE'},{key:'FALSE',label:'FALSE'},{key:'NOT GIVEN',label:'NOT GIVEN'}] },
+      { n:3, type:'select', text:'Rubber from the Castilla elastica plant is of poorer quality than that from the Para plant.', options:[{key:'TRUE',label:'TRUE'},{key:'FALSE',label:'FALSE'},{key:'NOT GIVEN',label:'NOT GIVEN'}] },
+      { n:4, type:'select', text:'A French mathematician inspired real interest in rubber amongst Europeans.', options:[{key:'TRUE',label:'TRUE'},{key:'FALSE',label:'FALSE'},{key:'NOT GIVEN',label:'NOT GIVEN'}] },
+      { n:5, type:'select', text:'The process of vulcanisation was discovered by accident.', options:[{key:'TRUE',label:'TRUE'},{key:'FALSE',label:'FALSE'},{key:'NOT GIVEN',label:'NOT GIVEN'}] },
+      { n:6, type:'select', text:'Imports of crude rubber into Britain fell during the nineteenth century.', options:[{key:'TRUE',label:'TRUE'},{key:'FALSE',label:'FALSE'},{key:'NOT GIVEN',label:'NOT GIVEN'}] },
+    ]
+  },
+  {
+    passageIndex: 0,
+    instructionsHtml: '<b>Questions 7–13</b><br>Complete the notes below.<br>Choose <b>ONE OR TWO WORDS</b> from the passage for each answer.<br>Write your answers in boxes 7–13 on your answer sheet.',
+    questions: [
+      { n:7,  type:'text', text:'In 1818, (7) ___________ was produced using rubber,' },
+      { n:8,  type:'text', text:'and in 1820 a machine was invented for recycling (8) ___________ of rubber.' },
+      { n:9,  type:'text', text:'For example, rubber products smelt bad when they were dissolved, and could turn either soft or (9) ___________ depending on the temperature.' },
+      { n:10, type:'text', text:'However, in 1839, a new process to (10) ___________ the substance greatly increased its potential.' },
+      { n:11, type:'text', text:'For example, rubber was used in the creation of the (11) ___________ industry during the Industrial Revolution.' },
+      { n:12, type:'text', text:'Then in 1888 the (12) ___________ was developed,' },
+      { n:13, type:'text', text:'and a few years later the (13) ___________ of the motor car began.' },
+    ]
+  },
+  {
+    passageIndex: 1,
+    instructionsHtml: '<b>Questions 14–18</b><br>The passage has seven sections, <b>[14]–[18]</b>.<br>Choose the correct heading for each section from the list of headings below.<br>Write the correct number, <b>i–vii</b>, in boxes 14–18 on your answer sheet.<br><br><b>List of Headings</b><br>i. Historical reasons why interrupted sleep became uncommon<br>ii. Brain structure involved in sleep patterns<br>iii. Potential health issues related to sleep<br>iv. Famous cases in literature of sleep<br>v. An analysis of old documents to discover deep patterns<br>vi. Biological and environmental factors preventing people from falling asleep again<br>vii. Scientific evidence that divided sleep is a natural phenomenon',
+    questions: [
+      { n:14, type:'select', text:'Section [14]', options:[{key:'i',label:'Historical reasons why interrupted sleep became uncommon'},{key:'ii',label:'Brain structure involved in sleep patterns'},{key:'iii',label:'Potential health issues related to sleep'},{key:'iv',label:'Famous cases in literature of sleep'},{key:'v',label:'An analysis of old documents to discover deep patterns'},{key:'vi',label:'Biological and environmental factors preventing people from falling asleep again'},{key:'vii',label:'Scientific evidence that divided sleep is a natural phenomenon'}] },
+      { n:15, type:'select', text:'Section [15]', options:[{key:'i',label:'Historical reasons why interrupted sleep became uncommon'},{key:'ii',label:'Brain structure involved in sleep patterns'},{key:'iii',label:'Potential health issues related to sleep'},{key:'iv',label:'Famous cases in literature of sleep'},{key:'v',label:'An analysis of old documents to discover deep patterns'},{key:'vi',label:'Biological and environmental factors preventing people from falling asleep again'},{key:'vii',label:'Scientific evidence that divided sleep is a natural phenomenon'}] },
+      { n:16, type:'select', text:'Section [16]', options:[{key:'i',label:'Historical reasons why interrupted sleep became uncommon'},{key:'ii',label:'Brain structure involved in sleep patterns'},{key:'iii',label:'Potential health issues related to sleep'},{key:'iv',label:'Famous cases in literature of sleep'},{key:'v',label:'An analysis of old documents to discover deep patterns'},{key:'vi',label:'Biological and environmental factors preventing people from falling asleep again'},{key:'vii',label:'Scientific evidence that divided sleep is a natural phenomenon'}] },
+      { n:17, type:'select', text:'Section [17]', options:[{key:'i',label:'Historical reasons why interrupted sleep became uncommon'},{key:'ii',label:'Brain structure involved in sleep patterns'},{key:'iii',label:'Potential health issues related to sleep'},{key:'iv',label:'Famous cases in literature of sleep'},{key:'v',label:'An analysis of old documents to discover deep patterns'},{key:'vi',label:'Biological and environmental factors preventing people from falling asleep again'},{key:'vii',label:'Scientific evidence that divided sleep is a natural phenomenon'}] },
+      { n:18, type:'select', text:'Section [18]', options:[{key:'i',label:'Historical reasons why interrupted sleep became uncommon'},{key:'ii',label:'Brain structure involved in sleep patterns'},{key:'iii',label:'Potential health issues related to sleep'},{key:'iv',label:'Famous cases in literature of sleep'},{key:'v',label:'An analysis of old documents to discover deep patterns'},{key:'vi',label:'Biological and environmental factors preventing people from falling asleep again'},{key:'vii',label:'Scientific evidence that divided sleep is a natural phenomenon'}] },
+    ]
+  },
+  {
+    passageIndex: 1,
+    instructionsHtml: '<b>Questions 19–23</b><br>Look at the following statements (Questions 19–23) and the list of people below.<br>Match each statement with the correct person, <b>A–E</b>.<br>Write the correct letter, <b>A–E</b>, in boxes 19–23 on your answer sheet.<br><br><b>List of People</b><br>A. Thomas Wehr<br>B. Roger Ekirch<br>C. Craig Koslofsky<br>D. Gregg Jacobs<br>E. Russell Foster',
+    questions: [
+      { n:19, type:'select', text:'In certain historical periods, the threat of criminal danger led to segmented sleep.', options:[{key:'A',label:'Thomas Wehr'},{key:'B',label:'Roger Ekirch'},{key:'C',label:'Craig Koslofsky'},{key:'D',label:'Gregg Jacobs'},{key:'E',label:'Russell Foster'}] },
+      { n:20, type:'select', text:'Physicians should learn more about treating people with sleeping difficulties.', options:[{key:'A',label:'Thomas Wehr'},{key:'B',label:'Roger Ekirch'},{key:'C',label:'Craig Koslofsky'},{key:'D',label:'Gregg Jacobs'},{key:'E',label:'Russell Foster'}] },
+      { n:21, type:'select', text:'Historically, when people experienced interrupted sleep, they used the waking period at night for different activities.', options:[{key:'A',label:'Thomas Wehr'},{key:'B',label:'Roger Ekirch'},{key:'C',label:'Craig Koslofsky'},{key:'D',label:'Gregg Jacobs'},{key:'E',label:'Russell Foster'}] },
+      { n:22, type:'select', text:'Technological changes in Europe made people more likely to sleep throughout the night.', options:[{key:'A',label:'Thomas Wehr'},{key:'B',label:'Roger Ekirch'},{key:'C',label:'Craig Koslofsky'},{key:'D',label:'Gregg Jacobs'},{key:'E',label:'Russell Foster'}] },
+      { n:23, type:'select', text:'The belief that humans should have a long continuous sleep can be psychologically harmful.', options:[{key:'A',label:'Thomas Wehr'},{key:'B',label:'Roger Ekirch'},{key:'C',label:'Craig Koslofsky'},{key:'D',label:'Gregg Jacobs'},{key:'E',label:'Russell Foster'}] },
+    ]
+  },
+  {
+    passageIndex: 1,
+    instructionsHtml: '<b>Questions 24–26</b><br>Complete the summary below.<br>Choose <b>ONE WORD ONLY</b> from the passage for each answer.<br>Write your answers in boxes 24–26 on your answer sheet.',
+    questions: [
+      { n:24, type:'text', text:'People habitually went to bed early, soon after (24) ___________, slept for a while,' },
+      { n:25, type:'text', text:'then woke up for a few hours of activity or perhaps to consider, for example, the meaning of (25) ___________.' },
+      { n:26, type:'text', text:'In 16th-century Europe, people tended to stay at home at night because they feared (26) ___________ on large unlit city streets.' },
+    ]
+  },
+  {
+    passageIndex: 2,
+    instructionsHtml: '<b>Questions 27–33</b><br>The passage has seven sections, <b>[27]–[33]</b>.<br>Choose the correct heading for each section from the list of headings below.<br>Write the correct number, <b>i–ix</b>, in boxes 27–33 on your answer sheet.<br><br><b>List of Headings</b><br>i. Moving rapidly across the desert<br>ii. Recreating the process in a laboratory<br>iii. Strange music created by human movement<br>iv. A potential threat to industry and communications<br>v. Dunes coming together and re-forming<br>vi. Needing a specific combination of conditions<br>vii. A continuous cycle<br>viii. The commonest type of dune<br>ix. Old superstitions demystified',
+    questions: [
+      { n:27, type:'select', text:'Section [27]', options:[{key:'i',label:'Moving rapidly across the desert'},{key:'ii',label:'Recreating the process in a laboratory'},{key:'iii',label:'Strange music created by human movement'},{key:'iv',label:'A potential threat to industry and communications'},{key:'v',label:'Dunes coming together and re-forming'},{key:'vi',label:'Needing a specific combination of conditions'},{key:'vii',label:'A continuous cycle'},{key:'viii',label:'The commonest type of dune'},{key:'ix',label:'Old superstitions demystified'}] },
+      { n:28, type:'select', text:'Section [28]', options:[{key:'i',label:'Moving rapidly across the desert'},{key:'ii',label:'Recreating the process in a laboratory'},{key:'iii',label:'Strange music created by human movement'},{key:'iv',label:'A potential threat to industry and communications'},{key:'v',label:'Dunes coming together and re-forming'},{key:'vi',label:'Needing a specific combination of conditions'},{key:'vii',label:'A continuous cycle'},{key:'viii',label:'The commonest type of dune'},{key:'ix',label:'Old superstitions demystified'}] },
+      { n:29, type:'select', text:'Section [29]', options:[{key:'i',label:'Moving rapidly across the desert'},{key:'ii',label:'Recreating the process in a laboratory'},{key:'iii',label:'Strange music created by human movement'},{key:'iv',label:'A potential threat to industry and communications'},{key:'v',label:'Dunes coming together and re-forming'},{key:'vi',label:'Needing a specific combination of conditions'},{key:'vii',label:'A continuous cycle'},{key:'viii',label:'The commonest type of dune'},{key:'ix',label:'Old superstitions demystified'}] },
+      { n:30, type:'select', text:'Section [30]', options:[{key:'i',label:'Moving rapidly across the desert'},{key:'ii',label:'Recreating the process in a laboratory'},{key:'iii',label:'Strange music created by human movement'},{key:'iv',label:'A potential threat to industry and communications'},{key:'v',label:'Dunes coming together and re-forming'},{key:'vi',label:'Needing a specific combination of conditions'},{key:'vii',label:'A continuous cycle'},{key:'viii',label:'The commonest type of dune'},{key:'ix',label:'Old superstitions demystified'}] },
+      { n:31, type:'select', text:'Section [31]', options:[{key:'i',label:'Moving rapidly across the desert'},{key:'ii',label:'Recreating the process in a laboratory'},{key:'iii',label:'Strange music created by human movement'},{key:'iv',label:'A potential threat to industry and communications'},{key:'v',label:'Dunes coming together and re-forming'},{key:'vi',label:'Needing a specific combination of conditions'},{key:'vii',label:'A continuous cycle'},{key:'viii',label:'The commonest type of dune'},{key:'ix',label:'Old superstitions demystified'}] },
+      { n:32, type:'select', text:'Section [32]', options:[{key:'i',label:'Moving rapidly across the desert'},{key:'ii',label:'Recreating the process in a laboratory'},{key:'iii',label:'Strange music created by human movement'},{key:'iv',label:'A potential threat to industry and communications'},{key:'v',label:'Dunes coming together and re-forming'},{key:'vi',label:'Needing a specific combination of conditions'},{key:'vii',label:'A continuous cycle'},{key:'viii',label:'The commonest type of dune'},{key:'ix',label:'Old superstitions demystified'}] },
+      { n:33, type:'select', text:'Section [33]', options:[{key:'i',label:'Moving rapidly across the desert'},{key:'ii',label:'Recreating the process in a laboratory'},{key:'iii',label:'Strange music created by human movement'},{key:'iv',label:'A potential threat to industry and communications'},{key:'v',label:'Dunes coming together and re-forming'},{key:'vi',label:'Needing a specific combination of conditions'},{key:'vii',label:'A continuous cycle'},{key:'viii',label:'The commonest type of dune'},{key:'ix',label:'Old superstitions demystified'}] },
+    ]
+  },
+  {
+    passageIndex: 2,
+    instructionsHtml: '<b>Questions 34–36</b><br>Choose the correct letter, <b>A</b>, <b>B</b>, <b>C</b> or <b>D</b>.<br>Write the correct letter in boxes 34–36 on your answer sheet.',
+    questions: [
+      { n:34, type:'radio', text:'What are we told about linear dunes?', options:[
+        {key:'A', label:'They are formed by strong winds blowing from one direction.'},
+        {key:'B', label:'They can move up to 100 metres in a twelve-month period.'},
+        {key:'C', label:'They develop in a recognisable shape.'},
+        {key:'D', label:'They make up about 20% of the world\'s deserts.'}
+      ]},
+      { n:35, type:'radio', text:'Bagnold discovered that movement in barchans was caused by', options:[
+        {key:'A', label:'the long straight shape of the dunes.'},
+        {key:'B', label:'the particular composition of the dunes.'},
+        {key:'C', label:'the exceptionally heavy nature of the sand grains.'},
+        {key:'D', label:'the unusual strength of the wind in certain seasons.'}
+      ]},
+      { n:36, type:'radio', text:'Why does Dr Douady compare a barchan dune to a living organism?', options:[
+        {key:'A', label:'It starts small and then increases in size.'},
+        {key:'B', label:'It has an effect on its immediate surroundings.'},
+        {key:'C', label:'Its relations with desert organisms are quite developed.'},
+        {key:'D', label:'Its outline stays the same even after a period of movement.'}
+      ]},
+    ]
+  },
+  {
+    passageIndex: 2,
+    instructionsHtml: '<b>Questions 37–40</b><br>Complete the sentences below.<br>Choose <b>ONE OR TWO WORDS</b> from the passage for each answer.<br>Write your answers in boxes 37–40 on your answer sheet.',
+    questions: [
+      { n:37, type:'text', text:'Singing dunes, which belong to the type of dunes known as (37) ___________, produce a very loud sound which is transmitted at a low frequency.' },
+      { n:38, type:'text', text:'Research proves that the individual grains have a similar (38) ___________,' },
+      { n:39, type:'text', text:'but the differences in dimensions alter the (39) ___________ of the \'song\'.' },
+      { n:40, type:'text', text:'Each grain is covered with a mixture of different (40) ___________ and this is vital to the sound production.' },
+    ]
+  },
 ];
 
-const HEADINGS_P2=['i – Historical reasons why interrupted sleep became uncommon','ii – Brain structure involved in sleep patterns','iii – Potential health issues related to sleep','iv – Famous cases in literature of sleep','v – An analysis of old documents to discover deep patterns','vi – Biological and environmental factors preventing people from falling asleep again','vii – Scientific evidence that divided sleep is a natural phenomenon'];
-const HEADINGS_P3=['i – Moving rapidly across the desert','ii – Recreating the process in a laboratory','iii – Strange music created by human movement','iv – A potential threat to industry and communications','v – Dunes coming together and re-forming','vi – Needing a specific combination of conditions','vii – A continuous cycle','viii – The commonest type of dune','ix – Old superstitions demystified'];
-const ACADEMICS=['A. Thomas Wehr','B. Roger Ekirch','C. Craig Koslofsky','D. Gregg Jacobs','E. Russell Foster'];
+/* ---------- 2. ĐÁP ÁN ĐÚNG — TODO[AI STUDIO] ----------
+   key: số câu (string) -> đáp án đúng (string, lowercase trim sẽ
+   được so khi chấm). Với câu pair (vd 19-20): để 2 key riêng "19"
+   và "20", mỗi key là 1 trong 2 đáp án đúng của cặp đó. */
+const CORRECT_ANSWERS = {
+  "1":  "FALSE",
+  "2":  "NOT GIVEN",
+  "3":  "NOT GIVEN",
+  "4":  "TRUE",
+  "5":  "NOT GIVEN",
+  "6":  "FALSE",
+  "7":  "waterproof cloth",
+  "8":  "waste strips",
+  "9":  "rigid",
+  "10": "stabilise",
+  "11": "steam engines",
+  "12": "pneumatic tyre",
+  "13": "mass production",
+  "14": "vii",
+  "15": "v",
+  "16": "i",
+  "17": "vi",
+  "18": "iii",
+  "19": "C",
+  "20": "E",
+  "21": "B",
+  "22": "B",
+  "23": "D",
+  "24": "sunset",
+  "25": "dreams",
+  "26": "thieves",
+  "27": "iv",
+  "28": "viii",
+  "29": "vi",
+  "30": "vii",
+  "31": "v",
+  "32": "ix",
+  "33": "ii",
+  "34": "C",
+  "35": "B",
+  "36": "D",
+  "37": "barchans",
+  "38": "shape",
+  "39": "tone",
+  "40": "minerals",
+};
 
-let currentPassage=1;
+/* ============================================================
+   3. RENDER ENGINE (dùng chung — không cần sửa)
+   ============================================================ */
+let currentTab = 0;
+let answers = {};       // { "1": "value", "19": "A", ... }
+let flags = {};         // { "1": true }
+let remainingSeconds = DURATION_MIN * 60;
+let timerInterval = null;
+let studentInfo = { name:'', class:'' };
+let isSubmitted = false;
+let isReviewMode = false;
+let lastPayload = null; // lưu payload đã nộp để khôi phục màn result/sheet khi reload
 
-function switchPassage(p){
-  currentPassage=p;
-  [1,2,3].forEach(n=>{
-    document.getElementById('tab-p'+n).classList.toggle('active',n===p);
+function renderTabs(){
+  const bar = document.getElementById('tabs-bar');
+  bar.innerHTML = '';
+  PASSAGES.forEach((p, i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (i===currentTab ? ' active' : '');
+    btn.textContent = 'Passage ' + (i+1);
+    btn.addEventListener('click', ()=> switchTab(i));
+    bar.appendChild(btn);
   });
-  renderPassage(p);
-  renderQuestions(p);
 }
 
-function renderPassage(p){
-  const col=document.getElementById('passage-col');
-  const d=PASSAGES[p-1];
-  col.innerHTML=`<div class="passage-title">${d.title}</div>${d.subtitle?`<div class="passage-subtitle">${d.subtitle}</div>`:''}<div class="passage-text">${d.text}</div>`;
-  col.scrollTop=0;
+function switchTab(i){
+  currentTab = i;
+  renderTabs();
+  renderPassage();
+  renderQuestions();
+  initCopyProtection();
 }
 
-function renderQuestions(p){
-  const col=document.getElementById('questions-col');
-  col.innerHTML='';
-  const qs=QUESTIONS.filter(q=>q.p===p);
+function renderPassage(){
+  const p = PASSAGES[currentTab];
+  const panel = document.getElementById('panel-passage');
+  panel.innerHTML = `
+    <div class="passage-title">${p.title}</div>
+    <div class="passage-meta">${p.meta}</div>
+    <div class="passage-body">${p.html}</div>
+  `;
+}
 
-  // Group by type-block for cleaner rendering
-  let html='';
+function renderQuestions(){
+  const panel = document.getElementById('panel-questions');
+  panel.innerHTML = '';
+  const groups = QUESTION_GROUPS.filter(g => g.passageIndex === currentTab);
 
-  if(p===1){
-    // TFN block
-    html+=`<div class="q-block"><div class="q-section-title">Questions 1–6</div>
-    <div class="q-instruction">Choose <strong>TRUE</strong> if the statement agrees with the text, <strong>FALSE</strong> if it contradicts, or <strong>NOT GIVEN</strong> if there is no information.</div>`;
-    QUESTIONS.filter(q=>q.p===1&&q.type==='tfn').forEach(q=>html+=buildTFN(q));
-    html+=`</div>`;
-    // Fill block
-    html+=`<div class="q-block"><div class="q-section-title">Questions 7–13 — Summary Completion</div>
-    <div class="q-instruction">Complete the summary below. Write <strong>NO MORE THAN THREE WORDS</strong> from the passage for each answer.</div>`;
-    QUESTIONS.filter(q=>q.p===1&&q.type==='fill').forEach(q=>html+=buildFill(q));
-    html+=`</div>`;
-  } else if(p===2){
-    html+=`<div class="q-block"><div class="q-section-title">Questions 14–18 — Matching Headings</div>
-    <div class="q-instruction">Reading Passage 2 has five sections. Choose the correct heading for each section from the list. Choose the correct number, <strong>i–vii</strong>.</div>`;
-    QUESTIONS.filter(q=>q.p===2&&q.type==='heading').forEach(q=>html+=buildSelect(q,HEADINGS_P2));
-    html+=`</div>`;
-    html+=`<div class="q-block"><div class="q-section-title">Questions 19–23 — Matching Academics</div>
-    <div class="q-instruction">Match each statement with the correct researcher, <strong>A–E</strong>. You may use any letter more than once.</div>
-    <div style="font-size:0.78rem;color:var(--text-light);margin-bottom:12px;line-height:1.8;">${ACADEMICS.map(a=>`<span style="margin-right:12px">${a}</span>`).join('')}</div>`;
-    QUESTIONS.filter(q=>q.p===2&&q.type==='academic').forEach(q=>html+=buildSelect(q,q.options));
-    html+=`</div>`;
-    html+=`<div class="q-block"><div class="q-section-title">Questions 24–26 — Summary Completion</div>
-    <div class="q-instruction">Write <strong>ONE WORD ONLY</strong> from the passage for each answer.</div>`;
-    QUESTIONS.filter(q=>q.p===2&&q.type==='fill').forEach(q=>html+=buildFill(q));
-    html+=`</div>`;
-  } else if(p===3){
-    html+=`<div class="q-block"><div class="q-section-title">Questions 27–33 — Matching Headings</div>
-    <div class="q-instruction">Reading Passage 3 has seven paragraphs. Choose the correct heading for each paragraph from the list. Choose the correct number, <strong>i–ix</strong>.</div>`;
-    QUESTIONS.filter(q=>q.p===3&&q.type==='para-head').forEach(q=>html+=buildSelect(q,HEADINGS_P3));
-    html+=`</div>`;
-    html+=`<div class="q-block"><div class="q-section-title">Questions 34–36 — Multiple Choice</div>
-    <div class="q-instruction">Choose the correct answer, <strong>A, B, C or D</strong>.</div>`;
-    QUESTIONS.filter(q=>q.p===3&&q.type==='mcq').forEach(q=>html+=buildMCQ(q));
-    html+=`</div>`;
-    html+=`<div class="q-block"><div class="q-section-title">Questions 37–40 — Summary Completion</div>
-    <div class="q-instruction">Write <strong>NO MORE THAN TWO WORDS</strong> from the passage for each answer.</div>`;
-    QUESTIONS.filter(q=>q.p===3&&q.type==='fill').forEach(q=>html+=buildFill(q));
-    html+=`</div>`;
+  groups.forEach(group=>{
+    const gEl = document.createElement('div');
+    gEl.className = 'qgroup';
+    const instr = document.createElement('div');
+    instr.className = 'qgroup-instructions';
+    instr.innerHTML = group.instructionsHtml;
+    gEl.appendChild(instr);
+
+    group.questions.forEach(q=>{
+      gEl.appendChild(renderQuestionItem(q));
+    });
+    panel.appendChild(gEl);
+  });
+}
+
+function renderQuestionItem(q){
+  const item = document.createElement('div');
+  item.className = 'qitem';
+  item.id = 'anchor-' + q.n;
+
+  const num = document.createElement('div');
+  num.className = 'qnum';
+  num.textContent = q.n;
+
+  const body = document.createElement('div');
+  body.className = 'qbody';
+
+  const textEl = document.createElement('div');
+  textEl.className = 'qtext';
+  textEl.textContent = q.n + '. ' + q.text;
+  body.appendChild(textEl);
+
+  body.appendChild(renderAnswerInput(q));
+
+  const flagBtn = document.createElement('button');
+  flagBtn.className = 'qflag-btn';
+  flagBtn.dataset.q = q.n;
+  flagBtn.textContent = '🚩';
+  flagBtn.addEventListener('click', ()=> toggleFlag(q.n));
+
+  item.appendChild(num);
+  item.appendChild(body);
+  item.appendChild(flagBtn);
+
+  refreshQItemState(item, q.n);
+  return item;
+}
+
+function renderAnswerInput(q){
+  if(q.type === 'text'){
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.className = 'ans-text';
+    inp.dataset.q = q.n;
+    inp.placeholder = 'Câu trả lời...';
+    inp.value = answers[q.n] || '';
+    inp.disabled = isReviewMode;
+    inp.addEventListener('input', ()=> setAnswer(q.n, inp.value.trim()));
+    return inp;
   }
-
-  col.innerHTML=html;
-  // Bind events
-  bindQuestionEvents();
-  applyAnswers();
-  if(reviewMode)applyReviewBadges();
-  col.scrollTop=0;
-}
-
-function buildTFN(q){
-  const qn=q.id+1;
-  return `<div class="q-row${answers[q.id]?' answered':''}${flags[q.id]?' flagged':''}" id="qrow-${q.id}">
-    <span class="q-num">${qn}</span>
-    <div class="q-content">
-      <div class="q-text">${q.text}</div>
-      <div class="tfn-group" id="tfn-${q.id}">
-        <button class="tfn-btn${answers[q.id]==='TRUE'?' sel-TRUE':''}" data-q="${q.id}" data-v="TRUE" ${submitted&&!reviewMode?'disabled':''}>TRUE</button>
-        <button class="tfn-btn${answers[q.id]==='FALSE'?' sel-FALSE':''}" data-q="${q.id}" data-v="FALSE" ${submitted&&!reviewMode?'disabled':''}>FALSE</button>
-        <button class="tfn-btn${answers[q.id]==='NOT_GIVEN'?' sel-NOT_GIVEN':''}" data-q="${q.id}" data-v="NOT_GIVEN" ${submitted&&!reviewMode?'disabled':''}>NOT GIVEN</button>
-      </div>
-      <div class="answer-badge" id="badge-${q.id}"></div>
-    </div>
-    <button class="flag-btn${flags[q.id]?' flagged':''}" data-q="${q.id}" onclick="toggleFlag(${q.id})" title="Đánh dấu">🚩</button>
-  </div>`;
-}
-
-function buildFill(q){
-  const qn=q.id+1;
-  return `<div class="q-row${answers[q.id]?' answered':''}${flags[q.id]?' flagged':''}" id="qrow-${q.id}">
-    <span class="q-num">${qn}</span>
-    <div class="q-content">
-      <div class="q-text">${q.text}</div>
-      <input class="q-input" type="text" id="qi-${q.id}" placeholder="Nhập đáp án..." autocomplete="off" data-q="${q.id}" value="${answers[q.id]||''}" ${submitted?'disabled':''}>
-      <div class="answer-badge" id="badge-${q.id}"></div>
-    </div>
-    <button class="flag-btn${flags[q.id]?' flagged':''}" data-q="${q.id}" onclick="toggleFlag(${q.id})" title="Đánh dấu">🚩</button>
-  </div>`;
-}
-
-function buildSelect(q,opts){
-  const qn=q.id+1;
-  const optsHtml=opts.map(o=>{
-    const val=o.split(' ')[0].replace(/[.–]/g,'');
-    return `<option value="${val}" ${answers[q.id]===val?'selected':''}>${o}</option>`;
-  }).join('');
-  return `<div class="q-row${answers[q.id]?' answered':''}${flags[q.id]?' flagged':''}" id="qrow-${q.id}">
-    <span class="q-num">${qn}</span>
-    <div class="q-content">
-      <div class="q-text">${q.text}</div>
-      <select class="q-input" id="qi-${q.id}" data-q="${q.id}" ${submitted?'disabled':''}>
-        <option value="">-- Chọn --</option>${optsHtml}
-      </select>
-      <div class="answer-badge" id="badge-${q.id}"></div>
-    </div>
-    <button class="flag-btn${flags[q.id]?' flagged':''}" data-q="${q.id}" onclick="toggleFlag(${q.id})" title="Đánh dấu">🚩</button>
-  </div>`;
-}
-
-function buildMCQ(q){
-  const qn=q.id+1;
-  const optsHtml=q.options.map((o,i)=>{
-    const val=o.charAt(0);
-    return `<div class="q-option${answers[q.id]===val?' selected-opt':''}">
-      <input type="radio" name="mcq-${q.id}" id="mcq-${q.id}-${i}" value="${val}" ${answers[q.id]===val?'checked':''} ${submitted?'disabled':''}>
-      <label for="mcq-${q.id}-${i}">${o}</label>
-    </div>`;
-  }).join('');
-  return `<div class="q-row${answers[q.id]?' answered':''}${flags[q.id]?' flagged':''}" id="qrow-${q.id}">
-    <span class="q-num">${qn}</span>
-    <div class="q-content">
-      <div class="q-text">${q.text}</div>
-      <div class="q-options" id="qi-${q.id}">${optsHtml}</div>
-      <div class="answer-badge" id="badge-${q.id}"></div>
-    </div>
-    <button class="flag-btn${flags[q.id]?' flagged':''}" data-q="${q.id}" onclick="toggleFlag(${q.id})" title="Đánh dấu">🚩</button>
-  </div>`;
-}
-
-function bindQuestionEvents(){
-  // TFN buttons
-  document.querySelectorAll('.tfn-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      if(submitted)return;
-      const qi=parseInt(btn.dataset.q),v=btn.dataset.v;
-      answers[qi]=v;
-      // re-render just the tfn group
-      const grp=document.getElementById('tfn-'+qi);
-      grp.querySelectorAll('.tfn-btn').forEach(b=>{
-        b.className='tfn-btn'+(b.dataset.v===v?' sel-'+v:'');
-      });
-      updateRow(qi);
+  if(q.type === 'select'){
+    const sel = document.createElement('select');
+    sel.className = 'ans-select';
+    sel.dataset.q = q.n;
+    sel.disabled = isReviewMode;
+    const blank = document.createElement('option');
+    blank.value = ''; blank.textContent = '—';
+    sel.appendChild(blank);
+    (q.options||[]).forEach(o=>{
+      const opt = document.createElement('option');
+      opt.value = o.key; opt.textContent = (o.label && o.label !== o.key) ? o.key + ' — ' + o.label : o.label || o.key;
+      sel.appendChild(opt);
     });
-  });
-  // Fill inputs
-  document.querySelectorAll('input.q-input[data-q]').forEach(inp=>{
-    inp.addEventListener('input',()=>{
-      const qi=parseInt(inp.dataset.q);
-      answers[qi]=inp.value.trim();
-      updateRow(qi);
-    });
-  });
-  // Select
-  document.querySelectorAll('select.q-input[data-q]').forEach(sel=>{
-    sel.addEventListener('change',()=>{
-      const qi=parseInt(sel.dataset.q);
-      answers[qi]=sel.value;
-      updateRow(qi);
-    });
-  });
-  // MCQ radio
-  document.querySelectorAll('input[type=radio]').forEach(r=>{
-    r.addEventListener('change',()=>{
-      if(submitted)return;
-      const qi=parseInt(r.name.replace('mcq-',''));
-      answers[qi]=r.value;
-      updateRow(qi);
-      // update selected-opt styling
-      const container=document.getElementById('qi-'+qi);
-      container.querySelectorAll('.q-option').forEach(opt=>{
-        const radio=opt.querySelector('input[type=radio]');
-        opt.classList.toggle('selected-opt',radio.checked);
-      });
-    });
-  });
-}
-
-function applyAnswers(){
-  // already baked into HTML from buildXXX functions
-}
-
-function updateRow(qi){
-  const row=document.getElementById('qrow-'+qi);
-  if(!row)return;
-  row.classList.toggle('answered',!!answers[qi]);
-  row.classList.toggle('flagged',flags[qi]);
-  updateSidebarQ(qi);
-  updateProgress();
-  saveLocal();
-}
-
-function toggleFlag(qi){
-  if(reviewMode)return;
-  flags[qi]=!flags[qi];
-  const row=document.getElementById('qrow-'+qi);
-  if(row){
-    row.classList.toggle('flagged',flags[qi]);
-    const fb=row.querySelector('.flag-btn');
-    if(fb)fb.classList.toggle('flagged',flags[qi]);
+    sel.value = answers[q.n] || '';
+    sel.addEventListener('change', ()=> setAnswer(q.n, sel.value));
+    return sel;
   }
-  updateSidebarQ(qi);
-  saveLocal();
+  if(q.type === 'radio'){
+    const wrap = document.createElement('div');
+    wrap.className = 'ans-options';
+    (q.options||[]).forEach(o=>{
+      const lbl = document.createElement('label');
+      lbl.className = 'ans-opt' + (answers[q.n]===o.key ? ' checked' : '');
+      const inp = document.createElement('input');
+      inp.type = 'radio'; inp.name = 'q'+q.n; inp.value = o.key;
+      inp.checked = answers[q.n]===o.key;
+      inp.disabled = isReviewMode;
+      inp.addEventListener('change', ()=>{
+        setAnswer(q.n, o.key);
+        wrap.querySelectorAll('.ans-opt').forEach(el=>el.classList.remove('checked'));
+        lbl.classList.add('checked');
+      });
+      const span = document.createElement('span');
+      span.textContent = o.key + '. ' + o.label;
+      lbl.appendChild(inp); lbl.appendChild(span);
+      wrap.appendChild(lbl);
+    });
+    return wrap;
+  }
+  if(q.type === 'checkbox-pair'){
+    const wrap = document.createElement('div');
+    wrap.className = 'ans-options';
+    const pairKey = q.pairKey;
+    (q.options||[]).forEach(o=>{
+      const lbl = document.createElement('label');
+      const checkedNow = pairValueIncludes(pairKey, o.key);
+      lbl.className = 'ans-opt' + (checkedNow ? ' checked' : '');
+      const inp = document.createElement('input');
+      inp.type = 'checkbox'; inp.value = o.key;
+      inp.checked = checkedNow;
+      inp.disabled = isReviewMode;
+      inp.addEventListener('change', ()=> handlePairToggle(pairKey, q, wrap));
+      const span = document.createElement('span');
+      span.textContent = o.key + '. ' + o.label;
+      lbl.appendChild(inp); lbl.appendChild(span);
+      wrap.appendChild(lbl);
+    });
+    return wrap;
+  }
+  return document.createElement('div');
 }
 
-// ===== SIDEBAR =====
-function buildSidebar(){
-  const sb=document.getElementById('sidebar');
-  const header=sb.querySelector('.flag-panel-btn');
-  // Keep flag btn, remove rest
-  while(sb.children.length>2)sb.removeChild(sb.lastChild);
-  
-  const groups=[[0,12],[13,25],[26,39]];
-  groups.forEach((g,gi)=>{
-    if(gi>0){const sep=document.createElement('div');sep.className='sidebar-sep';sb.appendChild(sep);}
-    for(let i=g[0];i<=g[1];i++){
-      const btn=document.createElement('button');
-      btn.className='sidebar-q';
-      btn.id='sq-'+i;
-      btn.textContent=i+1;
-      btn.title='Câu '+(i+1);
-      btn.onclick=()=>jumpToQ(i);
-      updateSidebarQEl(btn,i);
-      sb.appendChild(btn);
-    }
+/* checkbox-pair helpers: lưu vào answers[firstNOfPair] dạng array, đồng bộ cả 2 số câu trong pairKey */
+function pairQuestionNs(pairKey){
+  return pairKey.split('-').map(s=>s.trim());
+}
+function pairValueIncludes(pairKey, key){
+  const ns = pairQuestionNs(pairKey);
+  const arr = answers[ns[0]+'-'+ns[1]] || [];
+  return arr.includes(key);
+}
+function handlePairToggle(pairKey, q, wrapEl){
+  const ns = pairQuestionNs(pairKey);
+  const storeKey = ns[0]+'-'+ns[1];
+  let arr = answers[storeKey] || [];
+  const checks = Array.from(wrapEl.querySelectorAll('input[type=checkbox]'));
+  const checked = checks.filter(c=>c.checked).map(c=>c.value);
+  if(checked.length > 2){
+    // giới hạn tối đa 2 — bỏ lựa chọn cũ nhất (lựa chọn đầu tiên trong arr không còn trong checked mới sẽ giữ, ta revert lựa chọn vừa thêm)
+    const lastChecked = checks.find(c => c.checked && !arr.includes(c.value));
+    if(lastChecked) lastChecked.checked = false;
+    arr = arr; // giữ nguyên
+  } else {
+    arr = checked;
+  }
+  answers[storeKey] = arr;
+  wrapEl.querySelectorAll('.ans-opt').forEach(el=>{
+    const cb = el.querySelector('input');
+    el.classList.toggle('checked', cb.checked);
+  });
+  // map cả 2 số câu n riêng lẻ cho qmap/flag hiển thị tiến độ
+  ns.forEach(n => { answers[n] = arr.length ? arr.join(',') : undefined; if(!arr.length) delete answers[n]; });
+  saveProgress();
+  refreshAllQItemStates();
+  renderQMap();
+  renderSheetGrid();
+}
+
+function setAnswer(n, value){
+  if(value === '' || value == null){ delete answers[n]; }
+  else { answers[n] = value; }
+  saveProgress();
+  refreshQItemStateByN(n);
+  renderQMap();
+}
+
+function refreshQItemStateByN(n){
+  const el = document.getElementById('anchor-'+n);
+  if(el) refreshQItemState(el, n);
+}
+function refreshAllQItemStates(){
+  document.querySelectorAll('.qitem').forEach(el=>{
+    const n = el.id.replace('anchor-','');
+    refreshQItemState(el, n);
   });
 }
-
-function updateSidebarQ(qi){
-  const btn=document.getElementById('sq-'+qi);
-  if(btn)updateSidebarQEl(btn,qi);
-}
-function updateSidebarQEl(btn,qi){
-  btn.className='sidebar-q';
-  if(answers[qi])btn.classList.add('ans');
-  if(flags[qi])btn.classList.add('flag');
+function refreshQItemState(el, n){
+  el.classList.toggle('answered', !!answers[n]);
+  el.classList.toggle('flagged', !!flags[n]);
+  const flagBtn = el.querySelector('.qflag-btn');
+  if(flagBtn) flagBtn.classList.toggle('on', !!flags[n]);
 }
 
-function jumpToQ(qi){
-  const q=QUESTIONS[qi];
-  if(q.p!==currentPassage)switchPassage(q.p);
+function toggleFlag(n){
+  flags[n] = !flags[n];
+  if(!flags[n]) delete flags[n];
+  saveProgress();
+  refreshQItemStateByN(n);
+  renderQMap();
+}
+
+/* ---------- Question Map (sidebar) ---------- */
+function renderQMap(){
+  const map = document.getElementById('qmap');
+  map.innerHTML = '';
+  let answeredCount = 0;
+  for(let n=1; n<=TOTAL_QUESTIONS; n++){
+    const cell = document.createElement('div');
+    cell.className = 'qmap-cell';
+    cell.textContent = n;
+    const isAnswered = !!answers[n];
+    if(isAnswered){ cell.classList.add('answered'); answeredCount++; }
+    if(flags[n]) cell.classList.add('flagged');
+    cell.addEventListener('click', ()=> goToQuestion(n));
+    map.appendChild(cell);
+  }
+  document.getElementById('sb-map-progress').textContent = answeredCount + '/' + TOTAL_QUESTIONS;
+}
+
+function goToQuestion(n){
+  const groupIdx = QUESTION_GROUPS.findIndex(g => g.questions.some(q=>q.n===n));
+  if(groupIdx === -1) return;
+  const targetTab = QUESTION_GROUPS[groupIdx].passageIndex;
+  if(targetTab !== currentTab) switchTab(targetTab);
   setTimeout(()=>{
-    const row=document.getElementById('qrow-'+qi);
-    if(row)row.scrollIntoView({behavior:'smooth',block:'center'});
-  },50);
+    const el = document.getElementById('anchor-'+n);
+    if(el){
+      el.scrollIntoView({behavior:'smooth', block:'center'});
+      el.style.boxShadow = '0 0 0 2px var(--gold)';
+      setTimeout(()=> el.style.boxShadow='', 900);
+    }
+  }, targetTab !== currentTab ? 80 : 0);
+  closeFlagsPanel();
 }
 
-// ===== PROGRESS =====
-function updateProgress(){
-  const total=answers.filter(a=>a&&a.trim()).length;
-  document.getElementById('progress-fill').style.width=(total/40*100)+'%';
-  document.getElementById('progress-text').textContent=`${total} / 40 câu đã trả lời`;
-  // also update all sidebar
-  for(let i=0;i<40;i++)updateSidebarQ(i);
+/* ============================================================
+   4. TIMER
+   ============================================================ */
+function startTimer(){
+  updateTimerDisplay();
+  timerInterval = setInterval(()=>{
+    remainingSeconds--;
+    if(remainingSeconds <= 0){
+      remainingSeconds = 0;
+      clearInterval(timerInterval);
+      updateTimerDisplay();
+      autoSubmit();
+      return;
+    }
+    updateTimerDisplay();
+    saveProgress();
+  }, 1000);
 }
 
-// ===== FLAG PANEL =====
-function toggleFlagPanel(){
-  const panel=document.getElementById('flag-panel');
-  panel.classList.toggle('show');
-  if(panel.classList.contains('show'))renderFlagPanel();
-}
-function renderFlagPanel(){
-  const list=document.getElementById('flag-list');
-  const flagged=flags.map((f,i)=>f?i:-1).filter(i=>i>=0);
-  if(!flagged.length){list.innerHTML='<div class="flag-none">Chưa đánh dấu câu nào</div>';return;}
-  list.innerHTML=flagged.map(qi=>`<div class="flag-item" onclick="jumpToQ(${qi});toggleFlagPanel()">
-    <span class="flag-item-q">Q${qi+1}</span>
-    <span>${QUESTIONS[qi].text.substring(0,60)}…</span>
-  </div>`).join('');
+function updateTimerDisplay(){
+  const m = Math.floor(remainingSeconds/60).toString().padStart(2,'0');
+  const s = (remainingSeconds%60).toString().padStart(2,'0');
+  const el = document.getElementById('sb-timer');
+  el.textContent = m+':'+s;
+  el.classList.toggle('warn', remainingSeconds <= 600 && remainingSeconds > 0);
 }
 
-// ===== SUBMIT =====
-function showSubmitModal(){
-  if(submitted)return;
-  const total=answers.filter(a=>a&&a.trim()).length;
-  document.getElementById('modal-answered').textContent=total;
-  document.getElementById('modal-submit').classList.add('show');
-}
-function closeModal(id){document.getElementById(id).classList.remove('show');}
-
-function submitTest(){
-  closeModal('modal-submit');
-  doSubmit();
-  showResult();
+function autoSubmit(){
+  document.getElementById('overlay-submit').classList.remove('show');
+  showToast('Hết giờ — hệ thống tự động nộp bài...');
+  doSubmit(true);
 }
 
-function doSubmit(){
-  if(submitted)return;
-  submitted=true;
-  clearInterval(timerInterval);
-  // Score
-  const correct=calcScore();
-  const band=getBand(correct);
-  // Send to sheet
-  sendToSheet(correct,band);
-  saveLocal();
-  showSubmittedState();
+/* ============================================================
+   5. HIGHLIGHT (4 màu, free-range, không ngắt dòng)
+   ============================================================ */
+let hlActiveColor = null;
+const hlToolbar = document.getElementById('hl-toolbar');
+
+document.querySelectorAll('.hl-swatch').forEach(sw=>{
+  sw.addEventListener('mousedown', e=> e.preventDefault()); // giữ selection
+  sw.addEventListener('click', ()=> applyHighlight(sw.dataset.c));
+});
+document.getElementById('hl-erase').addEventListener('mousedown', e=> e.preventDefault());
+document.getElementById('hl-erase').addEventListener('click', removeHighlight);
+
+function tryShowToolbarFromSelection(){
+  if(isReviewMode) return;
+  const sel = window.getSelection();
+  if(!sel || sel.isCollapsed || sel.rangeCount===0){ hideToolbar(); return; }
+  const range = sel.getRangeAt(0);
+  const container = document.getElementById('split-container');
+  if(!container.contains(range.commonAncestorContainer)){ hideToolbar(); return; }
+  const rect = range.getBoundingClientRect();
+  if(rect.width===0 && rect.height===0){ hideToolbar(); return; }
+  showToolbarAt(rect);
 }
 
-function showSubmittedState(){
-  const btn=document.getElementById('submit-btn');
-  btn.textContent='✓ Đã nộp bài';
-  btn.classList.add('submitted');
-  const timerEl=document.getElementById('timer-box');
-  timerEl.textContent='✓ Đã nộp';
-  timerEl.classList.remove('warning');
-  timerEl.classList.add('done');
-  // disable all inputs
-  document.querySelectorAll('.q-input,.tfn-btn,input[type=radio]').forEach(el=>el.disabled=true);
-}
-
-function calcScore(){
-  let c=0;
-  _k.forEach((key,i)=>{
-    const ans=(answers[i]||'').trim().toLowerCase();
-    if(!ans)return;
-    const keys=key.split('/').map(k=>k.trim().toLowerCase());
-    if(keys.includes(ans))c++;
-  });
-  return c;
-}
-
-function sendToSheet(correct,band){
-  if(sheetSent)return;
-  sheetSent=true;
-
-  // Pack answers as JSON object {"1":"answer","2":"answer",...}
-  const answersObj={};
-  answers.forEach((a,i)=>answersObj[String(i+1)]=a||'');
-  const answersStr=JSON.stringify(answersObj);
-
-  const payload={
-    timestamp:new Date().toISOString(),
-    test_name:'reading_test4',
-    name:studentName,
-    class:studentClass,
-    totalScore:correct,
-    bandScore:band,
-    answers:answersStr
-  };
-  // Also send individual q1..q40
-  answers.forEach((a,i)=>payload['q'+(i+1)]=a||'');
-
-  // Try fetch POST first (Apps Script must have doPost)
-  fetch(SCRIPT_URL,{
-    method:'POST',
-    mode:'no-cors',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(payload)
-  }).catch(()=>{});
-
-  // Also fire GET as fallback (works if doGet handles it)
-  const params=new URLSearchParams({
-    timestamp:payload.timestamp,
-    test_name:payload.test_name,
-    name:payload.name,
-    class:payload.class,
-    totalScore:correct,
-    bandScore:band,
-    answers:answersStr
-  });
-  answers.forEach((a,i)=>params.append('q'+(i+1),a||''));
-  new Image().src=SCRIPT_URL+'?'+params.toString();
-}
-
-function showResult(){
-  document.getElementById('test-screen').style.display='none';
-  const rs=document.getElementById('result-screen');
-  rs.style.display='flex';
-  const correct=calcScore();
-  const band=getBand(correct);
-  document.getElementById('res-name').textContent=studentName;
-  document.getElementById('res-correct').textContent=correct;
-  document.getElementById('res-band').textContent=band;
-}
-
-function goToResult(){
-  reviewMode=false;
-  document.getElementById('test-screen').style.display='none';
-  showResult();
-}
-
-// ===== REVIEW MODE =====
-function enterReviewMode(){
-  reviewMode=true;
-  document.getElementById('result-screen').style.display='none';
-  const ts=document.getElementById('test-screen');
-  ts.style.display='flex';
-  document.getElementById('review-banner').style.display='block';
-  document.getElementById('submit-wrap').style.display='none';
-  switchPassage(1);
-}
-
-function applyReviewBadges(){
-  QUESTIONS.filter(q=>q.p===currentPassage).forEach(q=>{
-    const badge=document.getElementById('badge-'+q.id);
-    if(!badge)return;
-    const ans=(answers[q.id]||'').trim();
-    if(!ans){badge.className='answer-badge blank';badge.textContent='— Bỏ trống';return;}
-    const keys=_k[q.id].split('/').map(k=>k.trim().toLowerCase());
-    const isCorrect=keys.includes(ans.toLowerCase());
-    badge.className='answer-badge '+(isCorrect?'correct':'wrong');
-    badge.textContent=(isCorrect?'✓ ':'✗ ')+ans;
-  });
-}
-
-// ===== LOCAL STORAGE =====
-function saveLocal(){
-  try{
-    localStorage.setItem(LS_KEY,JSON.stringify({name:studentName,cls:studentClass,answers,flags,timeLeft,submitted}));
-  }catch(e){}
-}
-
-// ===== DISABLE RIGHT CLICK (exclude form elements) =====
-document.addEventListener('contextmenu',e=>{
-  const tag=e.target.tagName;
-  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
-  e.preventDefault();
+// Bắt mouseup ở mức document (không chỉ split-container) để không bỏ lỡ
+// trường hợp học sinh kéo chọn rồi thả chuột hơi lệch ra ngoài khung.
+document.addEventListener('mouseup', (e)=>{
+  // bỏ qua nếu vừa click vào chính toolbar (tránh đóng ngay khi đang chọn màu)
+  if(hlToolbar.contains(e.target)) return;
+  setTimeout(tryShowToolbarFromSelection, 5);
+});
+// Hỗ trợ thiết bị cảm ứng (tablet/laptop màn cảm ứng)
+document.addEventListener('touchend', (e)=>{
+  if(hlToolbar.contains(e.target)) return;
+  setTimeout(tryShowToolbarFromSelection, 60);
 });
 
-// Login input enter key
-document.getElementById('inp-class').addEventListener('keydown',e=>{if(e.key==='Enter')startTest();});
-
-// ===== HIGHLIGHT SYSTEM =====
-const HL_LS_KEY='gedu_rt3_highlights';
-// highlights: [{id, passageIdx, color, text, startOffset, ...}] — stored as serialized ranges
-// We use a simpler approach: store by unique span IDs with their innerHTML context
-let hlData={};  // {spanId: color}
-let _hlSelection=null; // saved Selection range
-let _hlToolbarVisible=false;
-
-function saveHighlights(){
-  try{
-    // Collect all .hl-span in DOM
-    const result={};
-    document.querySelectorAll('.hl-span').forEach(s=>{
-      result[s.dataset.hlId]={color:s.dataset.hlColor,passage:s.dataset.hlPassage};
-    });
-    localStorage.setItem(HL_LS_KEY,JSON.stringify(result));
-  }catch(e){}
+function showToolbarAt(rect){
+  hlToolbar.classList.add('show');
+  // hl-toolbar dùng position:fixed -> tọa độ phải lấy trực tiếp từ
+  // getBoundingClientRect() (viewport-relative), KHÔNG cộng scrollX/scrollY.
+  const toolbarHeight = 40;
+  const toolbarWidth = 160;
+  let top = rect.top - toolbarHeight - 8;
+  if(top < 8) top = rect.bottom + 8; // nếu sát mép trên, hiện toolbar bên dưới vùng chọn thay vì bị che/lệch
+  let left = rect.left + rect.width/2 - toolbarWidth/2;
+  left = Math.max(8, Math.min(left, window.innerWidth - toolbarWidth - 8));
+  top = Math.min(top, window.innerHeight - toolbarHeight - 8);
+  hlToolbar.style.top = top + 'px';
+  hlToolbar.style.left = left + 'px';
 }
-
-function loadHighlights(){
-  try{
-    const saved=localStorage.getItem(HL_LS_KEY);
-    if(saved)hlData=JSON.parse(saved);
-  }catch(e){hlData={};}
-}
-
-// Show toolbar near selection
-function showHlToolbar(x,y){
-  const tb=document.getElementById('hl-toolbar');
-  tb.classList.add('show');
-  _hlToolbarVisible=true;
-  // Position above cursor
-  const tbW=tb.offsetWidth||160;
-  const tbH=tb.offsetHeight||40;
-  let left=x-tbW/2;
-  let top=y-tbH-14;
-  // Clamp
-  left=Math.max(8,Math.min(left,window.innerWidth-tbW-8));
-  top=Math.max(8,top);
-  tb.style.left=left+'px';
-  tb.style.top=top+'px';
-}
-
-function hideHlToolbar(){
-  document.getElementById('hl-toolbar').classList.remove('show');
-  _hlToolbarVisible=false;
-  _hlSelection=null;
-  window.getSelection().removeAllRanges();
-}
-
-// Listen for text selection inside passage-col
-document.addEventListener('mouseup',e=>{
-  // Ignore if target is a form element
-  const tag=e.target.tagName;
-  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT'||tag==='BUTTON'||tag==='LABEL')return;
-
-  // If click is on toolbar itself, don't hide
-  const tb=document.getElementById('hl-toolbar');
-  if(tb.contains(e.target))return;
-
-  // Check if click is on existing highlight span → remove
-  const span=e.target.closest('.hl-span');
-  if(span&&!_hlToolbarVisible){
-    removeHighlight(span);
-    return;
-  }
-
-  const passageCol=document.getElementById('passage-col');
-  const questionsCol=document.getElementById('questions-col');
-  if(!passageCol)return;
-
-  const sel=window.getSelection();
-  if(!sel||sel.isCollapsed||sel.rangeCount===0){
-    if(!tb.contains(e.target))hideHlToolbar();
-    return;
-  }
-
-  const range=sel.getRangeAt(0);
-  const selectedText=sel.toString().trim();
-  if(!selectedText){hideHlToolbar();return;}
-
-  // Check selection is inside passage-col OR questions-col
-  const container=range.commonAncestorContainer;
-  const el=container instanceof Element?container:container.parentElement;
-  const inPassage=passageCol.contains(el);
-  const inQuestions=questionsCol&&questionsCol.contains(el);
-  if(!inPassage&&!inQuestions){hideHlToolbar();return;}
-
-  // Save range for later application
-  _hlSelection=range.cloneRange();
-
-  // Position toolbar above selection
-  const rect=range.getBoundingClientRect();
-  showHlToolbar(rect.left+rect.width/2, rect.top+window.scrollY);
-});
-
-// Hide toolbar on scroll or ESC
-document.addEventListener('keydown',e=>{if(e.key==='Escape')hideHlToolbar();});
-document.addEventListener('scroll',()=>hideHlToolbar(),true);
+function hideToolbar(){ hlToolbar.classList.remove('show'); }
 
 function applyHighlight(color){
-  if(!_hlSelection)return;
-  const range=_hlSelection;
+  const sel = window.getSelection();
+  if(!sel || sel.rangeCount===0) return;
+  const range = sel.getRangeAt(0);
+  if(range.collapsed) return;
 
-  try{
-    // Use TreeWalker to handle multi-node selections safely
-    const frag=range.cloneContents();
-    const textNodes=[];
-    const walker=document.createTreeWalker(frag,NodeFilter.SHOW_TEXT);
-    let node;
-    while(node=walker.nextNode())textNodes.push(node);
-    if(!textNodes.length){hideHlToolbar();return;}
-
-    // Apply to actual DOM via surroundContents if possible, else manual
-    wrapRangeWithHighlight(range,color);
+  // Nếu vùng chọn đã nằm gọn trong 1 mark cùng màu -> coi như "click lại để tắt"
+  const ancestor = range.commonAncestorContainer;
+  const parentMark = ancestor.nodeType===1 ? ancestor.closest?.('mark') : ancestor.parentElement?.closest?.('mark');
+  if(parentMark && parentMark.classList.contains('hl-'+color) && sel.toString() === parentMark.textContent){
+    unwrapMark(parentMark);
+    sel.removeAllRanges();
+    hideToolbar();
     saveHighlights();
-  }catch(e){
-    console.warn('Highlight error:',e);
-  }
-  hideHlToolbar();
-}
-
-function wrapRangeWithHighlight(range,color){
-  const spanId='hl-'+(Date.now())+'-'+Math.random().toString(36).slice(2,7);
-
-  // Walk all Text nodes that overlap the range and wrap each individually
-  // This avoids surroundContents() which breaks when range crosses element boundaries
-  const startNode=range.startContainer;
-  const endNode=range.endContainer;
-  const passageCol=document.getElementById('passage-col');
-
-  // Collect all text nodes within the range
-  const textNodes=[];
-  const treeWalker=document.createTreeWalker(
-    range.commonAncestorContainer.nodeType===3
-      ? range.commonAncestorContainer.parentNode
-      : range.commonAncestorContainer,
-    NodeFilter.SHOW_TEXT,
-    null
-  );
-
-  let node;
-  while(node=treeWalker.nextNode()){
-    if(range.intersectsNode(node)){
-      textNodes.push(node);
-    }
+    return;
   }
 
-  if(!textNodes.length)return;
-
-  textNodes.forEach(tn=>{
-    let start=0,end=tn.textContent.length;
-    if(tn===startNode)start=range.startOffset;
-    if(tn===endNode)end=range.endOffset;
-    if(start>=end)return;
-
-    // Split the text node: [before][selected][after]
-    // Work backwards to preserve offsets
-    if(end<tn.textContent.length)tn.splitText(end);
-    const selectedNode=start>0?tn.splitText(start):tn;
-
-    const sp=document.createElement('span');
-    sp.className='hl-span';
-    sp.dataset.hlId=spanId;
-    sp.dataset.hlColor=color;
-    sp.dataset.hlPassage=String(currentPassage);
-    selectedNode.parentNode.insertBefore(sp,selectedNode);
-    sp.appendChild(selectedNode);
-    sp.addEventListener('click',function(e){
-      e.stopPropagation();
-      if(!_hlToolbarVisible)removeHighlight(this);
-    });
-  });
-}
-
-function removeHighlight(span){
-  // Unwrap: replace span with its text content
-  const parent=span.parentNode;
-  if(!parent)return;
-  while(span.firstChild)parent.insertBefore(span.firstChild,span);
-  parent.removeChild(span);
-  parent.normalize();
+  wrapRangeWithMark(range, color);
+  sel.removeAllRanges();
+  hideToolbar();
   saveHighlights();
 }
 
-// Re-bind click events on existing hl-spans after passage re-render
-// (highlights don't persist across tab switches in DOM — that's expected;
-//  they persist in localStorage but full DOM restoration is complex;
-//  we keep it session-based within a tab stay)
-function bindExistingHighlightClicks(){
-  document.querySelectorAll('.hl-span').forEach(sp=>{
-    sp.addEventListener('click',function(e){
-      e.stopPropagation();
-      if(!_hlToolbarVisible)removeHighlight(this);
-    });
+function removeHighlight(){
+  const sel = window.getSelection();
+  if(!sel || sel.rangeCount===0) return;
+  const range = sel.getRangeAt(0);
+  const container = range.commonAncestorContainer;
+  const marks = (container.nodeType===1 ? container : container.parentElement).querySelectorAll?.('mark') || [];
+  // tắt mọi mark giao với selection
+  const allMarks = document.querySelectorAll('#split-container mark');
+  allMarks.forEach(m=>{
+    if(sel.containsNode(m, true) || range.intersectsNode?.(m)){
+      unwrapMark(m);
+    }
+  });
+  sel.removeAllRanges();
+  hideToolbar();
+  saveHighlights();
+}
+
+function unwrapMark(mark){
+  const parent = mark.parentNode;
+  while(mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+  parent.removeChild(mark);
+  parent.normalize();
+}
+
+/* Wrap selection an toàn dùng splitText + insertBefore/appendChild
+   (tránh lỗi cắt text giữa từ do TreeWalker boundary handling) */
+function wrapRangeWithMark(range, color){
+  const startNode = range.startContainer;
+  const endNode = range.endContainer;
+
+  // Trường hợp đơn giản: selection nằm trong 1 text node
+  if(startNode === endNode && startNode.nodeType === 3){
+    // QUAN TRỌNG: Range là "live" — gọi splitText() trên node mà range đang
+    // trỏ vào sẽ khiến trình duyệt tự động cập nhật lại range.startOffset/
+    // endOffset theo cấu trúc DOM mới. Vì vậy phải chụp lại (snapshot) 2 giá
+    // trị offset thành biến thường NGAY TỪ ĐẦU, không được đọc range.xxx sau
+    // khi đã gọi splitText (đây chính là nguyên nhân gây lỗi highlight bị cắt
+    // chỉ còn vài ký tự thay vì toàn bộ vùng đã bôi đen).
+    const startOffset = range.startOffset;
+    const endOffset = range.endOffset;
+    const text = startNode;
+    const after = text.splitText(startOffset);
+    after.splitText(endOffset - startOffset);
+    const mark = document.createElement('mark');
+    mark.className = 'hl-' + color;
+    text.parentNode.insertBefore(mark, after);
+    mark.appendChild(after);
+    return;
+  }
+
+  // Trường hợp selection trải nhiều node: dùng TreeWalker thu thập
+  // các text node nằm trong range, rồi wrap từng đoạn giao nhau.
+  const root = range.commonAncestorContainer.nodeType === 1
+    ? range.commonAncestorContainer
+    : range.commonAncestorContainer.parentNode;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node){
+      return range.intersectsNode(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+  const nodes = [];
+  let n;
+  while((n = walker.nextNode())) nodes.push(n);
+
+  // Snapshot toàn bộ offset cần thiết TRƯỚC khi gọi bất kỳ splitText() nào,
+  // vì range là live và sẽ tự cập nhật offset theo DOM mới ngay khi node
+  // bị tách — đọc range.startOffset/endOffset giữa chừng vòng lặp là không an toàn.
+  const rangeStartContainer = range.startContainer;
+  const rangeEndContainer = range.endContainer;
+  const rangeStartOffset = range.startOffset;
+  const rangeEndOffset = range.endOffset;
+
+  const segments = nodes.map(node=>{
+    const start = (node === rangeStartContainer) ? rangeStartOffset : 0;
+    const end = (node === rangeEndContainer) ? rangeEndOffset : node.length;
+    return { node, start, end };
+  });
+
+  segments.forEach(({node, start, end})=>{
+    if(start >= end) return;
+    let target = node;
+    if(end < node.length){ target.splitText(end); }
+    if(start > 0){ target = target.splitText(start); }
+    const mark = document.createElement('mark');
+    mark.className = 'hl-' + color;
+    target.parentNode.insertBefore(mark, target);
+    mark.appendChild(target);
   });
 }
 
-// Init
-loadHighlights();
+function saveHighlights(){
+  const passageHtml = document.getElementById('panel-passage').querySelector('.passage-body')?.innerHTML || '';
+  const questionsHtml = document.getElementById('panel-questions').innerHTML;
+  // Lưu highlight theo từng tab riêng để không lẫn giữa các passage
+  let store = JSON.parse(localStorage.getItem(LS_PREFIX+'highlights') || '{}');
+  store[currentTab] = { passage: passageHtml, questionsSnapshotTime: Date.now() };
+  // Ghi chú: ta KHÔNG lưu lại toàn bộ questionsHtml vì nó chứa input/value động;
+  // thay vào đó lưu riêng các mark trong câu hỏi bằng cách quét outerHTML của mark.
+  // Đơn giản & ổn định hơn: lưu toàn bộ outerHTML của các phần tử có thể chứa mark.
+  store[currentTab].marksPassage = extractMarksMap(document.getElementById('panel-passage'));
+  store[currentTab].marksQuestions = extractMarksMap(document.getElementById('panel-questions'));
+  localStorage.setItem(LS_PREFIX+'highlights', JSON.stringify(store));
+}
+
+function extractMarksMap(container){
+  // Lưu danh sách {path, color, text} đơn giản hoá: dùng cách lưu toàn bộ
+  // innerHTML tĩnh phần passage (an toàn vì passage không có input).
+  // Với panel câu hỏi (có input), ta chỉ lưu mark nằm trong .qtext (text tĩnh).
+  const result = [];
+  container.querySelectorAll('mark').forEach((m, idx)=>{
+    result.push({ idx, color: m.className.replace('hl-',''), text: m.textContent });
+  });
+  return result;
+}
+
+/* Khôi phục highlight: đơn giản hoá — vì passage HTML tĩnh, ta lưu/khôi phục
+   trực tiếp bằng cách re-render passage rồi áp lại mark theo text match
+   tuần tự (best-effort). Đây là phương án ổn định cho nội dung tĩnh. */
+function restoreHighlights(){
+  const store = JSON.parse(localStorage.getItem(LS_PREFIX+'highlights') || '{}');
+  const data = store[currentTab];
+  if(!data) return;
+  // Re-apply trên passage (text tĩnh, không có input nên an toàn để khôi phục theo thứ tự xuất hiện)
+  reapplyMarksByOrder(document.getElementById('panel-passage'), data.marksPassage || []);
+  reapplyMarksByOrder(document.getElementById('panel-questions'), data.marksQuestions || []);
+}
+
+function reapplyMarksByOrder(container, marksList){
+  marksList.forEach(item=>{
+    const range = findTextRange(container, item.text);
+    if(range){ wrapRangeWithMark(range, item.color); }
+  });
+}
+
+function findTextRange(container, searchText){
+  if(!searchText) return null;
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null);
+  let node;
+  while((node = walker.nextNode())){
+    const idx = node.textContent.indexOf(searchText);
+    if(idx !== -1){
+      const range = document.createRange();
+      range.setStart(node, idx);
+      range.setEnd(node, idx + searchText.length);
+      return range;
+    }
+  }
+  return null;
+}
+
+/* ============================================================
+   ⚠️ 6. COPY PROTECTION — KHÓA, KHÔNG ĐƯỢC XÓA/SỬA/BỎ QUA
+   ------------------------------------------------------------
+   AI STUDIO / BẤT KỲ CÔNG CỤ MERGE NÀO: đây là tính năng vận
+   hành bắt buộc của G.EDU — ngăn học sinh copy đáp án từ passage
+   dán sang phần trả lời. TUYỆT ĐỐI không được xóa, comment lại,
+   rút gọn, hay bỏ sót khối này khi xử lý/merge nội dung đề thi.
+   Nếu cần thêm nội dung đề thi, chỉ sửa các biến ở mục "0. CONFIG",
+   "1. PASSAGES & QUESTIONS DATA" và "2. ĐÁP ÁN ĐÚNG" — KHÔNG đụng
+   vào khối COPY PROTECTION này.
+
+   Cơ chế tự bảo vệ: toàn bộ logic nằm trong hàm initCopyProtection()
+   được gọi lại ở NHIỀU điểm chốt (lúc tải trang, lúc vào màn thi,
+   mỗi lần chuyển tab) + có watchdog setInterval tự kiểm tra và tự
+   gắn lại listener nếu phát hiện bị thiếu — phòng trường hợp công
+   cụ merge bên ngoài vô tình xóa mất đoạn code này.
+   ============================================================ */
+function initCopyProtection(){
+  const container = document.getElementById('split-container');
+  if(!container) return;
+  if(container.dataset.copyProtected === '1') return; // đã gắn rồi, tránh gắn trùng
+
+  ['copy','cut','contextmenu'].forEach(evt=>{
+    container.addEventListener(evt, copyProtectionBlockHandler);
+  });
+  document.addEventListener('keydown', copyProtectionKeydownHandler);
+
+  container.dataset.copyProtected = '1';
+}
+
+function copyProtectionBlockHandler(e){
+  const tag = e.target.tagName;
+  if(tag==='INPUT' || tag==='SELECT' || tag==='TEXTAREA') return; // cho phép thao tác bình thường trong field
+  e.preventDefault();
+}
+
+function copyProtectionKeydownHandler(e){
+  const tag = e.target.tagName;
+  if(tag==='INPUT' || tag==='SELECT' || tag==='TEXTAREA') return;
+  const container = document.getElementById('split-container');
+  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='c'){
+    if(container && container.contains(e.target)) e.preventDefault();
+  }
+}
+
+initCopyProtection();
+
+// Watchdog: kiểm tra định kỳ mỗi 3 giây, nếu vì lý do gì đó cờ
+// dataset.copyProtected bị mất (vd DOM bị render/thay thế lại) thì
+// tự động gắn lại listener ngay lập tức, không cần reload trang.
+setInterval(()=>{
+  const container = document.getElementById('split-container');
+  if(container && container.dataset.copyProtected !== '1'){
+    console.warn('[G.EDU LOCK] Phát hiện tính năng khóa copy bị mất — đã tự động kích hoạt lại.');
+    initCopyProtection();
+  }
+}, 3000);
+
+/* ============================================================
+   7. LOCALSTORAGE — SAVE / RESTORE (2 scenario)
+   ============================================================ */
+function saveProgress(){
+  const data = {
+    name: studentInfo.name,
+    class: studentInfo.class,
+    answers, flags,
+    remainingSeconds,
+    isSubmitted,
+    lastPayload,
+    savedAt: Date.now()
+  };
+  localStorage.setItem(LS_PREFIX+'progress', JSON.stringify(data));
+}
+
+function loadProgressFor(name, cls){
+  const raw = localStorage.getItem(LS_PREFIX+'progress');
+  if(!raw) return null;
+  try{
+    const data = JSON.parse(raw);
+    if(data.name === name && data.class === cls) return data;
+  }catch(e){}
+  return null;
+}
+
+/* ============================================================
+   8. SUBMIT FLOW
+   ============================================================ */
+document.getElementById('btn-submit').addEventListener('click', ()=>{
+  const answeredCount = Object.keys(answers).filter(k=>!k.includes('-')).length;
+  document.getElementById('modal-answered-count').textContent = answeredCount;
+  const unansweredEl = document.getElementById('modal-unanswered-warn');
+  const missing = TOTAL_QUESTIONS - answeredCount;
+  unansweredEl.innerHTML = missing > 0 ? `Còn <b>${missing}</b> câu chưa trả lời.` : '';
+  verifyLockedNotices();
+  document.getElementById('overlay-submit').classList.add('show');
+});
+document.getElementById('btn-cancel-submit').addEventListener('click', ()=>{
+  document.getElementById('overlay-submit').classList.remove('show');
+});
+document.getElementById('btn-confirm-submit').addEventListener('click', ()=>{
+  document.getElementById('overlay-submit').classList.remove('show');
+  doSubmit(false);
+});
+
+function gradeAnswers(){
+  let correctCount = 0;
+  for(let n=1; n<=TOTAL_QUESTIONS; n++){
+    const correct = (CORRECT_ANSWERS[n] || '').toString().trim().toLowerCase();
+    const given = (answers[n] || '').toString().trim().toLowerCase();
+    if(correct && given && correct === given) correctCount++;
+  }
+  return correctCount;
+}
+
+function normalizeAnswersForSubmission(){
+  // chuyển answers (có thể chứa key dạng "19-20" mảng) thành object phẳng numeric keys
+  const out = {};
+  for(let n=1; n<=TOTAL_QUESTIONS; n++){
+    out[n] = answers[n] || '';
+  }
+  return out;
+}
+
+function doSubmit(isAuto){
+  if(isSubmitted) return;
+  isSubmitted = true;
+  if(timerInterval) clearInterval(timerInterval);
+
+  const correctCount = gradeAnswers();
+  const payload = {
+    test_name: TEST_NAME,
+    name: studentInfo.name,
+    cls: studentInfo.class,
+    totalScore: correctCount,
+    timestamp: new Date().toISOString(),
+    answers: normalizeAnswersForSubmission()
+  };
+  lastPayload = payload;
+  saveProgress();
+  sendToSheet(payload);
+  showResultScreen(correctCount);
+}
+
+/* ---------- GAS submission (GET, fetch primary + Image fallback) ---------- */
+function sendToSheet(payload){
+  const queryParams = new URLSearchParams();
+  queryParams.append('test_name', payload.test_name);
+  queryParams.append('name', payload.name);
+  queryParams.append('cls', payload.cls);
+  queryParams.append('totalScore', payload.totalScore);
+  queryParams.append('timestamp', payload.timestamp);
+  queryParams.append('answers', JSON.stringify(payload.answers));
+  const finalUrl = `${GAS_URL}?${queryParams.toString()}`;
+
+  fetch(finalUrl, { method:'GET', mode:'no-cors', keepalive:true })
+    .then(()=> console.log('Đã gửi dữ liệu qua Fetch GET'))
+    .catch((err)=>{
+      console.error('Lỗi Fetch GET, fallback Image beacon:', err);
+      try{ const img = new Image(); img.src = finalUrl; }catch(e){ console.error('Lỗi Image beacon:', e); }
+    });
+}
+
+/* ============================================================
+   9. RESULT / ANSWER SHEET / REVIEW SCREENS
+   ============================================================ */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showResultScreen(correctCount){
+  document.getElementById('result-score').textContent = correctCount + '/' + TOTAL_QUESTIONS;
+  document.getElementById('result-band').textContent = computeBandScore(correctCount);
+  document.getElementById('result-name').textContent = studentInfo.name;
+  document.getElementById('result-test-name').textContent = TEST_LABEL;
+  document.getElementById('sheet-name').textContent = studentInfo.name;
+  document.getElementById('sheet-class').textContent = studentInfo.class;
+  showScreen('screen-result');
+  verifyLockedNotices();
+}
+
+/* Band Score ước tính theo thang quy đổi IELTS Academic Reading chuẩn (40 câu).
+   TODO[AI STUDIO]: có thể tinh chỉnh bảng quy đổi nếu đề có thang điểm riêng. */
+function computeBandScore(correct){
+  // Bảng quy đổi IELTS Academic Reading chuẩn (40 câu)
+  const table = [
+    [39,40,9.0],[37,38,8.5],[35,36,8.0],[33,34,7.5],[30,32,7.0],
+    [27,29,6.5],[23,26,6.0],[20,22,5.5],[16,19,5.0],[13,15,4.5],
+    [10,12,4.0],[7,9,3.5],[5,6,3.0],[3,4,2.5]
+  ];
+  for(const [min,max,band] of table){
+    if(correct >= min && correct <= max) return band.toFixed(1);
+  }
+  return correct <= 2 ? '2.0' : '—';
+}
+
+document.getElementById('btn-go-sheet').addEventListener('click', ()=>{
+  renderSheetGrid();
+  showScreen('screen-sheet');
+  verifyLockedNotices();
+});
+
+function renderSheetGrid(){
+  const grid = document.getElementById('sheet-grid');
+  grid.innerHTML = '';
+  for(let n=1; n<=TOTAL_QUESTIONS; n++){
+    const cell = document.createElement('div');
+    cell.className = 'sheet-cell';
+    const val = answers[n];
+    cell.innerHTML = `<div class="n">Câu ${n}</div><div class="v ${val?'':'empty'}">${val ? escapeHtml(val) : 'Bỏ trống'}</div>`;
+    grid.appendChild(cell);
+  }
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+document.getElementById('btn-go-review').addEventListener('click', ()=>{
+  enterReviewMode();
+});
+
+function enterReviewMode(){
+  isReviewMode = true;
+  document.getElementById('review-banner').classList.add('show');
+  document.getElementById('split-container').classList.add('locked-select');
+  document.getElementById('btn-submit').style.display = 'none';
+  renderPassage();
+  renderQuestions();
+  restoreHighlights();
+  showScreen('screen-exam');
+}
+
+document.getElementById('btn-back-to-result').addEventListener('click', ()=>{
+  showScreen('screen-result');
+});
+
+/* ============================================================
+   10. FLAGGED QUESTIONS PANEL
+   ============================================================ */
+document.getElementById('btn-open-flags').addEventListener('click', renderFlagsPanel);
+document.getElementById('btn-close-flags').addEventListener('click', closeFlagsPanel);
+function closeFlagsPanel(){ document.getElementById('overlay-flags').classList.remove('show'); }
+
+function renderFlagsPanel(){
+  const body = document.getElementById('flagpanel-body');
+  const flaggedNs = Object.keys(flags).filter(n=>flags[n]).map(Number).sort((a,b)=>a-b);
+  if(flaggedNs.length === 0){
+    body.innerHTML = `<div class="flagpanel-empty">${LOCKED_NOTICES['flagpanel-empty']}</div>`;
+  } else {
+    body.innerHTML = '';
+    flaggedNs.forEach(n=>{
+      const row = document.createElement('div');
+      row.className = 'flagitem';
+      const ans = answers[n];
+      row.innerHTML = `
+        <div class="flagitem-left">
+          <div class="flagitem-num">${n}</div>
+          <div class="flagitem-ans ${ans?'':'empty'}">${ans ? 'Đã trả lời: '+escapeHtml(ans) : 'Chưa trả lời'}</div>
+        </div>
+        <div class="flagitem-go">Đi tới →</div>`;
+      row.addEventListener('click', ()=> goToQuestion(n));
+      body.appendChild(row);
+    });
+  }
+  document.getElementById('overlay-flags').classList.add('show');
+}
+
+/* ============================================================
+   11. RESIZER (split panel)
+   ============================================================ */
+const resizer = document.getElementById('resizer');
+const splitContainer = document.getElementById('split-container');
+const panelLeft = document.getElementById('panel-passage');
+const panelRight = document.getElementById('panel-questions');
+let isResizing = false;
+
+resizer.addEventListener('mousedown', (e)=>{
+  isResizing = true;
+  resizer.classList.add('active');
+  document.body.style.userSelect = 'none';
+});
+document.addEventListener('mousemove', (e)=>{
+  if(!isResizing) return;
+  const containerRect = splitContainer.getBoundingClientRect();
+  let leftWidthPct = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+  leftWidthPct = Math.max(25, Math.min(75, leftWidthPct));
+  panelLeft.style.width = leftWidthPct + '%';
+  panelRight.style.width = (100 - leftWidthPct) + '%';
+  localStorage.setItem(LS_PREFIX+'splitpos', leftWidthPct);
+});
+document.addEventListener('mouseup', ()=>{
+  if(isResizing){
+    isResizing = false;
+    resizer.classList.remove('active');
+    document.body.style.userSelect = '';
+  }
+});
+function restoreSplitPos(){
+  const saved = localStorage.getItem(LS_PREFIX+'splitpos');
+  if(saved){
+    panelLeft.style.width = saved + '%';
+    panelRight.style.width = (100 - parseFloat(saved)) + '%';
+  }
+}
+
+/* ============================================================
+   12. TOAST
+   ============================================================ */
+let toastTimer = null;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> t.classList.remove('show'), 3200);
+}
+
+/* ============================================================
+   13. LOGIN / BOOTSTRAP
+   ============================================================ */
+document.getElementById('btn-start').addEventListener('click', attemptLogin);
+document.getElementById('input-class').addEventListener('keydown', (e)=>{ if(e.key==='Enter') attemptLogin(); });
+
+function attemptLogin(){
+  const nameInp = document.getElementById('input-name');
+  const classInp = document.getElementById('input-class');
+  const name = nameInp.value.trim().toUpperCase();
+  const cls = classInp.value.trim().toUpperCase();
+  const errEl = document.getElementById('login-error');
+
+  if(!name || !cls){
+    errEl.textContent = 'Vui lòng nhập đầy đủ Họ tên và Lớp.';
+    errEl.style.display = 'block';
+    return;
+  }
+  errEl.style.display = 'none';
+  studentInfo = { name, class: cls };
+
+  document.getElementById('sb-student-name').textContent = name;
+  document.getElementById('sb-student-class').textContent = cls;
+
+  const existing = loadProgressFor(name, cls);
+  if(existing && existing.isSubmitted){
+    // Scenario 2: đã nộp -> khôi phục thẳng kết quả
+    answers = existing.answers || {};
+    flags = existing.flags || {};
+    isSubmitted = true;
+    lastPayload = existing.lastPayload;
+    bootstrapExamUI(false);
+    const correctCount = existing.lastPayload ? existing.lastPayload.totalScore : gradeAnswers();
+    showResultScreen(correctCount);
+    return;
+  }
+
+  if(existing && !existing.isSubmitted){
+    // Scenario 1: chưa nộp -> khôi phục bài làm dở
+    answers = existing.answers || {};
+    flags = existing.flags || {};
+    remainingSeconds = typeof existing.remainingSeconds === 'number' ? existing.remainingSeconds : DURATION_MIN*60;
+    showToast('Đã khôi phục bài làm trước đó.');
+  } else {
+    answers = {}; flags = {};
+    remainingSeconds = DURATION_MIN * 60;
+  }
+
+  bootstrapExamUI(true);
+}
+
+function bootstrapExamUI(startTimerNow){
+  showScreen('screen-exam');
+  renderTabs();
+  renderPassage();
+  renderQuestions();
+  renderQMap();
+  restoreSplitPos();
+  restoreHighlights();
+  if(startTimerNow) startTimer();
+  saveProgress();
+  verifyLockedNotices();
+  initCopyProtection();
+}
+
+/* fix tỉ lệ màn hình: đảm bảo nút Nộp bài luôn trong viewport bằng flex column
+   + media query (max-height:720px) đã xử lý ở CSS. Không cần JS bổ sung trừ khi
+   cần test thực tế trên thiết bị cụ thể. */
 </script>
 </body>
 </html>
