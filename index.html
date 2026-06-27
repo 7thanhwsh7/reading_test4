@@ -265,6 +265,16 @@ input, select, textarea{ font-family: inherit; }
   border-radius:8px; padding:14px 16px; margin-bottom:16px; font-size:13.5px; line-height:1.6; color: var(--ink);
 }
 .qgroup-instructions b{ color:var(--navy); }
+.qgroup-summary-title{ font-family:'Playfair Display',serif; font-weight:700; font-size:15px; text-align:center; color:var(--navy); margin:14px 0 12px; }
+.summary-passage-wrap{ font-size:14.5px; line-height:2; color:#33302b; text-align:justify; padding:4px 0; }
+.summary-q-anchor{ display:inline; }
+.summary-q-anchor.answered input{ border-color: var(--gold); background:#fffbf0; }
+.summary-q-anchor.flagged input{ border-color: #e05c2a; }
+input.ans-inline{ display:inline-block; width:130px; border:none; border-bottom:2px solid var(--navy); background:transparent; font-size:14px; font-family:'Be Vietnam Pro',sans-serif; color:var(--navy); padding:0 4px; margin:0 2px; vertical-align:baseline; outline:none; }
+input.ans-inline:focus{ border-bottom-color:var(--gold); background:#fffbf0; }
+.summary-flag-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; padding-top:10px; border-top:1px dashed #ddd; }
+.summary-flag-btn{ font-size:11px; padding:3px 8px; background:transparent; border:1px solid #ccc; border-radius:4px; cursor:pointer; color:#666; }
+.summary-flag-btn.on{ border-color:#e05c2a; color:#e05c2a; background:#fff5f0; }
 
 .qitem{
   display:flex; gap:12px; padding:14px 14px 14px 10px; border-radius:10px;
@@ -884,15 +894,17 @@ const QUESTION_GROUPS = [
   },
   {
     passageIndex: 0,
-    instructionsHtml: '<b>Questions 7–13</b><br>Complete the notes below.<br>Choose <b>ONE OR TWO WORDS</b> from the passage for each answer.<br>Write your answers in boxes 7–13 on your answer sheet.',
+    instructionsHtml: '<b>Questions 7–13</b><br>Complete the summary below.<br>Write <b>NO MORE THAN THREE WORDS</b> from the passage for each answer.<br>Write your answers in boxes 7–13 on your answer sheet.',
+    summaryTitle: 'The Commercial Development of Rubber',
+    summaryPassage: 'Early European travellers gave accounts of various rubber objects in use in Central and South America, and these accounts created interest in the commercial exploitation of rubber. In 1818, {Q7} was produced using rubber, and in 1820 a machine was invented for recycling {Q8} of rubber. Over the next few years, other attempts were made to improve rubber, but some problems remained. For example, rubber products smelt bad when they were dissolved, and could turn either soft or {Q9} depending on the temperature. However, in 1839, a new process to {Q10} the substance greatly increased its potential. For example, rubber was used in the creation of the {Q11} industry during the Industrial Revolution. Then in 1888 the {Q12} was developed, and a few years later the {Q13} of the motor car began.',
     questions: [
-      { n:7,  type:'text', text:'In 1818, (7) ___________ was produced using rubber,' },
-      { n:8,  type:'text', text:'and in 1820 a machine was invented for recycling (8) ___________ of rubber.' },
-      { n:9,  type:'text', text:'For example, rubber products smelt bad when they were dissolved, and could turn either soft or (9) ___________ depending on the temperature.' },
-      { n:10, type:'text', text:'However, in 1839, a new process to (10) ___________ the substance greatly increased its potential.' },
-      { n:11, type:'text', text:'For example, rubber was used in the creation of the (11) ___________ industry during the Industrial Revolution.' },
-      { n:12, type:'text', text:'Then in 1888 the (12) ___________ was developed,' },
-      { n:13, type:'text', text:'and a few years later the (13) ___________ of the motor car began.' },
+      { n:7,  type:'text', text:'' },
+      { n:8,  type:'text', text:'' },
+      { n:9,  type:'text', text:'' },
+      { n:10, type:'text', text:'' },
+      { n:11, type:'text', text:'' },
+      { n:12, type:'text', text:'' },
+      { n:13, type:'text', text:'' },
     ]
   },
   {
@@ -919,11 +931,13 @@ const QUESTION_GROUPS = [
   },
   {
     passageIndex: 1,
-    instructionsHtml: '<b>Questions 24–26</b><br>Complete the summary below.<br>Choose <b>ONE WORD ONLY</b> from the passage for each answer.<br>Write your answers in boxes 24–26 on your answer sheet.',
+    instructionsHtml: '<b>Questions 24–26</b><br>Complete the summary below.<br>Write <b>ONE WORD ONLY</b> from the passage for each answer.<br>Write your answers in boxes 24–26 on your answer sheet.',
+    summaryTitle: 'Historical patterns of interrupted sleep',
+    summaryPassage: 'Historical evidence seems to show that humans had common sleep patterns which were quite unlike today\'s eight hours of unbroken sleep each night. People habitually went to bed early, soon after {Q24} , slept for a while, then woke up for a few hours of activity or perhaps to consider, for example, the meaning of {Q25} . There was little else to do at home in the dark, since what little means of lighting they had, such as using candles, was costly. In 16th-century Europe, people tended to stay at home at night because they feared {Q26} on large unit city. Once urban street lighting improved, night life in cities became popular, and recreational spots, like coffee houses came to be considered fashionable. Consequently, sleeping patterns also began to change.',
     questions: [
-      { n:24, type:'text', text:'People habitually went to bed early, soon after (24) ___________, slept for a while,' },
-      { n:25, type:'text', text:'then woke up for a few hours of activity or perhaps to consider, for example, the meaning of (25) ___________.' },
-      { n:26, type:'text', text:'In 16th-century Europe, people tended to stay at home at night because they feared (26) ___________ on large unlit city streets.' },
+      { n:24, type:'text', text:'' },
+      { n:25, type:'text', text:'' },
+      { n:26, type:'text', text:'' },
     ]
   },
   {
@@ -965,12 +979,14 @@ const QUESTION_GROUPS = [
   },
   {
     passageIndex: 2,
-    instructionsHtml: '<b>Questions 37–40</b><br>Complete the sentences below.<br>Choose <b>ONE OR TWO WORDS</b> from the passage for each answer.<br>Write your answers in boxes 37–40 on your answer sheet.',
+    instructionsHtml: '<b>Questions 37–40</b><br>Complete the summary below.<br>Write <b>NO MORE THAN TWO WORDS</b> from the passage for each answer.<br>Write your answers in boxes 37–40 on your answer sheet.',
+    summaryTitle: 'Singing dunes',
+    summaryPassage: 'Singing dunes, which belong to the type of dunes known as {Q37} , produce a very loud sound which is transmitted at a low frequency. Researchers have worked out that sand grains fall down the dune and start vibrating against other grains, forming a sound wave.<br>Research proves that the individual grains have a similar {Q38} , but the differences in dimensions alter the {Q39} of the \'song\'. Each grain is covered with a mixture of different {Q40} and this is vital to the sound production.',
     questions: [
-      { n:37, type:'text', text:'Singing dunes, which belong to the type of dunes known as (37) ___________, produce a very loud sound which is transmitted at a low frequency.' },
-      { n:38, type:'text', text:'Research proves that the individual grains have a similar (38) ___________,' },
-      { n:39, type:'text', text:'but the differences in dimensions alter the (39) ___________ of the \'song\'.' },
-      { n:40, type:'text', text:'Each grain is covered with a mixture of different (40) ___________ and this is vital to the sound production.' },
+      { n:37, type:'text', text:'' },
+      { n:38, type:'text', text:'' },
+      { n:39, type:'text', text:'' },
+      { n:40, type:'text', text:'' },
     ]
   },
 ];
@@ -1048,10 +1064,12 @@ function renderTabs(){
 }
 
 function switchTab(i){
+  saveHighlights();      // lưu highlight tab hiện tại trước khi rời
   currentTab = i;
   renderTabs();
   renderPassage();
   renderQuestions();
+  restoreHighlights();   // khôi phục highlight cho tab mới
   initCopyProtection();
 }
 
@@ -1078,11 +1096,72 @@ function renderQuestions(){
     instr.innerHTML = group.instructionsHtml;
     gEl.appendChild(instr);
 
-    group.questions.forEach(q=>{
-      gEl.appendChild(renderQuestionItem(q));
-    });
+    if(group.summaryTitle){
+      const titleEl = document.createElement('div');
+      titleEl.className = 'qgroup-summary-title';
+      titleEl.textContent = group.summaryTitle;
+      gEl.appendChild(titleEl);
+    }
+
+    if(group.summaryPassage){
+      gEl.appendChild(renderSummaryPassage(group));
+    } else {
+      group.questions.forEach(q=>{
+        gEl.appendChild(renderQuestionItem(q));
+      });
+    }
     panel.appendChild(gEl);
   });
+}
+
+/* ---------- Summary Passage renderer ---------- */
+function renderSummaryPassage(group){
+  const wrap = document.createElement('div');
+  wrap.className = 'summary-passage-wrap';
+
+  // Collect all question numbers from the group
+  const qNums = group.questions.map(q => q.n);
+
+  // Build HTML string: replace {Qn} tokens with inline input placeholders
+  let html = group.summaryPassage;
+  qNums.forEach(n => {
+    html = html.replace(
+      new RegExp('\\{Q' + n + '\\}', 'g'),
+      `<span class="summary-q-anchor" id="anchor-${n}" data-q="${n}"><input type="text" class="ans-text ans-inline" data-q="${n}" placeholder="(${n})" /></span>`
+    );
+  });
+  wrap.innerHTML = html;
+
+  // Wire up inputs
+  wrap.querySelectorAll('input.ans-inline').forEach(inp => {
+    const n = parseInt(inp.dataset.q);
+    inp.value = answers[n] || '';
+    inp.disabled = isReviewMode;
+    inp.addEventListener('input', () => {
+      setAnswer(n, inp.value.trim());
+      // refresh anchor span state
+      const anchor = wrap.querySelector('#anchor-' + n);
+      if(anchor){
+        anchor.classList.toggle('answered', !!answers[n]);
+        anchor.classList.toggle('flagged', !!flags[n]);
+      }
+    });
+  });
+
+  // Add flag buttons below passage, one per question
+  const flagRow = document.createElement('div');
+  flagRow.className = 'summary-flag-row';
+  qNums.forEach(n => {
+    const btn = document.createElement('button');
+    btn.className = 'qflag-btn summary-flag-btn';
+    btn.dataset.q = n;
+    btn.textContent = '🚩 ' + n;
+    btn.addEventListener('click', () => toggleFlag(n));
+    flagRow.appendChild(btn);
+  });
+  wrap.appendChild(flagRow);
+
+  return wrap;
 }
 
 function renderQuestionItem(q){
