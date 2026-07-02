@@ -997,7 +997,7 @@ const QUESTION_GROUPS = [
    và "20", mỗi key là 1 trong 2 đáp án đúng của cặp đó. */
 const CORRECT_ANSWERS = {
   "1":  "FALSE",
-  "2":  "NOT GIVEN",
+  "2":  "TRUE",
   "3":  "NOT GIVEN",
   "4":  "TRUE",
   "5":  "NOT GIVEN",
@@ -1007,7 +1007,7 @@ const CORRECT_ANSWERS = {
   "9":  "rigid",
   "10": "stabilise",
   "11": "steam engines",
-  "12": "pneumatic tyre",
+  "12": ["pneumatic tyre", "first pneumatic tyre"],
   "13": "mass production",
   "14": "vii",
   "15": "v",
@@ -1742,9 +1742,14 @@ document.getElementById('btn-confirm-submit').addEventListener('click', ()=>{
 function gradeAnswers(){
   let correctCount = 0;
   for(let n=1; n<=TOTAL_QUESTIONS; n++){
-    const correct = (CORRECT_ANSWERS[n] || '').toString().trim().toLowerCase();
+    const correctRaw = CORRECT_ANSWERS[n];
+    if(!correctRaw) continue;
     const given = (answers[n] || '').toString().trim().toLowerCase();
-    if(correct && given && correct === given) correctCount++;
+    if(!given) continue;
+    const accepted = Array.isArray(correctRaw)
+      ? correctRaw.map(a => a.toString().trim().toLowerCase())
+      : [correctRaw.toString().trim().toLowerCase()];
+    if(accepted.includes(given)) correctCount++;
   }
   return correctCount;
 }
